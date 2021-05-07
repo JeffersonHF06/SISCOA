@@ -24,4 +24,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::prefix('users')->group(function () {
+        Route::get('', 'UserController@index');
+        Route::get('/edit/{user}', 'UserController@edit');
+        Route::put('/{user}', 'UserController@update');
+        Route::get('/create', 'UserController@create');
+        Route::post('', 'UserController@store');
+        Route::post('search', 'UserController@search');
+    });
+
 });

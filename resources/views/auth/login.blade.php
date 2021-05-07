@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('adminlte::auth.login')
 
 @section('content')
-<div id="login" class="container">
+<div id="login" class="card-footer">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -52,7 +52,12 @@
         </div>
     </div>
 </div>
+
 @endsection
+
+
+
+
 
 
 
