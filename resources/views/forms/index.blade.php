@@ -34,23 +34,23 @@
 
     </div>
 
-    <div class="table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+    <div id="app" class="table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
 
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Puesto</th>
-                    <th>Rol</th>
+                    <th>Motivo</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Horario</th>
+                    <th>Enlace</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach($users as $user)
-                @include('users._user')
+                @foreach($forms as $form)
+                <form form="{{$form}}" asset="{{asset('forms')}}"><form/>
                 @endforeach
             </tbody>
         </table>
@@ -59,10 +59,10 @@
 
     <div class="row">
         <div class="col d-flex justify-content-end">
-            {{ $users->links() }}
+            {{ $forms->links() }}
         </div>
     </div>
-
+    
 </div>
 @stop
 
@@ -79,9 +79,11 @@
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/main.css') }}"> --}}
 @stop
 
 @section('js')
-<script src="{{ asset('js/users/index.js') }}"></script>
-@stop
+<script src="{{ asset('js/forms/forms.js') }}"></script>
+@endsection
+
+

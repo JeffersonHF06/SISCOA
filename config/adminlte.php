@@ -242,22 +242,16 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],*/
         [
-            'text'    => 'Administración',
-            'icon'    => 'fas fa-user-cog',
-            
-            'submenu' => [
-                [
-                    'text' => 'Roles',
-                    'url'  => '#',
-                    'icon' => 'far fa-id-card'
-                ],
-                [
-                    'text' => 'Usuarios',
-                    'url'  => 'users',
-                    'icon' => 'fas fa-users',
-                    'can' => 'view_user'
-                ],
-            ],
+            'text' => 'Usuarios',
+            'url'  => 'users',
+            'icon' => 'fas fa-users',
+            'can' => 'admin'
+        ],
+        [
+            'text' => 'Formularios',
+            'url'  => 'forms',
+            'icon' => 'fas fa-clipboard-list',
+            'can' => ['admin','official']
         ],
     ],
 

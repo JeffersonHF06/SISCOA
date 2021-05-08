@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col">
             </div>
-            @can('change_password')
+           
             <div class="col-4">
                 <div class="form-group">
                     <button id="change-password-btn" type="button" class="btn btn-info mr-2 btn-block" data-toggle="modal" data-target="#change-password">
@@ -23,7 +23,7 @@
                     </button>
                 </div>
             </div>
-            @endcan
+            
 
         </div>
 
@@ -59,7 +59,7 @@
         </div>
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
 
                 <div class="form-group">
                     <label class="control-label  required" for="phone-input">Teléfono</label>
@@ -73,7 +73,7 @@
 
             </div>
 
-            <div class="col-6">
+            <div class="col-4">
 
                 <div class="form-group">
                     <label class="control-label  required" for="position-input">Puesto</label>
@@ -85,6 +85,27 @@
 
                 </div>
 
+            </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="role" class="col control-label required" id="role">Rol</label>
+                    <div class="col">
+                        <select class="form-control {{ $errors->has('role_id') ? 'is-invalid' : '' }}"
+                            value="{{ old('role_id') ?? $user->role_id}}" name="role_id" id="role_id-input">
+
+                            @foreach ($roles as $role)
+                                <option selected="{{$user->role_id}}" value="{{ $role->id }}">
+                                    {{ $role->label }}
+                                </option>
+                            @endforeach
+                            
+                        </select>
+                        @error('role_id')
+                            <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -129,9 +150,7 @@
 
 </div>
 
-@can('change_password')
 @include('users._change')
-@endcan
 
 @stop
 

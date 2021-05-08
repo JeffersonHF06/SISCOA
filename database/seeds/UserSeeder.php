@@ -21,9 +21,10 @@ class UserSeeder extends Seeder
             'phone' => 78876765,
             'position' => 'Administrador',
             'password' => Hash::make('admin'),
+            'role_id' => '1',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('admin');
+        ]);
 
         User::create([
             'name' => 'Adrián Ramírez Fernández',
@@ -31,8 +32,20 @@ class UserSeeder extends Seeder
             'phone' => 89987867,
             'position' => 'Profesor',
             'password' => Hash::make('admin'),
+            'role_id' => '2',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-        ])->assignRole('official');
+        ]);
+
+        User::create([
+            'name' => 'Mariana Castro Gutierrez',
+            'email' => 'mcg@una.ac.cr',
+            'phone' => 89987867,
+            'position' => 'Oyente',
+            'password' => Hash::make('admin'),
+            'role_id' => '3',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
     }
 }

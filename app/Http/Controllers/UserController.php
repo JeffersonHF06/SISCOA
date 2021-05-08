@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\User;
+use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -28,7 +31,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('users.create',[
+            'user' => Auth::user(),
+            'roles' => Role::all()
+        ]);
     }
 
     /**
@@ -66,6 +72,7 @@ class UserController extends Controller
     {
         return view('users.edit', [
             'user' => $user,
+            'roles' => Role::all()
         ]);
     }
 
@@ -76,9 +83,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $validateEmail = User::where('email', $request->email)->first();
+        if ($user != $validateEmail) {
+            return redirect()->back()->withErrors(['email' => 'El correo electrónico ya ha sido registrado.']);
+        }
+
+        $request->merge(['password' => Hash::make($request->password)]);
+        $user->update($request->all());
+        $user->refresh();
+        return redirect('/users')->with('status', 'Usuario editado con éxito');
     }
 
     public function search()
@@ -103,8 +118,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect('/users')->with('status', 'Usuario eliminado con éxito');
     }
 }

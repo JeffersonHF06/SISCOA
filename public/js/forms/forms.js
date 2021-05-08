@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -50176,26 +50176,27 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/***/ "./resources/js/forms/forms.js":
+/*!*************************************!*\
+  !*** ./resources/js/forms/forms.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/jefferson/JeffersonHF1/UNA/Desarrollos/una_asistencia/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /media/jefferson/JeffersonHF1/UNA/Desarrollos/una_asistencia/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! ../bootstrap.js */ "./resources/js/bootstrap.js");
+
+__webpack_require__(/*! ../app */ "./resources/js/app.js");
+
+/***/ }),
+
+/***/ 1:
+/*!*******************************************!*\
+  !*** multi ./resources/js/forms/forms.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /media/jefferson/JeffersonHF1/UNA/Desarrollos/una_asistencia/resources/js/forms/forms.js */"./resources/js/forms/forms.js");
 
 
 /***/ })

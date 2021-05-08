@@ -31219,3 +31219,8 @@ a.text-muted:hover {
   color: #ffffff;
 }
 /*# sourceMappingURL=adminlte.css.map */
+
+#off-form{
+  align-items: center;
+  margin-left: 50%;
+}

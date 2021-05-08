@@ -44,7 +44,7 @@
         </div>
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
 
                 <div class="form-group">
                     <label class="control-label  required" for="phone-input">Teléfono</label>
@@ -58,7 +58,7 @@
 
             </div>
 
-            <div class="col-6">
+            <div class="col-4">
 
                 <div class="form-group">
                     <label class="control-label  required" for="position-input">Puesto</label>
@@ -70,6 +70,28 @@
 
                 </div>
 
+            </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="role" class="col control-label required" id="role">Rol</label>
+                    <div class="col">
+                        <select class="form-control {{ $errors->has('role_id') ? 'is-invalid' : '' }}"
+                            value="{{ old('role_id')}}" name="role_id" id="role_id-input">
+                            <option selected value="" disabled>Seleccione un rol para el usuario</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">
+                                    {{ $role->label }}
+                                </option>
+                            @endforeach
+                            
+                        </select>
+                        @error('role_id')
+                            <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
+                        @enderror
+                    </div>
+                </div>
+                
             </div>
         </div>
 

@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class RoleSeeder extends Seeder
 {
@@ -13,31 +13,31 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-    
-       //Admin role
-       $role1 = Role::create([
-           'name' => 'admin',
-           'label' => 'Administrador',
-           'description' => 'Rol para administradores'
+        //Admin role
+        DB::table('roles')->insert([
+            'name' => 'admin',
+            'label' => 'Administrador',
+            'description' => 'Rol que brinda acceso a todas las funcionalidades del sistema',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-
-       //Official role
-       $role2 = Role::create([
-           'name' => 'official',
-           'label' => 'Funcionario',
-           'description' => 'Rol para funcionarios'
+ 
+        //Official role
+        DB::table('roles')->insert([
+            'name' => 'official',
+            'label' => 'Funcionario',
+            'description' => 'Rol para funcionarios, los cuales solamente acceden a las funcionalidades de sus formularios',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-
-       //Assign Roles permission
-       Permission::create(['name' => 'view_roles'])->assignRole('admin');
-       Permission::create(['name' => 'assign_roles'])->assignRole('admin');
-
-       //Users crud permissions
-       Permission::create(['name' => 'view_user'])->assignRole('admin');
-       Permission::create(['name' => 'create_user'])->assignRole('admin');
-       Permission::create(['name' => 'edit_user'])->syncRoles(['admin','official']);
-       Permission::create(['name' => 'delete_user'])->assignRole('admin');
-       Permission::create(['name' => 'change_password'])->assignRole('admin');
-
+ 
+         //Hearer role
+        DB::table('roles')->insert([
+             'name' => 'hearer',
+             'label' => 'Oyente',
+             'description' => 'Rol para oyentes, este rol limita el acceso total al sistema, solamente pueden registrar asistencia en los formularios',
+             'created_at' => Carbon::now(),
+             'updated_at' => Carbon::now(),
+        ]);
     }
 }

@@ -13,6 +13,16 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->string('label')->unique();
+            $table->text('description')->nullable();
+            $table->timestamps();;
+        });
+
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -20,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->integer('phone');
             $table->string('position');
             $table->string('password');
+            $table->foreignId('role_id')->references('id')->on('roles');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -32,6 +43,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('users');
     }
 }
