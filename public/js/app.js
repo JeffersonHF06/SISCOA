@@ -1983,59 +1983,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {
-    console.log('entre');
+  mounted: function mounted() {
+    console.log(this.asset);
   },
-  props: ['form', 'asset'],
+  props: ["id", "url"],
   data: function data() {
     return {
-      asset: "".concat(this.asset, "/forms/").concat(form.id)
+      asset: "".concat(this.url, "forms/").concat(this.id)
     };
   },
   methods: {
-    copy: function copy(id) {
-      var copyText = document.getElementById("formLink".id);
-      copyText.select();
-      copyText.setSelectionRange(0, 99999);
-      /* Para dispositivos móviles*/
-
-      document.execCommand("copy");
-      alert("Enlace copiado: " + copyText.value);
+    copy: function copy() {
+      var copyText = document.getElementById("link".concat(this.id));
+      navigator.clipboard.writeText(copyText.value);
+      $('#copiedToast').toast('show');
     }
   }
 });
@@ -37703,122 +37665,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("tr", [
-    _c("td", { attrs: { id: "table-body-text" } }, [
-      _vm._v("\n        " + _vm._s(_vm.form.title) + "\n    ")
-    ]),
+  return _c("div", [
+    _c("input", {
+      attrs: { hidden: "", type: "text", id: "link" + _vm.id },
+      domProps: { value: _vm.asset }
+    }),
     _vm._v(" "),
-    _c("td", { attrs: { id: "table-body-text" } }, [
-      _vm._v("\n        " + _vm._s(_vm.form.description) + "\n    ")
-    ]),
-    _vm._v(" "),
-    _c("td", { attrs: { id: "table-body-text" } }, [
-      _vm._v("\n        " + _vm._s(_vm.form.date) + "\n    ")
-    ]),
-    _vm._v(" "),
-    _c("td", { attrs: { id: "table-body-text" } }, [
-      _vm._v(
-        "\n        " +
-          _vm._s(_vm.form.start_time) +
-          " - " +
-          _vm._s(_vm.form.end_time) +
-          "\n    "
-      )
-    ]),
-    _vm._v(" "),
-    _c("td", { attrs: { id: "table-body-text" } }, [
-      _c("input", {
-        attrs: { hidden: "", type: "text", id: "formLink" + _vm.form.id },
-        domProps: { value: _vm.asset }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-dark",
-          on: {
-            click: function($event) {
-              return _vm.copy(_vm.form.id)
-            }
-          }
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-dark",
+        attrs: {
+          type: "button",
+          id: "linkBtn",
+          "data-toggle": "tooltip",
+          "data-placement": "top",
+          title: "Copiar"
         },
-        [_vm._v("Copiar enlace")]
-      )
-    ]),
+        on: { click: _vm.copy }
+      },
+      [_vm._v("\n    Copiar enlace\n  ")]
+    ),
     _vm._v(" "),
-    _c("td", { attrs: { id: "table-body-elements" } }, [
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-secondary mr-2 mb-2",
-            attrs: { href: "/forms/edit/" + _vm.form.id }
-          },
-          [_c("i", { staticClass: "fas fa-marker" }), _vm._v(" Editar")]
-        ),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            attrs: {
-              action: "forms/" + _vm.form.id,
-              method: "POST",
-              id: "delete-form"
-            }
-          },
-          [
-            _vm._v(
-              "\n                @csrf\n                @method('DELETE')\n\n                "
-            ),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger delete mr-2 mb-2",
-                attrs: {
-                  type: "button",
-                  "data-toggle": "modal",
-                  "data-target": "#deleteModal" + _vm.form.id
-                }
-              },
-              [
-                _c("i", { staticClass: "far fa-trash-alt" }),
-                _vm._v(" Eliminar\n                ")
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "modal fade",
-                attrs: {
-                  id: "deleteModal" + _vm.form.id,
-                  tabindex: "-1",
-                  "aria-labelledby": "deleteModalLabel",
-                  "aria-hidden": "true"
-                }
-              },
-              [
-                _c("div", { staticClass: "modal-dialog" }, [
-                  _c("div", { staticClass: "modal-content" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-body" }, [
-                      _vm._v(
-                        "\n                            ¿Desea eliminar el formulario " +
-                          _vm._s(_vm.form.name) +
-                          "?\n                        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(1)
-                  ])
-                ])
-              ]
-            )
-          ]
-        )
-      ])
-    ])
+    _vm._m(0)
   ])
 }
 var staticRenderFns = [
@@ -37826,34 +37695,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "deleteModalLabel" } },
-        [_vm._v("Confirmación")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_c("i", { staticClass: "fas fa-times" }), _vm._v(" No")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-danger", attrs: { type: "submit" } },
-        [_c("i", { staticClass: "far fa-trash-alt" }), _vm._v(" Sí")]
-      )
-    ])
+    return _c(
+      "div",
+      {
+        staticStyle: { position: "relative", "min-height": "200px" },
+        attrs: { "aria-live": "polite", "aria-atomic": "true" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "toast",
+            staticStyle: { position: "absolute", top: "0", right: "0" },
+            attrs: { id: "copiedToast" }
+          },
+          [_c("div", { staticClass: "toast-body" }, [_vm._v("Enlace Copiado")])]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -50038,6 +49897,8 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./clipboard */ "./resources/js/clipboard.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -50049,7 +49910,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component("Form", __webpack_require__(/*! ./components/FormRow.vue */ "./resources/js/components/FormRow.vue")["default"]);
+Vue.component("Forms", __webpack_require__(/*! ./components/FormRow.vue */ "./resources/js/components/FormRow.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50104,6 +49965,25 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/clipboard.js":
+/*!***********************************!*\
+  !*** ./resources/js/clipboard.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function copyLink(id) {
+  console.log('entre');
+  var copyText = document.getElementById("link".concat(id));
+  navigator.clipboard.writeText(copyText); // copyText.select();
+  // copyText.setSelectionRange(0, 99999); /* Para dispositivos móviles*/
+  // document.execCommand("copy");
+
+  alert("Enlace copiado: " + copyText.value);
+}
 
 /***/ }),
 

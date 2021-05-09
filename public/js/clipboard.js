@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -93,8 +93,9 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-function copy() {
-  var copyText = document.getElementById("formLink");
+function copy(id) {
+  console.log('entre');
+  var copyText = document.getElementById("link".concat(id));
   copyText.select();
   copyText.setSelectionRange(0, 99999);
   /* Para dispositivos móviles*/
@@ -105,7 +106,7 @@ function copy() {
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!*****************************************!*\
   !*** multi ./resources/js/clipboard.js ***!
   \*****************************************/

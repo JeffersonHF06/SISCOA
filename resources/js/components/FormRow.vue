@@ -1,93 +1,53 @@
 <template>
-<tr>
-    <td id="table-body-text">
-        {{ form.title }}
-    </td>
+  <div>
+    <input hidden type="text" :id="`link${id}`" :value="asset" />
+    <button
+      type="button"
+      id="linkBtn"
+      data-toggle="tooltip"
+      data-placement="top"
+      title="Copiar"
+      @click="copy"
+      class="btn btn-dark"
+    >
+      Copiar enlace
+    </button>
 
-    <td id="table-body-text">
-        {{ form.description }}
-    </td>
-
-    <td id="table-body-text">
-        {{ form.date }}
-    </td>
-
-    <td id="table-body-text">
-        {{ form.start_time }} - {{ form.end_time }}
-    </td>   
-
-    <td id="table-body-text">
-        <input hidden type="text" :value="asset" :id="`formLink${form.id}`">
-
-        <button class="btn btn-dark" @click="copy(form.id)">Copiar enlace</button>
-    </td>   
-
-    <td id="table-body-elements">
-        <div class="row">
-
-            <a class="btn btn-secondary mr-2 mb-2" :href="`/forms/edit/${ form.id }`"><i class="fas fa-marker"></i> Editar</a>
-    
-            <form :action="`forms/${form.id}`" method="POST" id="delete-form">
-                @csrf
-                @method('DELETE')
-
-                <button type="button" class="btn btn-danger delete mr-2 mb-2" data-toggle="modal"
-                    :data-target="`#deleteModal${form.id}`">
-                    <i class="far fa-trash-alt"></i> Eliminar
-                </button>
-
-                <div class="modal fade" :id="`deleteModal${form.id}`" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="deleteModalLabel">Confirmación</h5>
-                        </div>
-                        <div class="modal-body">
-                            ¿Desea eliminar el formulario {{form.name}}?
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> No</button>
-                          <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i> Sí</button>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-            </form>
-
-        </div>
-    </td>
-
-</tr>
+    <div
+      
+      aria-live="polite"
+      aria-atomic="true"
+      style="position: relative; min-height: 200px"
+    >
+      <div id="copiedToast" class="toast" style="position: absolute; top: 0; right: 0">
+        <div class="toast-body">Enlace Copiado</div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-
 export default {
+  mounted() {
+    console.log(this.asset);
+  },
 
-    created(){
-        console.log('entre')
+  props: ["id", "url"],
+
+  data() {
+    return {
+      asset: `${this.url}forms/${this.id}`,
+    };
+  },
+
+  methods: {
+    copy() {
+      var copyText = document.getElementById(`link${this.id}`);
+
+      navigator.clipboard.writeText(copyText.value);
+
+      $('#copiedToast').toast('show')
     },
-
-    props: ['form', 'asset'],
-
-    data() {
-        return{
-            asset: `${this.asset}/forms/${form.id}`
-        }
-    },
-
-    methods: {
-        copy(id){
-            var copyText = document.getElementById("formLink".id);
-  
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); /* Para dispositivos móviles*/
-        
-            
-            document.execCommand("copy");
-        
-            alert("Enlace copiado: " + copyText.value);
-        }
-    }
-}
+  },
+};
 </script>

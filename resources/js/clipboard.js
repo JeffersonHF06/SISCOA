@@ -1,11 +1,17 @@
-function copy() {
-    var copyText = document.getElementById("formLink");
-  
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /* Para dispositivos móviles*/
-  
+
+
+
+    function copyLink(id) {
+      console.log('entre')
+      var copyText = document.getElementById(`link${id}`);
+
+      navigator.clipboard.writeText(copyText);
     
-    document.execCommand("copy");
-  
-    alert("Enlace copiado: " + copyText.value);
-  }
+      // copyText.select();
+      // copyText.setSelectionRange(0, 99999); /* Para dispositivos móviles*/
+    
+      
+      // document.execCommand("copy");
+    
+      alert("Enlace copiado: " + copyText.value);
+    }

@@ -3,10 +3,12 @@
 @section('title', 'UNA')
 
 @section('content_header')
+
 <h1>Usuarios</h1>
 @stop
 
 @section('content')
+
 <div class="container text-style">
 
     @include('partials._status')
@@ -50,7 +52,7 @@
 
             <tbody>
                 @foreach($forms as $form)
-                <form form="{{$form}}" asset="{{asset('forms')}}"><form/>
+                @include('forms._form')
                 @endforeach
             </tbody>
         </table>
@@ -83,7 +85,10 @@
 @stop
 
 @section('js')
-<script src="{{ asset('js/forms/forms.js') }}"></script>
+{{-- <script src="{{ asset('js/forms/forms.js') }}"></script> --}}
+<script src="{{ asset('js/app.js') }}"></script>
 @endsection
+
+
 
 
