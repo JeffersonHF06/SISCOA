@@ -16,10 +16,10 @@
 
     <div class="row mb-4">
         <div class="col">
-            <form action="/users/search" class="form-inline" id="search-form" method="POST">
+            <form action="/forms/search" class="form-inline" id="search-form" method="POST">
                 @csrf
 
-                <input id="search-input" class="form-control mr-sm-2 {{ $errors->has('search') ? 'is-invalid' : '' }} " type="search" placeholder="Buscar Usuario " aria-label="Buscar" name="search" value="{{ old('search') }}">
+                <input id="search-input" class="form-control mr-sm-2 {{ $errors->has('search') ? 'is-invalid' : '' }} " type="search" placeholder="Buscar Formulario " aria-label="Buscar" name="search" value="{{ old('search') }}">
                 <button class="btn my-2 my-sm-0" type="submit">
                     <i class="fas fa-search"></i>
                 </button>
@@ -31,13 +31,12 @@
         </div>
 
         <div class="col d-flex align-items-end flex-column">
-            <a href="/users/create" type="submit" class="ml-auto btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+            <a href="/forms/create" type="submit" class="ml-auto btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
         </div>
 
     </div>
 
     <div id="app" class="table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
-
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>

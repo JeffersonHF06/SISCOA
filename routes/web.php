@@ -37,11 +37,13 @@ Route::middleware('auth')->group(function () {
             Route::delete('{user}','UserController@destroy');
         });
     });
-    Route::get('forms', 'FormController@index');
+    
     //Rutas forms
     Route::middleware('roles')->group(function (){
         Route::prefix('forms')->group(function () {
-            
+            Route::get('', 'FormController@index');
+            Route::get('/create', 'FormController@create');
+            Route::post('', 'FormController@store');
         });
     });
 

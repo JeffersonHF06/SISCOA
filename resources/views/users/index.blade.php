@@ -50,7 +50,7 @@
 
             <tbody>
                 @foreach($users as $user)
-                
+                @include('users._user')
                 @endforeach
             </tbody>
         </table>
