@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Form;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreFormRequest;
 
@@ -28,7 +29,7 @@ class FormController extends Controller
     public function create()
     {
         return view('forms.create', [
-            'user' => auth()->user()
+            'user' => Auth::user()
         ]);
     }
 
@@ -40,7 +41,8 @@ class FormController extends Controller
      */
     public function store(StoreFormRequest $request)
     {
-        Form::create($request->all());
+        $request->user()->forms()->create($request->all());
+        // Form::create($request->all());
         return redirect('/forms')->with('status', 'Formulario creado con éxito');
     }
 
@@ -52,8 +54,27 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        //
+        return view('forms.show',[
+            'form' => $form
+        ]);
     }
+
+    public function search()
+    {
+        $search = request()->validate([
+            'search' => 'required'
+        ]);
+
+        $searchByTitle = Form::where('title', 'like', $search['search'] . '%')->get();
+        $searchByDate = Form::where('date', 'like', $search['search'] . '%')->get();
+
+        $result = $searchByTitle->merge($searchByDate);
+
+        return view('forms.search', [
+            'forms' => $result
+        ]);
+    }
+
 
     /**
      * Show the form for editing the specified resource.

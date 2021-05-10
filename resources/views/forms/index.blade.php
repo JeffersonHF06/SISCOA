@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-<h1>Usuarios</h1>
+<h1>Formularios</h1>
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
 
     <div class="row mb-4">
         <div class="col">
-            <form action="/forms/search" class="form-inline" id="search-form" method="POST">
+            {{-- <form action="/forms/search" class="form-inline" id="search-form" method="POST">
                 @csrf
 
                 <input id="search-input" class="form-control mr-sm-2 {{ $errors->has('search') ? 'is-invalid' : '' }} " type="search" placeholder="Buscar Formulario " aria-label="Buscar" name="search" value="{{ old('search') }}">
@@ -27,11 +27,11 @@
                 <div id="error" class="invalid-feedback">{{ $message }}</div>
                 @enderror
 
-            </form>
+            </form> --}}
         </div>
 
         <div class="col d-flex align-items-end flex-column">
-            <a href="/forms/create" type="submit" class="ml-auto btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+            <a href="{{ route('forms.crear') }}" class="ml-auto btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
         </div>
 
     </div>
@@ -41,7 +41,6 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Motivo</th>
-                    {{-- <th>Descripción</th> --}}
                     <th>Fecha</th>
                     <th>Horario</th>
                     <th>Enlace</th>
@@ -74,7 +73,7 @@
       </div>
     </div>
 
-    <script>
+    {{-- <script>
         const copyLink = (id) => {
             var copyText = document.getElementById(`link${id}`);
 
@@ -82,7 +81,7 @@
 
             $('#copiedToast').toast('show')
         };
-    </script>
+    </script> --}}
     
 </div>
 @stop

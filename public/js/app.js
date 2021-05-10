@@ -49901,6 +49901,12 @@ var app = new Vue({
   el: '#app'
 });
 
+window.copyLink = function (id) {
+  var copyText = document.getElementById("link".concat(id));
+  navigator.clipboard.writeText(copyText.value);
+  $('#copiedToast').toast('show');
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

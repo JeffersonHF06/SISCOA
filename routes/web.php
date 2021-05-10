@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('forms/{form}', 'FormController@show');
 
 Route::middleware('auth')->group(function () {
 
@@ -28,7 +29,7 @@ Route::middleware('auth')->group(function () {
     //Rutas crud users
     Route::middleware('can:admin')->group(function (){
         Route::prefix('users')->group(function () {
-            Route::get('', 'UserController@index')->middleware('roles');
+            Route::get('', 'UserController@index');
             Route::get('/edit/{user}', 'UserController@edit');
             Route::put('/{user}', 'UserController@update');
             Route::get('/create', 'UserController@create');
@@ -41,9 +42,13 @@ Route::middleware('auth')->group(function () {
     //Rutas forms
     Route::middleware('roles')->group(function (){
         Route::prefix('forms')->group(function () {
+            Route::get('crear', 'FormController@create')->name('forms.crear');
             Route::get('', 'FormController@index');
-            Route::get('/create', 'FormController@create');
+            Route::get('create', 'FormController@create')->name('forms.create');
+            
             Route::post('', 'FormController@store');
+            Route::post('search', 'FormController@search');
+            
         });
     });
 

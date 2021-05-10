@@ -45,7 +45,7 @@
 
         <input hidden value="1" name="is_active" type="text">
 
-        <input hidden value="{{$user->id}}" name="user_id" type="text">
+        {{-- <input hidden value="{{$user->id}}" name="user_id" type="text"> --}}
         
         <br>
 
@@ -108,10 +108,3 @@
 
 @endsection
 
-@section('css')
-
-@stop
-
-@section('js')
-<script src="{{ asset('js/app.js') }}"></script>
-@stop

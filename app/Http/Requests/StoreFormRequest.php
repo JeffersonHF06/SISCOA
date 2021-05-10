@@ -30,18 +30,18 @@ class StoreFormRequest extends FormRequest
             'start_time' => 'required',
             'end_time' => 'required',
             'is_active' => 'required',
-            'user_id' => 'required'
+            // 'user_id' => 'required'
         ];
     }
 
-    public function attributes(){
-        return [
-            'title' => 'motivo',
-            'email' => 'correo electrónico',
-            'phone' => 'teléfono',
-            'position' => 'puesto',
-            'password' => 'contraseña',
-            'role_id' => 'rol'
-        ];
-    }
+    // public function attributes(){
+    //     return [
+    //         'title' => 'motivo',
+    //         'email' => 'correo electrónico',
+    //         'phone' => 'teléfono',
+    //         'position' => 'puesto',
+    //         'password' => 'contraseña',
+    //         'role_id' => 'rol'
+    //     ];
+    // }
 }

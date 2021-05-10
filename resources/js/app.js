@@ -34,3 +34,14 @@ Vue.component("Times", require("./components/TimePickers.vue").default);
 const app = new Vue({
     el: '#app',
 });
+
+
+
+
+window.copyLink = (id) => {
+    var copyText = document.getElementById(`link${id}`);
+
+    navigator.clipboard.writeText(copyText.value);
+
+    $('#copiedToast').toast('show')
+};
