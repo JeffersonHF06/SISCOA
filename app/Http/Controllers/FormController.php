@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Form;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreFormRequest;
 
 class FormController extends Controller
 {
@@ -26,7 +27,9 @@ class FormController extends Controller
      */
     public function create()
     {
-        return view('forms.create');
+        return view('forms.create', [
+            'user' => auth()->user()
+        ]);
     }
 
     /**
@@ -35,9 +38,10 @@ class FormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFormRequest $request)
     {
-        //
+        Form::create($request->all());
+        return redirect('/forms')->with('status', 'Formulario creado con éxito');
     }
 
     /**

@@ -7,11 +7,15 @@
 @section('content')
 <div id="app" class="container text-style">
 
-    <form action="/forms" method="POST" id="store-user-form">
+    <form action="/forms" method="POST" id="store-form-form">
 
         @csrf
 
-        <times />
+        <div class="row">
+            <div class="col-md-12">
+                <x-input name="title" title="Motivo"></x-input>
+            </div>
+        </div>
 
         <div class="form-row">
             <div class="form-group col-md-12">
@@ -19,6 +23,31 @@
                 <input type="date" class="form-control datepicker" id="date" name="date" required><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label required" for="date">Hora de inicio</label>
+                <input type="text" class="form-control" id="start_time" name="start_time" required><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+            </div>
+
+            <div class="col-md-6">
+                <label class="control-label required" for="date">Hora de finalización</label>
+                <input type="text" class="form-control" id="end_time" name="end_time" required><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <x-textarea name="description" title="Descripción"></x-textarea>
+            </div>
+        </div>
+
+        <input hidden value="1" name="is_active" type="text">
+
+        <input hidden value="{{$user->id}}" name="user_id" type="text">
+        
+        <br>
 
         
         <div class="row mb-4">

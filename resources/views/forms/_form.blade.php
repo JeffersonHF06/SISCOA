@@ -4,9 +4,9 @@
         {{ $form->title }}
     </td>
 
-    <td id="table-body-text">
+    {{-- <td id="table-body-text">
         {{ $form->description }}
-    </td>
+    </td> --}}
 
     <td id="table-body-text">
         {{ $form->date }}
@@ -17,7 +17,18 @@
     </td>   
 
     <td id="table-body-text">
-        <forms url="{{asset(`forms`)}}" id="{{$form->id}}"/>
+        <input hidden type="text" id="link{{$form->id}}" value="{{asset('forms')}}/{{$form->id}}" />
+        <button
+        type="button"
+        id="linkBtn"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="Copiar"
+        class="btn btn-dark"
+        onclick="copyLink({{$form->id}})"
+        >
+        Copiar enlace
+        </button>
     </td>  
     
     <td id="table-body-elements">

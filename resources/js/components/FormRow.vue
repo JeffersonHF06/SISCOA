@@ -1,29 +1,8 @@
 <template>
-  <div>
-    <input hidden type="text" :id="`link${id}`" :value="asset" />
-    <button
-      type="button"
-      id="linkBtn"
-      data-toggle="tooltip"
-      data-placement="top"
-      title="Copiar"
-      @click="copy"
-      class="btn btn-dark"
-    >
-      Copiar enlace
-    </button>
+  <td id="table-body-text">
+    
 
-    <div
-      
-      aria-live="polite"
-      aria-atomic="true"
-      style="position: relative; min-height: 200px"
-    >
-      <div id="copiedToast" class="toast" style="position: absolute; top: 0; right: 0">
-        <div class="toast-body">Enlace Copiado</div>
-      </div>
-    </div>
-  </div>
+ </td>
 </template>
 
 <script>
