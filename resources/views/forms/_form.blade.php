@@ -4,37 +4,38 @@
         {{ $form->title }}
     </td>
 
-    {{-- <td id="table-body-text">
-        {{ $form->description }}
-    </td> --}}
-
     <td id="table-body-text">
-        {{ $form->date }}
+        {{ $form->date->isoFormat('LL') }}
     </td>
 
     <td id="table-body-text">
-        {{ $form->start_time }} - {{ $form->end_time }}
-    </td>   
-
+        {{ $form->start_time->format('g:i A') }} - {{ $form->end_time->format('g:i A') }}
+    </td>  
+    
     <td id="table-body-text">
         <input hidden type="text" id="link{{$form->id}}" value="{{asset('forms')}}/{{$form->id}}" />
         <button
-        type="button"
-        id="linkBtn"
-        data-toggle="tooltip"
-        data-placement="top"
-        title="Copiar"
-        class="btn btn-dark"
-        onclick="copyLink({{$form->id}})"
+                type="button"
+                id="linkBtn"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Copiar"
+                class="btn btn-dark mr-2 mb-2"
+                onclick="copyLink({{$form->id}})"
         >
-        Copiar enlace
+              Copiar enlace
         </button>
-    </td>  
+    </td> 
+ 
     
     <td id="table-body-elements">
         <div class="row">
 
+            <button class="btn btn-info mr-2 mb-2" data-toggle="modal" data-target="#detailsModal{{$form->id}}"><i class="fas fa-info-circle"></i> Detalles</button>
+
             <a class="btn btn-secondary mr-2 mb-2" href="/forms/edit/{{ $form->id }}"><i class="fas fa-marker"></i> Editar</a>
+
+            <a class="btn btn-warning mr-2 mb-2" href="#"><i class="far fa-file-pdf"></i> PDF</a>
     
             <form action="forms/{{$form->id}}" method="POST" id="delete-form">
                 @csrf
@@ -62,6 +63,56 @@
                     </div>
                 </div>
             </form>
+
+            <!-- Modal detalles -->
+            <div class="modal fade" id="detailsModal{{$form->id}}" tabindex="-1" aria-labelledby="detailsModal{{$form->id}}Label" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="detailsModal{{$form->id}}Label">Detalles del formulario</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <x-input name="title" title="Motivo" value="{{$form->title}}" disabled="disabled"></x-input>
+                            </div>
+                        </div>
+                
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                               <x-input name="date" title="Fecha de la actividad" value="{{$form->date->isoFormat('LL')}}" disabled="disabled"></x-input>
+                            </div>
+                        </div>
+                
+                        <div class="row">
+                            <div class="col-md-6">
+                                <x-input name="start_time" title="Hora de Inicio" value="{{$form->start_time->format('g:i A')}}" disabled="disabled"></x-input>
+                            </div>
+                
+                            <div class="col-md-6">
+                                <x-input name="end_time" title="Hora de Finalización" value="{{$form->end_time->format('g:i A')}}" disabled="disabled"></x-input>
+                            </div>
+                
+                        </div>
+                
+                        <div class="row">
+                            <div class="col-md-12">
+                                <x-textarea name="description" title="Descripción" value="{{$form->description}}" disabled="disabled"></x-textarea>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <a class="btn btn-primary" href="#"><i class="fas fa-list"></i> Ver lista</a>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
         </div>
     </td>

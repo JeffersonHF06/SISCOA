@@ -1,9 +1,9 @@
 <div>
-    @props(['name', 'title'])
+    @props(['name', 'title', 'value' => '', 'disabled' => ''])
 
     <label class="control-label required" for="{{$name}}-input">{{$title}}</label>
 
-    <textarea id="{{$name}}-input" name="{{$name}}" cols="30" rows="5" value="{{old($name)}}" class="form-control {{ $errors->has($name) ? 'is-invalid' : '' }}">{{{ old($name) }}}</textarea>
+    <textarea {{$disabled}} id="{{$name}}-input" name="{{$name}}" cols="30" rows="5" class="form-control {{ $errors->has($name) ? 'is-invalid' : '' }}">{{ old($name) ?? $value }}</textarea>
 
     @if($errors->has($name))
         <div id="error" class="invalid-feedback">{{ ucfirst($errors->first($name)) }}</div>

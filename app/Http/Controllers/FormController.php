@@ -6,6 +6,7 @@ use App\Models\Form;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreFormRequest;
+use App\Http\Requests\UpdateFormRequest;
 
 class FormController extends Controller
 {
@@ -16,8 +17,10 @@ class FormController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $forms = Form::where('user_id',$user->id)->paginate(8);
         return view('forms.index',[
-            'forms' => Form::paginate(8)
+            'forms' => $forms
         ]);
     }
 
@@ -41,8 +44,8 @@ class FormController extends Controller
      */
     public function store(StoreFormRequest $request)
     {
-        $request->user()->forms()->create($request->all());
-        // Form::create($request->all());
+        // $request->user()->forms()->create($request->all());
+        Form::create($request->all());
         return redirect('/forms')->with('status', 'Formulario creado con éxito');
     }
 
@@ -65,8 +68,8 @@ class FormController extends Controller
             'search' => 'required'
         ]);
 
-        $searchByTitle = Form::where('title', 'like', $search['search'] . '%')->get();
-        $searchByDate = Form::where('date', 'like', $search['search'] . '%')->get();
+        $searchByTitle = Form::where('title', 'like', $search['search'] . '%')->where('user_id', Auth::user()->id)->get();
+        $searchByDate = Form::where('date', 'like', $search['search'] . '%')->where('user_id', Auth::user()->id)->get();
 
         $result = $searchByTitle->merge($searchByDate);
 
@@ -84,7 +87,10 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
-        //
+        return view('forms.edit', [
+            'user' => Auth::user(),
+            'form' => $form
+        ]);
     }
 
     /**
@@ -94,9 +100,10 @@ class FormController extends Controller
      * @param  \App\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Form $form)
+    public function update(UpdateFormRequest $request, Form $form)
     {
-        //
+        $form->update($request->all());
+        return redirect('/forms')->with('status', 'Formulario editado con éxito');
     }
 
     /**
@@ -107,6 +114,7 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
-        //
+        $form->delete();
+        return redirect('/forms')->with('status', 'Formulario eliminado con éxito');
     }
 }

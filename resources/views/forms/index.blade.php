@@ -16,7 +16,7 @@
 
     <div class="row mb-4">
         <div class="col">
-            {{-- <form action="/forms/search" class="form-inline" id="search-form" method="POST">
+            <form action="/forms/search" class="form-inline" id="search-form" method="POST">
                 @csrf
 
                 <input id="search-input" class="form-control mr-sm-2 {{ $errors->has('search') ? 'is-invalid' : '' }} " type="search" placeholder="Buscar Formulario " aria-label="Buscar" name="search" value="{{ old('search') }}">
@@ -27,11 +27,11 @@
                 <div id="error" class="invalid-feedback">{{ $message }}</div>
                 @enderror
 
-            </form> --}}
+            </form>
         </div>
 
         <div class="col d-flex align-items-end flex-column">
-            <a href="{{ route('forms.crear') }}" class="ml-auto btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+            <a href="forms/create" class="ml-auto btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
         </div>
 
     </div>
@@ -41,9 +41,9 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Motivo</th>
-                    <th>Fecha</th>
+                    <th>Fecha de la actividad</th>
                     <th>Horario</th>
-                    <th>Enlace</th>
+                    <th>Enlace del formulario</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -72,16 +72,6 @@
         <div class="toast-body">Enlace Copiado</div>
       </div>
     </div>
-
-    {{-- <script>
-        const copyLink = (id) => {
-            var copyText = document.getElementById(`link${id}`);
-
-            navigator.clipboard.writeText(copyText.value);
-
-            $('#copiedToast').toast('show')
-        };
-    </script> --}}
     
 </div>
 @stop

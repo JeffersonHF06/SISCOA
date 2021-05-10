@@ -19,20 +19,17 @@
 
         <div class="form-row">
             <div class="form-group col-md-12">
-                <label class="control-label required" for="date">Fecha</label>
-                <input type="date" class="form-control datepicker" id="date" name="date" required><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+               <x-input name="date" title="Fecha de la actividad" kind="date"></x-input>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <label class="control-label required" for="date">Hora de inicio</label>
-                <input type="text" class="form-control" id="start_time" name="start_time" required><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                <x-input name="start_time" title="Hora de Inicio" kind="time"></x-input>
             </div>
 
             <div class="col-md-6">
-                <label class="control-label required" for="date">Hora de finalización</label>
-                <input type="text" class="form-control" id="end_time" name="end_time" required><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                <x-input name="end_time" title="Hora de Finalización" kind="time"></x-input>
             </div>
 
         </div>
@@ -45,7 +42,7 @@
 
         <input hidden value="1" name="is_active" type="text">
 
-        {{-- <input hidden value="{{$user->id}}" name="user_id" type="text"> --}}
+        <input hidden value="{{$user->id}}" name="user_id" type="text">
         
         <br>
 
@@ -75,7 +72,7 @@
 
                             <div class="modal-footer">
 
-                                <a href="/users" class="btn btn-secondary mr-2">
+                                <a href="/forms" class="btn btn-secondary mr-2">
                                     <i class="fas fa-check"></i> Si
                                 </a>
 
