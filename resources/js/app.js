@@ -6,7 +6,6 @@
 
 require('./bootstrap');
 
-
 window.Vue = require('vue');
 
 
@@ -22,6 +21,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component("Forms", require("./components/FormRow.vue").default);
+Vue.component("Register", require("./components/Register.vue").default);
 
 
 /**
@@ -36,7 +36,7 @@ const app = new Vue({
 
 
 
-
+//Método para copiar enlace de form al clipboard
 window.copyLink = (id) => {
     var copyText = document.getElementById(`link${id}`);
 

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Form;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreFormRequest;
 use App\Http\Requests\UpdateFormRequest;
+use App\Http\Requests\AddUserToFormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class FormController extends Controller
 {
@@ -44,9 +47,29 @@ class FormController extends Controller
      */
     public function store(StoreFormRequest $request)
     {
-        // $request->user()->forms()->create($request->all());
         Form::create($request->all());
         return redirect('/forms')->with('status', 'Formulario creado con éxito');
+    }
+
+    public function addUserToForm(AddUserToFormRequest $request, Form $form){
+        
+        if($request->id == ""){
+           $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'position' => $request->position,
+            'password' => Hash::make("default"),
+            'role_id' => "3"
+           ]);
+        }
+        else{
+            $user = User::find($request->id);
+        }
+
+        $form->users()->attach($user);
+
+        return redirect('/forms/'.$request->page)->with('status', 'Ha sido registrado con éxito');
     }
 
     /**

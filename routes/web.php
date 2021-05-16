@@ -55,3 +55,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('forms/{form}', 'FormController@show');
+Route::get('users/getUser/{email}', 'UserController@getUser');
+Route::post('forms/addUserToForm/{form}', 'FormController@addUserToForm');

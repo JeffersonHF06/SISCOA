@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="icon" href="{{ asset('public/favicons/favicon.ico') }}">
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -21,7 +23,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/footer-form.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -29,7 +31,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
 
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="#">
                     <img class="navbar-brand"
                         src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/062010/unanacional_0.png?itok=EB58UD3N"
                         alt="Logo UNA">
@@ -45,33 +47,9 @@
             @yield('content')
         </main>
     </div>
+    
 </body>
-
-<footer id="footer">
-    <div id="copyright">
-        
-            <div class="row">
-             © 2021 Universidad Nacional de Costa Rica. Todos los derechos reservados.
-             </div>
-
-             <div class="row">
-                Desarrollado por Jefferson Hernández Flores.
-            </div>
-    </div>
-
-    <div id="contact">
-        <div class="row">
-            <p>Teléfono de contacto: 2277-3000</p> <br>
-        </div>
-
-        <div class="row">
-            <p>Redes Sociales:</p>
-            <div class="col">
-                <a  href="https://www.facebook.com/unacostarica/"><i class="fab fa-facebook"> Facebook</i></a>
-                <a  href="https://www.instagram.com/una.ac.cr/?hl=es-la"><i class="fab fa-instagram"> Instagram</i></a>
-                <a  href="https://twitter.com/comunidadUNACR?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i class="fab fa-twitter"> Twitter</i></a>
-            </div>
-        </div>
-    </div>
-</footer>
+<div class="d-flex flex-column" style="height: 100px; margin-top:3%;">
+    @yield('footer')
+</div>
 </html>

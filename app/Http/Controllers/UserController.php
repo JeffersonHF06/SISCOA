@@ -24,6 +24,11 @@ class UserController extends Controller
         ]);
     }
 
+    public function getUser(String $email){
+        
+        return User::where('email',$email)->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
