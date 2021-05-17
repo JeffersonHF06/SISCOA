@@ -35,7 +35,7 @@
 
             <a class="btn btn-secondary mr-2 mb-2" href="/forms/edit/{{ $form->id }}"><i class="fas fa-marker"></i> Editar</a>
 
-            <a class="btn btn-warning mr-2 mb-2" href="#"><i class="far fa-file-pdf"></i> PDF</a>
+            <a class="btn btn-warning mr-2 mb-2" href="/forms/pdf/{{ $form->id }}"><i class="far fa-file-pdf"></i> PDF</a>
     
             <form action="forms/{{$form->id}}" method="POST" id="delete{{$form->id}}-form">
                 @csrf

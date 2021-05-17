@@ -10,6 +10,8 @@ use App\Http\Requests\StoreFormRequest;
 use App\Http\Requests\UpdateFormRequest;
 use App\Http\Requests\AddUserToFormRequest;
 use Illuminate\Support\Facades\Hash;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 class FormController extends Controller
 {
@@ -96,6 +98,14 @@ class FormController extends Controller
             'users' => $form->users,
             'noUsers' => count($form->users)
         ];
+    }
+
+    public function PDF(Form $form){
+        $pdf = PDF::loadView('pdf.form',[
+            'form' => $form
+        ]);
+        // return $pdf->download('reference.pdf');
+        return $pdf->stream('Lista.pdf');
     }
 
     /**

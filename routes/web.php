@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
             Route::post('search', 'FormController@search');
             Route::get('/list/{form}', 'FormController@showList');
             Route::get('/getUsersForm/{form}', 'FormController@getUsersForm');
+            Route::get('/pdf/{form}', 'FormController@PDF');
         });
 
     });
