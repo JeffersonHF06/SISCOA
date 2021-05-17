@@ -117,6 +117,9 @@ export default {
   },
 
   methods: {
+    /**
+     * Método que obtiene los datos de un usuario si existe mediante su correo y carga estos datos en los inputs.
+     */
     async getUser() {
       return await axios
         .get(`/users/getUser/${this.email}`)

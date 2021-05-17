@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class UsersAuthorized
+class ActiveForm
 {
     /**
      * Handle an incoming request.
@@ -16,15 +15,10 @@ class UsersAuthorized
      */
     public function handle($request, Closure $next)
     {
-        $user = $request->user();
+        $form = $request->form;
         
-        if($user->role->name != 'admin' && $user->role->name != 'official'){
-            
-            if($user->role->name != 'official'){
-                Auth::logout();
-            }
-            
-            return abort(401);
+        if($form->is_active != 1){
+            return abort(403, 'Formulario Inactivo');
         }
       
         return $next($request);

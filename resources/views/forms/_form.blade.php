@@ -36,6 +36,16 @@
             <a class="btn btn-secondary mr-2 mb-2" href="/forms/edit/{{ $form->id }}"><i class="fas fa-marker"></i> Editar</a>
 
             <a class="btn btn-warning mr-2 mb-2" href="/forms/pdf/{{ $form->id }}"><i class="far fa-file-pdf"></i> PDF</a>
+
+
+            <form action="/forms/switchActive/{{ $form->id }}" method="POST" id="switchActive{{$form->id}}">
+
+              @csrf
+              @method('PUT')
+
+              <button type="submit" class="btn {{ $form->is_active == 1 ? 'btn-success' : 'btn-danger' }}"><i class="fas {{ $form->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}"> </i>{{ $form->is_active == 1 ? ' Activo' : ' Inactivo' }}</button>
+
+            </form>
     
             <form action="forms/{{$form->id}}" method="POST" id="delete{{$form->id}}-form">
                 @csrf

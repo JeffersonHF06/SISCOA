@@ -24,7 +24,7 @@
 
             <a class="btn btn-secondary mr-2 mb-2" href="/users/edit/{{ $user->id }}"><i class="fas fa-marker"></i> Editar</a>
     
-            <form action="users/{{$user->id}}" method="POST" id="delete-form">
+            <form action="users/{{$user->id}}" method="POST" id="delete{{ $user->id }}-form">
                 @csrf
                 @method('DELETE')
 

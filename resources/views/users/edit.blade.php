@@ -95,7 +95,7 @@
                             value="{{ old('role_id') ?? $user->role_id}}" name="role_id" id="role_id-input">
 
                             @foreach ($roles as $role)
-                                <option selected="{{$user->role_id}}" value="{{ $role->id }}">
+                                <option {{ $user->role_id == $role->id ? 'selected' : '' }} value="{{$role->id}}">
                                     {{ $role->label }}
                                 </option>
                             @endforeach

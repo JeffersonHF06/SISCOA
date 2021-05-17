@@ -16,9 +16,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 class FormController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Método que redirige a la vista index de formularios.
      */
     public function index()
     {
@@ -30,9 +28,7 @@ class FormController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Método que redirige a la vista create de formularios.
      */
     public function create()
     {
@@ -42,10 +38,11 @@ class FormController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Método que inserta un nuevo formulario en la Base de Datos, recibe los parámetros:
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Requests\StoreFormRequest $request el cual valida y a la vez contiene
+     * los datos del formulario por insertar.
+     * 
      */
     public function store(StoreFormRequest $request)
     {
@@ -57,9 +54,9 @@ class FormController extends Controller
      * Método para registrar un usuario en una lista de asistencia o Form.
      * Requiere 2 paŕametros: 
      * 
-     * @param \App\Http\Requests\AddUserToFormRequest el cual es el request que valida el objeto que llega 
-     * del Front-End y a la vez contiene los datos del usuario por registrar.
-     * @param \App\Models\Form el cual es el formulario por registrarse 
+     * @param \App\Http\Requests\AddUserToFormRequest $request el cual valida y a la vez contiene los datos 
+     * del usuario por registrar.
+     * @param \App\Models\Form $form el cual es el formulario al que el usuario quiere registararse.
      * 
      * Por último, nos redirige de nuevo a la página de registro o form con un mensaje de error o de éxito.
      */
@@ -91,7 +88,8 @@ class FormController extends Controller
     /**
      * Método que retorna los usuarios registrados en un form
      * recibe por parámetros: 
-     * @param App\Models\Form el cuál es el formulario del que queremos obtener los registros
+     * 
+     * @param App\Models\Form $form el cuál es el formulario del que queremos obtener los registros.
      */
     public function getUsersForm(Form $form){
         return [
@@ -100,19 +98,33 @@ class FormController extends Controller
         ];
     }
 
+    /**
+     * Método para crear un PDF a partir de un formulario, recibe por parámetros: 
+     * 
+     * @param App\Models\Form $form el cual es el formulario del que se generará el PDF.
+     */
     public function PDF(Form $form){
         $pdf = PDF::loadView('pdf.form',[
             'form' => $form
         ]);
-        // return $pdf->download('reference.pdf');
         return $pdf->stream('Lista.pdf');
     }
 
     /**
-     * Display the specified resource.
+     * Método que activa o desactiva el estado de un form, recibe por parámetros: 
+     * 
+     * @param \App\Models\Form $form formulario al que se le va a cambiar el estado.
+     */
+    public function switchActive(Form $form){
+        $form->update(['is_active' => !$form->is_active]);
+        return redirect('/forms')->with('status', 'Estado del formulario cambiado con éxito');
+    }
+
+    /**
+     * Método que redirige a la vista de registro de un formulario en específico. Requiere un parámetro:
      *
-     * @param  \App\Form  $form
-     * @return \Illuminate\Http\Response
+     * @param  \App\Form  $form formulario específico.
+     *
      */
     public function show(Form $form)
     {
@@ -121,6 +133,12 @@ class FormController extends Controller
         ]);
     }
 
+    /**
+     * Método que redirige a la vista list, la cual muestra la lista de usuarios registrados en un formulario
+     * en específico. Requiere un parámetro: 
+     * 
+     * @param \App\Models\Form $form el cual es el formulario del que se mostrará la lista de registrados.
+     */
     public function showList(Form $form)
     {
         return view('forms.list',[
@@ -128,6 +146,10 @@ class FormController extends Controller
         ]);
     }
 
+    /**
+     * Método que busca en la base de datos un formulario que posea un motivo o fecha similares a los enviados
+     * por el usuario.
+     */
     public function search()
     {
         $search = request()->validate([
@@ -146,10 +168,10 @@ class FormController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * Método que redirige a la vista edit de un formulario en específico. Requiere un parámetro:
      *
-     * @param  \App\Form  $form
-     * @return \Illuminate\Http\Response
+     * @param  \App\Form  $form formulario a editar.
+     * 
      */
     public function edit(Form $form)
     {
@@ -160,11 +182,12 @@ class FormController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Método que edita o actualiza los datos de un formulario específico. Requiere dos parámetros:
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Form  $form
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Requests\UpdateFormRequest  $request el cual valida y contiene los datos nuevos 
+     * del formulario.
+     * @param  \App\Form  $form el cual es el formulario a actualizar.
+     * 
      */
     public function update(UpdateFormRequest $request, Form $form)
     {
@@ -173,10 +196,10 @@ class FormController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Método que elimina un formulario en específico. Requiere un parámetro:
      *
-     * @param  \App\Form  $form
-     * @return \Illuminate\Http\Response
+     * @param  \App\Form  $form formulario por eliminar.
+     * 
      */
     public function destroy(Form $form)
     {

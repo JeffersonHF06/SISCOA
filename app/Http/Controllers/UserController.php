@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Form;
 use App\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +14,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Método que redirige a la página index de usuarios.
      */
     public function index()
     {
@@ -24,15 +23,18 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Método que retorna el usuario que contenga un email específico. Requiere un parámetro:
+     * 
+     * @param String $email el cual es el email específico por el cual buscar al usuario.
+     */
     public function getUser(String $email){
         
         return User::where('email',$email)->get();
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Método que redirige a la vista create de usuarios.
      */
     public function create()
     {
@@ -43,10 +45,10 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Método que inserta un nuevo usuario en la base de datos. Requiere un parámetro:
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Requests\StoreUserRequest  $request el cual valida y contiene los datos del nuevo 
+     * usuario.
      */
     public function store(StoreUserRequest $request)
     {
@@ -57,21 +59,9 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Método que redirige a la vista edit de usuarios, requiere un parámetro:
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \App\User $user el cual es el usuario por editar.
      */
     public function edit(User $user)
     {
@@ -82,11 +72,11 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Método que actualiza los datos de un usuario. Requiere dos parámetros:
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Requests\UpdateUSerRequest  $request el cual valida y contiene los datos por actualizar
+     * del usuario,
+     * @param  \App\User $user el cual es el usuario por actualizar.
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -101,6 +91,10 @@ class UserController extends Controller
         return redirect('/users')->with('status', 'Usuario editado con éxito');
     }
 
+    /**
+     * Método que busca en la base de datos un usuario que posea un nombre o email similares a los enviados
+     * por el usuario.
+     */
     public function search()
     {
         $search = request()->validate([
@@ -118,13 +112,16 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Método que elimina un usuario en específico. Requiere un paraámetro:
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\User $user el cual es el usuario por eliminar.
      */
     public function destroy(User $user)
     {
+       
+        if($user->forms->isNotEmpty()){
+            return redirect('/users')->with('error', 'No puede eliminar el usuario ya que se encuentra registrado en un formulario o es dueño de alguno.');
+        }
         $user->delete();
         return redirect('/users')->with('status', 'Usuario eliminado con éxito');
     }

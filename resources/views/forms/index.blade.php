@@ -3,7 +3,6 @@
 @section('title', 'UNA')
 
 @section('content_header')
-
 <h1>Formularios</h1>
 @stop
 
@@ -74,6 +73,7 @@
     </div>
     
 </div>
+
 @stop
 
 @section('footer')
@@ -88,12 +88,8 @@
 
 @endsection
 
-@section('css')
-{{-- <link rel="stylesheet" href="{{ asset('css/footer-form.css') }}"> --}}
-@stop
 
 @section('js')
-{{-- <script src="{{ asset('js/forms/forms.js') }}"></script> --}}
 <script src="{{ asset('js/app.js') }}"></script>
 @endsection
 

@@ -15,12 +15,7 @@
             <div class="col">
 
                 <div class="form-group">
-                    <label class="control-label required" for="name-input">Nombre Completo</label>
-                    <input name="name" id="name-input" type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('name') }}"></input>
-
-                    @error('name')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
+                    <x-input name="name" title="Nombre Completo"></x-input>
                 </div>
 
             </div>
@@ -31,13 +26,7 @@
             <div class="col">
 
                 <div class="form-group">
-                    <label class="control-label required" for="email-input">Email</label>
-                    <input id="email-input" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="text" value="{{ old('email') }}"></input>
-
-                    @error('email')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
-
+                    <x-input name="email" title="Correo electrónico" kind="email"></x-input>
                 </div>
 
             </div>
@@ -47,13 +36,7 @@
             <div class="col-4">
 
                 <div class="form-group">
-                    <label class="control-label  required" for="phone-input">Teléfono</label>
-                    <input id="phone-input" name="phone" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="" type="text"></input>
-
-                    @error('phone')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
-
+                    <x-input name="phone" title="Teléfono"></x-input>
                 </div>
 
             </div>
@@ -61,13 +44,7 @@
             <div class="col-4">
 
                 <div class="form-group">
-                    <label class="control-label  required" for="position-input">Puesto</label>
-                    <input id="position-input" name="position" class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}" placeholder="" type="text"></input>
-
-                    @error('position')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
-
+                    <x-input name="position" title="Puesto"></x-input>
                 </div>
 
             </div>

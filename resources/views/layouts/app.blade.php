@@ -5,8 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" href="{{ asset('public/favicons/favicon.ico') }}">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -24,6 +22,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/footer-form.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ asset('/favicons/favicon.ico') }}" type="image/x-icon"/>
 </head>
 
 <body>

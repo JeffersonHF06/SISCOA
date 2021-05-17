@@ -89,6 +89,9 @@ export default {
   },
 
   methods: {
+    /**
+     * Método que refresca el array de usuarios registrados en el form.
+     */
     async refresh() {
        let data = await axios.get(`/forms/getUsersForm/${this.form.id}`)
         .then(({ data }) => data)
@@ -102,6 +105,9 @@ export default {
   },
 
   computed: {
+      /**
+       * Computed que filtra los usuarios que se muestran en la tabla por su nombre.
+       */
       filteredUsers: function(){
           return this.users.filter((user) => {
               return user.name.toLowerCase().match(this.searchCriterion.toLowerCase())

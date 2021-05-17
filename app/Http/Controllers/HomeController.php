@@ -7,9 +7,8 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Constructor del controller en el cual se agrega el middleware auth
      *
-     * @return void
      */
     public function __construct()
     {
@@ -17,9 +16,8 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Método que redirige a la página principal o Home
      *
-     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {

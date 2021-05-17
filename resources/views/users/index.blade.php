@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+
 <div class="container text-style">
 
     @include('partials._status')
@@ -78,10 +79,5 @@
 
 @endsection
 
-@section('css')
-<link rel="stylesheet" href="{{ asset('css/main.css') }}">
-@stop
 
-@section('js')
-<script src="{{ asset('js/users/index.js') }}"></script>
-@stop
+

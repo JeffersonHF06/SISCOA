@@ -15,20 +15,23 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+//Rutas públicas para iniciar sesión o cerrar sesión
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-
+//Middleware que verifica si hay una sesión activa
 Route::middleware('auth')->group(function () {
+    //Middleware que verifica si el usuario en sesión posee el rol de admin o de official
     Route::middleware('roles')->group(function (){
         
         //Rutas home page
         Route::get('/', 'HomeController@index')->name('home');
         Route::get('/home', 'HomeController@index')->name('home');
 
-        //Rutas crud users
+        //Middleware que verifica si un usuario posee el rol de admin
         Route::middleware('can:admin')->group(function (){
+            //Rutas crud users
             Route::prefix('users')->group(function () {
                 Route::get('', 'UserController@index');
                 Route::get('/edit/{user}', 'UserController@edit');
@@ -52,12 +55,19 @@ Route::middleware('auth')->group(function () {
             Route::get('/list/{form}', 'FormController@showList');
             Route::get('/getUsersForm/{form}', 'FormController@getUsersForm');
             Route::get('/pdf/{form}', 'FormController@PDF');
+            Route::put('/switchActive/{form}', 'FormController@switchActive');
         });
 
     });
 });
 
-//Rutas públicas para registro de asistencia
-Route::get('forms/{form}', 'FormController@show');
+//Middleware que verifica si el formulario está activo
+Route::middleware('ActiveForm')->group(function (){
+    //Rutas públicas para registro de asistencia
+    Route::get('forms/{form}', 'FormController@show');
+    Route::post('forms/addUserToForm/{form}', 'FormController@addUserToForm');  
+});
+
+//Ruta para adquirir los datos de un usuario por medio del email
 Route::get('users/getUser/{email}', 'UserController@getUser');
-Route::post('forms/addUserToForm/{form}', 'FormController@addUserToForm');
+
