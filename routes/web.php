@@ -49,11 +49,14 @@ Route::middleware('auth')->group(function () {
             Route::put('/{form}', 'FormController@update');
             Route::delete('{form}','FormController@destroy');
             Route::post('search', 'FormController@search');
+            Route::get('/list/{form}', 'FormController@showList');
+            Route::get('/getUsersForm/{form}', 'FormController@getUsersForm');
         });
 
     });
 });
 
+//Rutas públicas para registro de asistencia
 Route::get('forms/{form}', 'FormController@show');
 Route::get('users/getUser/{email}', 'UserController@getUser');
 Route::post('forms/addUserToForm/{form}', 'FormController@addUserToForm');

@@ -51,6 +51,16 @@ class FormController extends Controller
         return redirect('/forms')->with('status', 'Formulario creado con éxito');
     }
 
+    /**
+     * Método para registrar un usuario en una lista de asistencia o Form.
+     * Requiere 2 paŕametros: 
+     * 
+     * @param \App\Http\Requests\AddUserToFormRequest el cual es el request que valida el objeto que llega 
+     * del Front-End y a la vez contiene los datos del usuario por registrar.
+     * @param \App\Models\Form el cual es el formulario por registrarse 
+     * 
+     * Por último, nos redirige de nuevo a la página de registro o form con un mensaje de error o de éxito.
+     */
     public function addUserToForm(AddUserToFormRequest $request, Form $form){
         
         if($request->id == ""){
@@ -65,11 +75,27 @@ class FormController extends Controller
         }
         else{
             $user = User::find($request->id);
+
+            if($form->users()->firstWhere('user_id', '=', $user->id)){
+                return redirect('/forms/'.$request->page)->with('error', 'El usuario ingresado ya se encuentra registrado');
+            }
         }
 
         $form->users()->attach($user);
 
         return redirect('/forms/'.$request->page)->with('status', 'Ha sido registrado con éxito');
+    }
+
+    /**
+     * Método que retorna los usuarios registrados en un form
+     * recibe por parámetros: 
+     * @param App\Models\Form el cuál es el formulario del que queremos obtener los registros
+     */
+    public function getUsersForm(Form $form){
+        return [
+            'users' => $form->users,
+            'noUsers' => count($form->users)
+        ];
     }
 
     /**
@@ -81,6 +107,13 @@ class FormController extends Controller
     public function show(Form $form)
     {
         return view('forms.show',[
+            'form' => $form
+        ]);
+    }
+
+    public function showList(Form $form)
+    {
+        return view('forms.list',[
             'form' => $form
         ]);
     }

@@ -37,7 +37,7 @@
 
             <a class="btn btn-warning mr-2 mb-2" href="#"><i class="far fa-file-pdf"></i> PDF</a>
     
-            <form action="forms/{{$form->id}}" method="POST" id="delete-form">
+            <form action="forms/{{$form->id}}" method="POST" id="delete{{$form->id}}-form">
                 @csrf
                 @method('DELETE')
 
@@ -46,11 +46,11 @@
                     <i class="far fa-trash-alt"></i> Eliminar
                 </button>
 
-                <div class="modal fade" id="deleteModal{{$form->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal fade" id="deleteModal{{$form->id}}" tabindex="-1" aria-labelledby="deleteModal{{$form->id}}Label" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="deleteModalLabel">Confirmación</h5>
+                          <h5 class="modal-title" id="deleteModal{{$form->id}}Label">Confirmación</h5>
                         </div>
                         <div class="modal-body">
                             ¿Desea eliminar el formulario {{$form->title}}?
@@ -78,41 +78,41 @@
                       <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-                                <x-input name="title" title="Motivo" value="{{$form->title}}" disabled="disabled"></x-input>
+                                <x-input name="title{{$form->id}}" title="Motivo" value="{{$form->title}}" disabled="disabled"></x-input>
                             </div>
                         </div>
                 
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                               <x-input name="date" title="Fecha de la actividad" value="{{$form->date->isoFormat('LL')}}" disabled="disabled"></x-input>
+                               <x-input name="date{{$form->id}}" title="Fecha de la actividad" value="{{$form->date->isoFormat('LL')}}" disabled="disabled"></x-input>
                             </div>
                         </div>
                 
                         <div class="row">
                             <div class="col-md-6">
-                                <x-input name="start_time" title="Hora de Inicio" value="{{$form->start_time->format('g:i A')}}" disabled="disabled"></x-input>
+                                <x-input name="start_time{{$form->id}}" title="Hora de Inicio" value="{{$form->start_time->format('g:i A')}}" disabled="disabled"></x-input>
                             </div>
                 
                             <div class="col-md-6">
-                                <x-input name="end_time" title="Hora de Finalización" value="{{$form->end_time->format('g:i A')}}" disabled="disabled"></x-input>
+                                <x-input name="end_time{{$form->id}}" title="Hora de Finalización" value="{{$form->end_time->format('g:i A')}}" disabled="disabled"></x-input>
                             </div>
                 
                         </div>
                 
                         <div class="row">
                             <div class="col-md-12">
-                                <x-textarea name="description" title="Descripción" value="{{$form->description}}" disabled="disabled"></x-textarea>
+                                <x-textarea name="description{{$form->id}}" title="Descripción" value="{{$form->description}}" disabled="disabled"></x-textarea>
                             </div>
                         </div>
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <a class="btn btn-primary" href="#"><i class="fas fa-list"></i> Ver lista</a>
+                      <a class="btn btn-primary mr-2 mb-2" href="/forms/list/{{$form->id}}"><i class="fas fa-list"></i> Lista de Registro</a>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                   </div>
                 </div>
-              </div>
+            </div>
 
         </div>
     </td>

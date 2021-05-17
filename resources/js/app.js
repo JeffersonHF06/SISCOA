@@ -9,6 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -19,9 +20,10 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component("Forms", require("./components/FormRow.vue").default);
 Vue.component("Register", require("./components/Register.vue").default);
+Vue.component("List", require("./components/List.vue").default);
+
+
 
 
 /**
