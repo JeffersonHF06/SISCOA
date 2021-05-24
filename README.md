@@ -29,6 +29,7 @@ SISCOA fue diseñado para la Universidad Nacional de Costa Rica como parte de un
     • Laravel 7
     • Vue js
     • DomPDF
+    • AdminLTE
 ## Autor
 Jefferson Hernández Flores.
 
