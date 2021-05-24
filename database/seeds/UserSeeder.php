@@ -16,25 +16,24 @@ class UserSeeder extends Seeder
     public function run()
     {
 
-        factory('App\User', 20)->create();
 
         User::create([
-            'name' => 'Cristopher Montero Jiménez',
-            'email' => 'cmj@una.ac.cr',
+            'name' => 'Administrador',
+            'email' => 'admin@gmail.com',
             'phone' => 78876765,
             'position' => 'Administrador',
-            'password' => Hash::make('admin'),
+            'password' => Hash::make('Admin1234'),
             'role_id' => '1',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
 
         User::create([
-            'name' => 'Adrián Ramírez Fernández',
-            'email' => 'arf@una.ac.cr',
+            'name' => 'Carlos Villegas Fernández',
+            'email' => 'cvf@gmail.com',
             'phone' => 89987867,
             'position' => 'Profesor',
-            'password' => Hash::make('admin'),
+            'password' => Hash::make('Professor1234'),
             'role_id' => '2',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
@@ -42,10 +41,10 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Mariana Castro Gutierrez',
-            'email' => 'mcg@una.ac.cr',
+            'email' => 'mcg@gmail.com',
             'phone' => 89987867,
             'position' => 'Oyente',
-            'password' => Hash::make('admin'),
+            'password' => Hash::make('Listener1234'),
             'role_id' => '3',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
