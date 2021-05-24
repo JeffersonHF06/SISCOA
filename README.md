@@ -2,7 +2,7 @@
 
 # Sistema de Control de Asistencia (SISCOA).
 
-SISCOA fue diseñado para la Universidad Nacional de Costa Rica como parte de una beca universitaria. Sin embargo es de código abierto. SISCOA permite a los usuarios crear formularios que gestionan la asistencia a actividades o reuniones. Las personas pueden acceder a estos formularios para registrarse por medio de un enlace que genera el sistema, además, cuenta con un pequeño sistema de roles para controlar las acciones que pueden realizar los usuarios dentro del programa, así como botones de acciones los cuales permiten observar las personas que se han registrado en el formulario, crear un PDF basado en un formulario, entre otras.
+SISCOA fue diseñado para la Universidad Nacional de Costa Rica como parte de una beca universitaria con el beneficio de poder compartir su código. SISCOA permite a los usuarios crear formularios que gestionan la asistencia a reuniones o actividades. Las personas pueden acceder a estos formularios para registrarse por medio de un enlace que genera el sistema, además, cuenta con un pequeño sistema de roles para controlar las acciones que pueden realizar los usuarios dentro del programa, así como botones de acciones los cuales permiten observar las personas que se han registrado en el formulario, crear un PDF basado en un formulario, entre otras.
 
 ## Pre-requisitos e instalación.
 
