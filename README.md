@@ -24,6 +24,8 @@ SISCOA fue diseñado para la Universidad Nacional de Costa Rica como parte de un
 3. Crear una base de datos y configurar en el archivo .env los parámetros necesarios como el nombre de la base de datos, usuario y contraseña.
 4. Realizar migraciones ejecutando el comando:
     - php artisan migrate --seed
+5. Ejecutar el servidor local con el comando:
+    - php artisan serve
 ```
 ## SISCOA fue desarrollado con las siguientes tecnologías: 
     • Laravel 7
