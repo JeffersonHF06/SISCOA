@@ -27,6 +27,17 @@ SISCOA fue diseñado para la Universidad Nacional de Costa Rica como parte de un
 5. Ejecutar el servidor local con el comando:
     - php artisan serve
 ```
+## Usuarios
+SISCOA nace con 3 usuarios con roles distintos:
+    
+    Email                   Password                Rol
+    admin@gmail.com         Admin1234               Administrador
+    cvf@gmail.com           Professor1234           Funcionario
+    mcg@gmail.com           Listener1234            Oyente
+    
+ Solamente pueden iniciar sesión en el sistema los usuarios con rol de administrador o de funcionario, el oyente solamente tiene derecho a registrar asistencia mediante un enlace de formulario.
+
+
 ## SISCOA fue desarrollado con las siguientes tecnologías: 
     • Laravel 7
     • Vue js
