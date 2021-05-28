@@ -13,7 +13,9 @@
     </td>  
     
     <td id="table-body-text">
-        <input hidden type="text" id="link{{$form->id}}" value="{{asset('forms')}}/{{$form->id}}" />
+      <input style="opacity: .01; height:0;
+      position:absolute;
+      z-index: -1;" type="text" id="link{{$form->id}}" value="{{asset('forms')}}/{{$form->id}}" />
         <button
                 type="button"
                 id="linkBtn"

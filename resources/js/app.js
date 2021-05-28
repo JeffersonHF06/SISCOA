@@ -40,9 +40,11 @@ const app = new Vue({
 
 //Método para copiar enlace de form al clipboard
 window.copyLink = (id) => {
-    var copyText = document.getElementById(`link${id}`);
+    var copyText = document.getElementById("link"+id);
 
-    navigator.clipboard.writeText(copyText.value);
+    copyText.select()
+    document.execCommand("copy");
+
 
     $('#copiedToast').toast('show')
 };

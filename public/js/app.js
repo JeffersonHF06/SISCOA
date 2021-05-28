@@ -2079,6 +2079,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    /**
+     * Método que refresca el array de usuarios registrados en el form.
+     */
     refresh: function refresh() {
       var _this2 = this;
 
@@ -2111,6 +2114,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   computed: {
+    /**
+     * Computed que filtra los usuarios que se muestran en la tabla por su nombre.
+     */
     filteredUsers: function filteredUsers() {
       var _this3 = this;
 
@@ -2256,6 +2262,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    /**
+     * Método que obtiene los datos de un usuario si existe mediante su correo y carga estos datos en los inputs.
+     */
     getUser: function getUser() {
       var _this = this;
 
@@ -51299,8 +51308,9 @@ var app = new Vue({
 }); //Método para copiar enlace de form al clipboard
 
 window.copyLink = function (id) {
-  var copyText = document.getElementById("link".concat(id));
-  navigator.clipboard.writeText(copyText.value);
+  var copyText = document.getElementById("link" + id);
+  copyText.select();
+  document.execCommand("copy");
   $('#copiedToast').toast('show');
 };
 
@@ -51507,8 +51517,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/jefferson/JeffersonHF1/UNA/Desarrollos/una_asistencia/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /media/jefferson/JeffersonHF1/UNA/Desarrollos/una_asistencia/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/jefferson/Escritorio/SISCOA/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/jefferson/Escritorio/SISCOA/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
