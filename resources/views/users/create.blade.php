@@ -57,7 +57,7 @@
                             value="{{ old('role_id')}}" name="role_id" id="role_id-input">
                             <option selected value="" disabled>Seleccione un rol para el usuario</option>
                             @foreach ($roles as $role)
-                                <option value="{{ $role->id }}">
+                                <option {{ old('role_id') == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
                                     {{ $role->label }}
                                 </option>
                             @endforeach
@@ -76,28 +76,14 @@
             <div class="col">
 
                 <div class="form-group">
-
-                    <label class="control-label required" for="password-input">Contraseña</label>
-
-                    <input id="password-input" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password"></input>
-
-                    @error('password')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
-
+                    <x-input name="password" title="Contraseña" kind="password"></x-input>
                 </div>
 
             </div>
             <div class="col">
 
                 <div class="form-group">
-                    <label class="control-label  required" for="confirm-password-input">Confirmar Contraseña</label>
-                    <input type="password" id="confirm-password-input" name="password_confirmation" class="form-control {{ $errors->has('confirm-password') ? 'is-invalid' : '' }}" type="text"></input>
-
-                    @error('password_confirmation')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
-
+                    <x-input name="password_confirmation" title="Confirmar Contraseña" kind="password"></x-input>
                 </div>
 
             </div>

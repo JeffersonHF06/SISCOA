@@ -23,6 +23,17 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
+        if($this->password != ""){
+            return [
+                'name' => 'required|string',
+                'email' => 'required|email',
+                'phone' => 'required|integer',
+                'position' => 'required|string',
+                'role_id' => 'required',
+                'password' => 'required|confirmed',
+            ];
+        }
+
         return [
             'name' => 'required|string',
             'email' => 'required|email',

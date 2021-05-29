@@ -85,7 +85,13 @@ class UserController extends Controller
             return redirect()->back()->withErrors(['email' => 'El correo electrónico ya ha sido registrado.']);
         }
 
-        $request->merge(['password' => Hash::make($request->password)]);
+        if($request->password != ""){
+            $request->merge(['password' => Hash::make($request->password)]);
+        }
+        else{
+            $request->merge(['password' => $user->password]);
+        }
+        
         $user->update($request->all());
         $user->refresh();
         return redirect('/users')->with('status', 'Usuario editado con éxito');

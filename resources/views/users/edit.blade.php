@@ -12,47 +12,22 @@
         @csrf
         @method('PUT')
 
-        <div class="row">
-            <div class="col">
-            </div>
-           
-            <div class="col-4">
-                <div class="form-group">
-                    <button id="change-password-btn" type="button" class="btn btn-info mr-2 btn-block" data-toggle="modal" data-target="#change-password">
-                        <i class="fas fa-lock"></i> Cambiar Contraseña
-                    </button>
-                </div>
-            </div>
-            
-
-        </div>
-
         <div class="form-row">
             <div class="col">
 
                 <div class="form-group">
-                    <label class="control-label required" for="name-input">Nombre Completo</label>
-                    <input name="name" id="name-input" type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="" value="{{ $user->name }}"></input>
-
-                    @error('name')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
+                    <x-input name="name" title="Nombre Completo" value="{{$user->name}}"></x-input>
                 </div>
 
             </div>
+
         </div>
 
         <div class="row">
             <div class="col">
 
                 <div class="form-group">
-                    <label class="control-label  required" for="email-input">Email</label>
-                    <input id="email-input" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="" type="text" value="{{ $user->email }}"></input>
-
-                    @error('email')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
-
+                    <x-input name="email" title="Correo electrónico" value="{{$user->email}}" kind="email"></x-input>
                 </div>
 
             </div>
@@ -62,13 +37,7 @@
             <div class="col-4">
 
                 <div class="form-group">
-                    <label class="control-label  required" for="phone-input">Teléfono</label>
-                    <input id="phone-input" name="phone" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="" type="text" value="{{ $user->phone }}"></input>
-
-                    @error('phone')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
-
+                    <x-input name="phone" title="Teléfono" value="{{$user->phone}}"></x-input>
                 </div>
 
             </div>
@@ -76,13 +45,7 @@
             <div class="col-4">
 
                 <div class="form-group">
-                    <label class="control-label  required" for="position-input">Puesto</label>
-                    <input id="position-input" name="position" class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}" placeholder="" type="text" value="{{ $user->position }}"></input>
-
-                    @error('position')
-                    <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                    @enderror
-
+                    <x-input name="position" title="Puesto" value="{{$user->position}}"></x-input>
                 </div>
 
             </div>
@@ -106,6 +69,23 @@
                         @enderror
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+
+                <div class="form-group">
+                    <x-input name="password" title="Contraseña" kind="password"></x-input>
+                </div>
+
+            </div>
+            <div class="col">
+
+                <div class="form-group">
+                    <x-input name="password_confirmation" title="Confirmar Contraseña" kind="password"></x-input>
+                </div>
+
             </div>
         </div>
 
@@ -172,11 +152,5 @@
 
 @section('js')
 <script src="{{ asset('js/users/edit.js') }}"></script>
-
-@error('password')
-<script>
-    document.querySelector('#change-password-btn').click();
-</script>
-@enderror
 
 @stop
