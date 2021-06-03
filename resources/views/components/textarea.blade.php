@@ -1,11 +1,14 @@
+@props(['name'])
+
+@php
+$classes = $errors->has($name) ? 'is-invalid' : '';
+@endphp
+
 <div>
-    @props(['name', 'title', 'value' => '', 'disabled' => ''])
+    <textarea name="{{ $name }}"
+        {{ $attributes->merge(['class' => "form-control {$classes}"]) }}>{{ $slot }}</textarea>
 
-    <label class="control-label required" for="{{$name}}-input">{{$title}}</label>
-
-    <textarea {{$disabled}} id="{{$name}}-input" name="{{$name}}" cols="30" rows="5" class="form-control {{ $errors->has($name) ? 'is-invalid' : '' }}">{{ old($name) ?? $value }}</textarea>
-
-    @if($errors->has($name))
-        <div id="error" class="invalid-feedback">{{ ucfirst($errors->first($name)) }}</div>
-    @endif
+    @error($name)
+        <span class="invalid-feedback"> {{ ucfirst($message) }} </span>
+    @enderror
 </div>

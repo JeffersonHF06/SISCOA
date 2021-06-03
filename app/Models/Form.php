@@ -2,14 +2,21 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\User;
 
 class Form extends Model
 {
-    protected $fillable = ['title', 'description', 'date', 'start_time', 'end_time', 'is_active', 'user_id'];
+    protected $fillable = [
+        'title',
+        'description',
+        'date',
+        'start_time',
+        'end_time',
+        'is_active',
+        'user_id'
+    ];
 
     protected $casts = ['date' => 'datetime'];
 
@@ -31,12 +38,13 @@ class Form extends Model
         return Carbon::parse($end_time);
     }
 
-    public function owner(){
+    public function owner()
+    {
         return $this->hasOne(User::class, 'user_id');
     }
 
-    public function users(){
+    public function users()
+    {
         return $this->belongsToMany(User::class);
     }
-    
 }

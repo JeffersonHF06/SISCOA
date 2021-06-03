@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users.index',[
+        return view('users.index', [
             'users' => User::paginate(8)
         ]);
     }
@@ -28,9 +28,10 @@ class UserController extends Controller
      * 
      * @param String $email el cual es el email específico por el cual buscar al usuario.
      */
-    public function getUser(String $email){
-        
-        return User::where('email',$email)->get();
+    public function getUser(String $email)
+    {
+
+        return User::where('email', $email)->get();
     }
 
     /**
@@ -38,7 +39,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create',[
+        return view('users.create', [
             'user' => Auth::user(),
             'roles' => Role::all()
         ]);
@@ -85,13 +86,12 @@ class UserController extends Controller
             return redirect()->back()->withErrors(['email' => 'El correo electrónico ya ha sido registrado.']);
         }
 
-        if($request->password != ""){
+        if ($request->password != "") {
             $request->merge(['password' => Hash::make($request->password)]);
-        }
-        else{
+        } else {
             $request->merge(['password' => $user->password]);
         }
-        
+
         $user->update($request->all());
         $user->refresh();
         return redirect('/users')->with('status', 'Usuario editado con éxito');
@@ -107,13 +107,11 @@ class UserController extends Controller
             'search' => 'required'
         ]);
 
-        $searchByName = User::where('name', 'like', $search['search'] . '%')->get();
-        $searchByEmail = User::where('email', 'like', $search['search'] . '%')->get();
-
-        $result = $searchByName->merge($searchByEmail);
+        $users = User::where('name', 'like', '%' . $search['search'] . '%')
+            ->orWhere('email', 'like', '%' . $search['search'] . '%')->get();
 
         return view('users.search', [
-            'users' => $result
+            'users' => $users
         ]);
     }
 
@@ -124,8 +122,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-       
-        if($user->forms->isNotEmpty()){
+
+        if ($user->forms->isNotEmpty()) {
             return redirect('/users')->with('error', 'No puede eliminar el usuario ya que se encuentra registrado en un formulario o es dueño de alguno.');
         }
         $user->delete();

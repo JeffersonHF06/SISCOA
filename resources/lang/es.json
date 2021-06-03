@@ -706,5 +706,16 @@
     "Your registered VAT Number is :vatNumber.": "Su número VAT registrado es :vatNumber.",
     "Zambia": "Zambia",
     "Zimbabwe": "Zimbabwe",
-    "Zip \/ Postal Code": "Zip \/ Código postal"
+    "Zip \/ Postal Code": "Zip \/ Código postal",
+
+    "Phone": "Teléfono",
+    "Position": "Puesto",
+    "Password confirmation": "Confirmación de contraseña",
+    "Are you sure you want to cancel?": "¿Seguro que desea cancelar?",
+    "Are you sure you want to delete the user :user?": "¿Seguro de eliminar el usuario :user?",
+    "Title": "Motivo",
+    "Activity date": "Fecha de la actividad",
+    "Start hour": "Hora de inicio",
+    "End hour": "Hora de finalización",
+    "Description": "Descripción"
 }

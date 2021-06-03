@@ -20,7 +20,7 @@ class CreateFormsTable extends Migration
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(true);
             $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
