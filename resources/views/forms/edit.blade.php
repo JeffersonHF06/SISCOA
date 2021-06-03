@@ -1,11 +1,9 @@
-@extends('adminlte::page')
+<x-layout>
+    <x-slot name="header">
+        <h1>{{ __('Edit Form') }}</h1>
+    </x-slot>
 
-@section('content_header')
-    <h1>Editar Formulario</h1>
-@stop
-
-@section('content')
-    <div class="container text-style">
+    <div class="container">
         <x-form method="PUT" action="{{ route('forms.update', $form->id) }}">
             <div class="form-row">
                 <div class="form-group col">
@@ -24,15 +22,15 @@
 
             <div class="form-row">
                 <div class="form-group col">
-                    <label for="start_time">{{ __('Start hour') }}</label>
+                    <label for="start_time">{{ __('Start time') }}</label>
                     <x-input name="start_time" value="{{ old('start_time') ?? $form->start_time->format('H:i') }}"
                         type="time" id="start_time" />
                 </div>
 
                 <div class="form-group col">
-                    <label for="end_time">{{ __('End hour') }}</label>
-                    <x-input name="end_time" value="{{ old('end_time') ?? $form->end_time->format('H:i') }}" type="time"
-                        id="end_time" />
+                    <label for="end_time">{{ __('End time') }}</label>
+                    <x-input name="end_time" value="{{ old('end_time') ?? $form->end_time->format('H:i') }}"
+                        type="time" id="end_time" />
                 </div>
             </div>
 
@@ -76,16 +74,4 @@
             </x-modal>
         </x-form>
     </div>
-@endsection
-
-@section('footer')
-
-    <div class="row">
-        <strong> © 2021 Universidad Nacional de Costa Rica. Sistema de Control de Asistencia (SISCOA). </strong>
-    </div>
-
-    <div class="row">
-        <strong> Desarrollado por Jefferson Hernández Flores. </strong>
-    </div>
-
-@endsection
+</x-layout>

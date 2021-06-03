@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Form;
 use App\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +28,6 @@ class UserController extends Controller
      */
     public function getUser(String $email)
     {
-
         return User::where('email', $email)->get();
     }
 
@@ -54,9 +51,10 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $request->merge(['password' => Hash::make($request->password)]);
-        $user = User::create($request->all());
 
-        return redirect('/users')->with('status', 'Usuario creado con éxito');
+        User::create($request->all());
+
+        return redirect()->route('users.index')->with('status', __('The user was created successfully.'));
     }
 
     /**
@@ -93,8 +91,10 @@ class UserController extends Controller
         }
 
         $user->update($request->all());
+
         $user->refresh();
-        return redirect('/users')->with('status', 'Usuario editado con éxito');
+
+        return redirect()->route('users.index')->with('status', __('The user was edited successfully.'));
     }
 
     /**
@@ -122,11 +122,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-
         if ($user->forms->isNotEmpty()) {
             return redirect('/users')->with('error', 'No puede eliminar el usuario ya que se encuentra registrado en un formulario o es dueño de alguno.');
         }
+
         $user->delete();
-        return redirect('/users')->with('status', 'Usuario eliminado con éxito');
+
+        return redirect()->route('users.index')->with('status', __('The user was successfully removed.'));
     }
 }

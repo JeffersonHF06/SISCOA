@@ -1,11 +1,9 @@
-@extends('adminlte::page')
+<x-layout>
+    <x-slot name="header">
+        <h1>{{ __('Add User') }}</h1>
+    </x-slot>
 
-@section('content_header')
-    <h1>Agregar Usuario</h1>
-@stop
-
-@section('content')
-    <div class="container text-style">
+    <div class="container">
         <x-form method="POST" action="{{ route('users.store') }}">
             <div class="form-row">
                 <div class="form-group col-md">
@@ -33,7 +31,8 @@
                 <div class="form-group col-md">
                     <label for="role">{{ __('Role') }}</label>
                     <x-select name="role_id" id="role">
-                        <option {{ old('role_id') ? '' : 'selected' }} value="" disabled>{{ __('Select') }}</option>
+                        <option {{ old('role_id') ? '' : 'selected' }} value="" disabled>{{ __('Select') }}
+                        </option>
 
                         @foreach ($roles as $role)
                             <option {{ old('role_id') == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
@@ -87,14 +86,4 @@
             </x-modal>
         </x-form>
     </div>
-@endsection
-
-@section('footer')
-    <div class="row">
-        <strong> © 2021 Universidad Nacional de Costa Rica. Sistema de Control de Asistencia (SISCOA). </strong>
-    </div>
-
-    <div class="row">
-        <strong> Desarrollado por Jefferson Hernández Flores. </strong>
-    </div>
-@endsection
+</x-layout>

@@ -1,11 +1,9 @@
-@extends('adminlte::page')
+<x-layout>
+    <x-slot name="header">
+        <h1>{{ __('Add Form') }}</h1>
+    </x-slot>
 
-@section('content_header')
-    <h1>Crear Formulario</h1>
-@stop
-
-@section('content')
-    <div id="app" class="container text-style">
+    <div class="container">
         <x-form method="POST" action="{{ route('forms.store') }}">
             <div class="form-row">
                 <div class="form-group col">
@@ -23,12 +21,12 @@
 
             <div class="form-row">
                 <div class="form-group col">
-                    <label for="start_time">{{ __('Start hour') }}</label>
+                    <label for="start_time">{{ __('Start time') }}</label>
                     <x-input name="start_time" value="{{ old('start_time') }}" type="time" id="start_time" />
                 </div>
 
                 <div class="form-group col">
-                    <label for="end_time">{{ __('End hour') }}</label>
+                    <label for="end_time">{{ __('End time') }}</label>
                     <x-input name="end_time" value="{{ old('end_time') }}" type="time" id="end_time" />
                 </div>
             </div>
@@ -71,16 +69,4 @@
             </x-modal>
         </x-form>
     </div>
-@endsection
-
-@section('footer')
-
-    <div class="row">
-        <strong> © 2021 Universidad Nacional de Costa Rica. Sistema de Control de Asistencia (SISCOA). </strong>
-    </div>
-
-    <div class="row">
-        <strong> Desarrollado por Jefferson Hernández Flores. </strong>
-    </div>
-
-@endsection
+</x-layout>
