@@ -17,7 +17,7 @@
       z-index: -1;" type="text" id="link{{ $form->id }}" value="{{ asset('forms') }}/{{ $form->id }}" />
         <button type="button" id="linkBtn" data-toggle="tooltip" data-placement="top" title="Copiar"
             class="btn btn-dark mr-2 mb-2" onclick="copyLink({{ $form->id }})">
-            Copiar enlace
+            {{ __('Copy Link') }}
         </button>
     </td>
 
