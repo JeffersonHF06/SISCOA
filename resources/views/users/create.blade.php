@@ -1,156 +1,100 @@
 @extends('adminlte::page')
 
 @section('content_header')
-<h1>Agregar Usuario</h1>
+    <h1>Agregar Usuario</h1>
 @stop
 
 @section('content')
-<div class="container text-style">
-
-    <form action="/users" method="POST" id="store-user-form">
-
-        @csrf
-
-        <div class="form-row">
-            <div class="col">
-
-                <div class="form-group">
-                    <x-input name="name" title="Nombre Completo"></x-input>
+    <div class="container text-style">
+        <x-form method="POST" action="{{ route('users.store') }}">
+            <div class="form-row">
+                <div class="form-group col-md">
+                    <label for="name">{{ __('Full name') }}</label>
+                    <x-input name="name" value="{{ old('name') }}" id="name" />
                 </div>
 
+                <div class="form-group col-md">
+                    <label for="email">{{ __('Email') }}</label>
+                    <x-input name="email" value="{{ old('email') }}" type="email" id="email" />
+                </div>
             </div>
 
-        </div>
-
-        <div class="row">
-            <div class="col">
-
-                <div class="form-group">
-                    <x-input name="email" title="Correo electrónico" kind="email"></x-input>
+            <div class="form-row">
+                <div class="form-group col-md">
+                    <label for="phone">{{ __('Phone') }}</label>
+                    <x-input name="phone" value="{{ old('phone') }}" type="number" id="phone" />
                 </div>
 
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-4">
-
-                <div class="form-group">
-                    <x-input name="phone" title="Teléfono"></x-input>
+                <div class="form-group col-md">
+                    <label for="position">{{ __('Position') }}</label>
+                    <x-input name="position" value="{{ old('position') }}" id="position" />
                 </div>
 
+                <div class="form-group col-md">
+                    <label for="role">{{ __('Role') }}</label>
+                    <x-select name="role_id" id="role">
+                        <option {{ old('role_id') ? '' : 'selected' }} value="" disabled>{{ __('Select') }}</option>
+
+                        @foreach ($roles as $role)
+                            <option {{ old('role_id') == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
+                                {{ $role->label }}
+                            </option>
+                        @endforeach
+                    </x-select>
+                </div>
             </div>
 
-            <div class="col-4">
-
-                <div class="form-group">
-                    <x-input name="position" title="Puesto"></x-input>
+            <div class="form row">
+                <div class="form-group col-md">
+                    <label for="password">{{ __('Password') }}</label>
+                    <x-input name="password" type="password" />
                 </div>
 
-            </div>
-
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="role" class="col control-label required" id="role">Rol</label>
-                    <div class="col">
-                        <select class="form-control {{ $errors->has('role_id') ? 'is-invalid' : '' }}"
-                            value="{{ old('role_id')}}" name="role_id" id="role_id-input">
-                            <option selected value="" disabled>Seleccione un rol para el usuario</option>
-                            @foreach ($roles as $role)
-                                <option {{ old('role_id') == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
-                                    {{ $role->label }}
-                                </option>
-                            @endforeach
-                            
-                        </select>
-                        @error('role_id')
-                            <div id="error" class="invalid-feedback">{{ ucfirst($message) }}</div>
-                        @enderror
-                    </div>
+                <div class="form-group col-md">
+                    <label for="password_confirmation">{{ __('Password confirmation') }}</label>
+                    <x-input name="password_confirmation" type="password" />
                 </div>
-                
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
+            <div class="form-row">
+                <div class="form-group col d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger mr-2" data-toggle="modal" data-target="#cancel-modal">
+                        <i class="fas fa-times"></i> {{ __('Cancel') }}
+                    </button>
 
-                <div class="form-group">
-                    <x-input name="password" title="Contraseña" kind="password"></x-input>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> {{ __('Save') }}
+                    </button>
                 </div>
-
             </div>
-            <div class="col">
 
-                <div class="form-group">
-                    <x-input name="password_confirmation" title="Confirmar Contraseña" kind="password"></x-input>
-                </div>
+            <x-modal id="cancel-modal">
+                <x-slot name="title">{{ __('Confirm') }}</x-slot>
 
-            </div>
-        </div>
+                <x-slot name="body">{{ __('Are you sure you want to cancel?') }}</x-slot>
 
-        <div class="row mb-4">
-            <div class="col d-flex flex-row-reverse">
+                <x-slot name="success">
+                    <a href="{{ route('users.index') }}" class="btn btn-secondary mr-2">
+                        <i class="fas fa-check"></i> {{ __('Yes') }}
+                    </a>
+                </x-slot>
 
-                <button id="store-user-button" type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar </button>
-                <button type="button" class="btn btn-danger mr-2" data-toggle="modal" data-target="#exampleModal">
-                    <i class="fas fa-times"></i> Cancelar
-                </button>
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <div class="modal-body">
-                                ¿Seguro que desea cancelar?
-                            </div>
-
-                            <div class="modal-footer">
-
-                                <a href="/users" class="btn btn-secondary mr-2">
-                                    <i class="fas fa-check"></i> Si
-                                </a>
-
-                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i> No </button>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </form>
-
-</div>
-
-@stop
+                <x-slot name="close">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <i class="fas fa-times"></i> {{ __('No') }}
+                    </button>
+                </x-slot>
+            </x-modal>
+        </x-form>
+    </div>
+@endsection
 
 @section('footer')
-        
     <div class="row">
-      <strong> © 2021 Universidad Nacional de Costa Rica. Sistema de Control de Asistencia (SISCOA). </strong>
+        <strong> © 2021 Universidad Nacional de Costa Rica. Sistema de Control de Asistencia (SISCOA). </strong>
     </div>
 
     <div class="row">
-      <strong> Desarrollado por Jefferson Hernández Flores. </strong>
-   </div>
-
+        <strong> Desarrollado por Jefferson Hernández Flores. </strong>
+    </div>
 @endsection
-
-@section('css')
-<link rel="stylesheet" href="{{ asset('css/main.css') }}">
-@stop
-
-@section('js')
-<script src="{{ asset('js/users/create.js') }}"></script>
-@stop

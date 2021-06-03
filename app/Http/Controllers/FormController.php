@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Form;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreFormRequest;
 use App\Http\Requests\UpdateFormRequest;
 use App\Http\Requests\AddUserToFormRequest;
@@ -21,8 +20,8 @@ class FormController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $forms = Form::where('user_id',$user->id)->paginate(8);
-        return view('forms.index',[
+        $forms = Form::where('user_id', $user->id)->paginate(8);
+        return view('forms.index', [
             'forms' => $forms
         ]);
     }
@@ -46,7 +45,8 @@ class FormController extends Controller
      */
     public function store(StoreFormRequest $request)
     {
-        Form::create($request->all());
+        Form::create($request->all() + ['user_id' => $request->user()->id]);
+
         return redirect('/forms')->with('status', 'Formulario creado con éxito');
     }
 
@@ -60,29 +60,29 @@ class FormController extends Controller
      * 
      * Por último, nos redirige de nuevo a la página de registro o form con un mensaje de error o de éxito.
      */
-    public function addUserToForm(AddUserToFormRequest $request, Form $form){
-        
-        if($request->id == ""){
-           $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'position' => $request->position,
-            'password' => Hash::make("default"),
-            'role_id' => "3"
-           ]);
-        }
-        else{
+    public function addUserToForm(AddUserToFormRequest $request, Form $form)
+    {
+
+        if ($request->id == "") {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'position' => $request->position,
+                'password' => Hash::make("default"),
+                'role_id' => "3"
+            ]);
+        } else {
             $user = User::find($request->id);
 
-            if($form->users()->firstWhere('user_id', '=', $user->id)){
-                return redirect('/forms/'.$request->page)->with('error', 'El usuario ingresado ya se encuentra registrado');
+            if ($form->users()->firstWhere('user_id', '=', $user->id)) {
+                return redirect('/forms/' . $request->page)->with('error', 'El usuario ingresado ya se encuentra registrado');
             }
         }
 
         $form->users()->attach($user);
 
-        return redirect('/forms/'.$request->page)->with('status', 'Ha sido registrado con éxito');
+        return redirect('/forms/' . $request->page)->with('status', 'Ha sido registrado con éxito');
     }
 
     /**
@@ -91,7 +91,8 @@ class FormController extends Controller
      * 
      * @param App\Models\Form $form el cuál es el formulario del que queremos obtener los registros.
      */
-    public function getUsersForm(Form $form){
+    public function getUsersForm(Form $form)
+    {
         return [
             'users' => $form->users,
             'noUsers' => count($form->users)
@@ -103,8 +104,9 @@ class FormController extends Controller
      * 
      * @param App\Models\Form $form el cual es el formulario del que se generará el PDF.
      */
-    public function PDF(Form $form){
-        $pdf = PDF::loadView('pdf.form',[
+    public function PDF(Form $form)
+    {
+        $pdf = PDF::loadView('pdf.form', [
             'form' => $form
         ]);
         return $pdf->stream('Lista.pdf');
@@ -115,7 +117,8 @@ class FormController extends Controller
      * 
      * @param \App\Models\Form $form formulario al que se le va a cambiar el estado.
      */
-    public function switchActive(Form $form){
+    public function switchActive(Form $form)
+    {
         $form->update(['is_active' => !$form->is_active]);
         return redirect('/forms')->with('status', 'Estado del formulario cambiado con éxito');
     }
@@ -128,7 +131,7 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        return view('forms.show',[
+        return view('forms.show', [
             'form' => $form
         ]);
     }
@@ -141,7 +144,7 @@ class FormController extends Controller
      */
     public function showList(Form $form)
     {
-        return view('forms.list',[
+        return view('forms.list', [
             'form' => $form
         ]);
     }
@@ -156,13 +159,15 @@ class FormController extends Controller
             'search' => 'required'
         ]);
 
-        $searchByTitle = Form::where('title', 'like', $search['search'] . '%')->where('user_id', Auth::user()->id)->get();
-        $searchByDate = Form::where('date', 'like', $search['search'] . '%')->where('user_id', Auth::user()->id)->get();
-
-        $result = $searchByTitle->merge($searchByDate);
+        /**
+         * Changed.
+         */
+        $forms = Form::where('title', 'like', '%' . $search['search'] . '%')
+            ->orWhere('date', 'like', '%' . $search['search'] . '%')->get()
+            ->where('user_id', auth()->user()->id);
 
         return view('forms.search', [
-            'forms' => $result
+            'forms' => $forms
         ]);
     }
 

@@ -29,12 +29,13 @@ class StoreFormRequest extends FormRequest
             'date' => 'required|date',
             'start_time' => 'required',
             'end_time' => 'required',
-            'is_active' => 'required',
-            'user_id' => 'required'
+            // 'is_active' => 'required',
+            // 'user_id' => 'required'
         ];
     }
 
-    public function attributes(){
+    public function attributes()
+    {
         return [
             'title' => 'motivo',
             'start_time' => 'hora de inicio',
