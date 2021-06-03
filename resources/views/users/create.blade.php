@@ -57,13 +57,14 @@
 
             <div class="form-row">
                 <div class="form-group col d-flex justify-content-end">
-                    <button type="button" class="btn btn-danger mr-2" data-toggle="modal" data-target="#cancel-modal">
-                        <i class="fas fa-times"></i> {{ __('Cancel') }}
-                    </button>
+                    <x-button icon="fas fa-times" color="danger" type="button" class="mr-2" data-toggle="modal"
+                        data-target="#cancel-modal">
+                        {{ __('Cancel') }}
+                    </x-button>
 
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save"></i> {{ __('Save') }}
-                    </button>
+                    <x-button icon="fas fa-save" color="success" type="submit">
+                        {{ __('Save') }}
+                    </x-button>
                 </div>
             </div>
 
@@ -73,15 +74,15 @@
                 <x-slot name="body">{{ __('Are you sure you want to cancel?') }}</x-slot>
 
                 <x-slot name="success">
-                    <a href="{{ route('users.index') }}" class="btn btn-secondary mr-2">
-                        <i class="fas fa-check"></i> {{ __('Yes') }}
-                    </a>
+                    <x-a icon="fas fa-check" color="secondary" href="{{ route('users.index') }}">
+                        {{ __('Yes') }}
+                    </x-a>
                 </x-slot>
 
                 <x-slot name="close">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">
-                        <i class="fas fa-times"></i> {{ __('No') }}
-                    </button>
+                    <x-button icon="fas fa-times" color="danger" type="button">
+                        {{ __('No') }}
+                    </x-button>
                 </x-slot>
             </x-modal>
         </x-form>

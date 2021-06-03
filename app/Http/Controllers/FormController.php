@@ -14,7 +14,9 @@ use Barryvdh\DomPDF\Facade as PDF;
 class FormController extends Controller
 {
     /**
-     * Método que redirige a la vista index de formularios.
+     * Muestra una lista del recurso.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -26,21 +28,20 @@ class FormController extends Controller
     }
 
     /**
-     * Método que redirige a la vista create de formularios.
+     * Muestra el formulario para crear un nuevo recurso.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('forms.create', [
-            'user' => Auth::user()
-        ]);
+        return view('forms.create');
     }
 
     /**
-     * Método que inserta un nuevo formulario en la Base de Datos, recibe los parámetros:
+     * Almacena un recurso recién creado en el almacenamiento.
      *
-     * @param  \Illuminate\Http\Requests\StoreFormRequest $request el cual valida y a la vez contiene
-     * los datos del formulario por insertar.
-     * 
+     * @param  \Illuminate\Http\Requests\StoreFormRequest  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(StoreFormRequest $request)
     {
@@ -124,10 +125,10 @@ class FormController extends Controller
     }
 
     /**
-     * Método que redirige a la vista de registro de un formulario en específico. Requiere un parámetro:
+     * Muestra el recurso especificado.
      *
-     * @param  \App\Form  $form formulario específico.
-     *
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
      */
     public function show(Form $form)
     {
@@ -171,28 +172,25 @@ class FormController extends Controller
         ]);
     }
 
-
     /**
-     * Método que redirige a la vista edit de un formulario en específico. Requiere un parámetro:
+     * Muestre el formulario para editar el recurso especificado.
      *
-     * @param  \App\Form  $form formulario a editar.
-     * 
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
      */
     public function edit(Form $form)
     {
         return view('forms.edit', [
-            'user' => Auth::user(),
             'form' => $form
         ]);
     }
 
     /**
-     * Método que edita o actualiza los datos de un formulario específico. Requiere dos parámetros:
+     * Actualiza el recurso especificado en el almacenamiento.
      *
-     * @param  \Illuminate\Http\Requests\UpdateFormRequest  $request el cual valida y contiene los datos nuevos 
-     * del formulario.
-     * @param  \App\Form  $form el cual es el formulario a actualizar.
-     * 
+     * @param  \Illuminate\Http\Requests\UpdateFormRequest  $request
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
      */
     public function update(UpdateFormRequest $request, Form $form)
     {
@@ -202,10 +200,10 @@ class FormController extends Controller
     }
 
     /**
-     * Método que elimina un formulario en específico. Requiere un parámetro:
+     * Elimina el recurso especificado del almacenamiento.
      *
-     * @param  \App\Form  $form formulario por eliminar.
-     * 
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Form $form)
     {

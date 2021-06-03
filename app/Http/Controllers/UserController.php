@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * Método que redirige a la página index de usuarios.
+     * Muestra una lista del recurso.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -32,7 +34,9 @@ class UserController extends Controller
     }
 
     /**
-     * Método que redirige a la vista create de usuarios.
+     * Muestra el formulario para crear un nuevo recurso.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -43,10 +47,10 @@ class UserController extends Controller
     }
 
     /**
-     * Método que inserta un nuevo usuario en la base de datos. Requiere un parámetro:
+     * Almacena un recurso recién creado en el almacenamiento.
      *
-     * @param  \Illuminate\Http\Requests\StoreUserRequest  $request el cual valida y contiene los datos del nuevo 
-     * usuario.
+     * @param  \Illuminate\Http\Requests\StoreUserRequest  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(StoreUserRequest $request)
     {
@@ -58,9 +62,10 @@ class UserController extends Controller
     }
 
     /**
-     * Método que redirige a la vista edit de usuarios, requiere un parámetro:
+     * Muestre el formulario para editar el recurso especificado.
      *
-     * @param \App\User $user el cual es el usuario por editar.
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
@@ -71,11 +76,11 @@ class UserController extends Controller
     }
 
     /**
-     * Método que actualiza los datos de un usuario. Requiere dos parámetros:
+     * Actualiza el recurso especificado en el almacenamiento.
      *
-     * @param  \Illuminate\Http\Requests\UpdateUSerRequest  $request el cual valida y contiene los datos por actualizar
-     * del usuario,
-     * @param  \App\User $user el cual es el usuario por actualizar.
+     * @param  \Illuminate\Http\Requests\UpdateUserRequest  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -116,9 +121,10 @@ class UserController extends Controller
     }
 
     /**
-     * Método que elimina un usuario en específico. Requiere un paraámetro:
+     * Elimina el recurso especificado del almacenamiento.
      *
-     * @param  \App\User $user el cual es el usuario por eliminar.
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
