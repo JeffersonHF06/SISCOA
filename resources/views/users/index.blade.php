@@ -1,23 +1,14 @@
-@extends('adminlte::page')
+<x-layout>
+    <x-slot name="header">
+        <h1>{{ __('Users') }}</h1>
+    </x-slot>
 
-@section('title', 'UNA')
-
-@section('content_header')
-    <h1>Usuarios</h1>
-@stop
-
-@section('content')
-
-    <div class="container text-style">
-
-        @include('partials._status')
-        @include('partials._error')
+    <div class="container">
+        <x-flash-message />
 
         <div class="row mb-4">
             <div class="col">
-                <form action="/users/search" class="form-inline" id="search-form" method="POST">
-                    @csrf
-
+                <x-form method="POST" action="{{ route('users.search') }}" class="form-inline">
                     <input id="search-input"
                         class="form-control mr-sm-2 {{ $errors->has('search') ? 'is-invalid' : '' }} " type="search"
                         placeholder="Buscar Usuario " aria-label="Buscar" name="search" value="{{ old('search') }}">
@@ -29,8 +20,7 @@
                     @error('search')
                         <div id="error" class="invalid-feedback">{{ $message }}</div>
                     @enderror
-
-                </form>
+                </x-form>
             </div>
 
             <div class="col d-flex align-items-end flex-column">
@@ -68,14 +58,4 @@
             </div>
         </div>
     </div>
-@stop
-
-@section('footer')
-    <div class="row">
-        <strong> © 2021 Universidad Nacional de Costa Rica. Sistema de Control de Asistencia (SISCOA). </strong>
-    </div>
-
-    <div class="row">
-        <strong> Desarrollado por Jefferson Hernández Flores. </strong>
-    </div>
-@endsection
+</x-layout>

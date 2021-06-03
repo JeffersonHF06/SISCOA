@@ -708,14 +708,39 @@
     "Zimbabwe": "Zimbabwe",
     "Zip \/ Postal Code": "Zip \/ Código postal",
 
+
+
+
+
     "Phone": "Teléfono",
     "Position": "Puesto",
     "Password confirmation": "Confirmación de contraseña",
     "Are you sure you want to cancel?": "¿Seguro que desea cancelar?",
     "Are you sure you want to delete the user :user?": "¿Seguro de eliminar el usuario :user?",
+    "Are you sure you want to delete the form :form?": "¿Seguro de eliminar el formulario :form?",
     "Title": "Motivo",
     "Activity date": "Fecha de la actividad",
-    "Start hour": "Hora de inicio",
-    "End hour": "Hora de finalización",
-    "Description": "Descripción"
+    "Start time": "Hora de inicio",
+    "End time": "Hora de finalización",
+    "Description": "Descripción",
+    "PDF": "PDF",
+    "Active": "Activo",
+    "Inactive": "Inactivo",
+    "Form details": "Detalles del formulario",
+    "Registration list": "Lista de registro",
+    "Add User": "Añadir Usuario",
+    "Edit User": "Editar Usuario",
+    "Users": "Usuarios",
+    "Add Form": "Añadir Formulario",
+    "Edit Form": "Editar Formulario",
+    "Forms": "Formularios",
+    "Schedule": "Horario",
+    "Link": "Enlace",
+    "The form was created successfully.": "El formulario se creó correctamente.",
+    "The state of the form was successfully modified.": "El estado del formulario se modificó correctamente.",
+    "The form was successfully edited.": "El formulario se editó correctamente.",
+    "The form was successfully removed.": "El formulario se eliminó correctamente.",
+    "The user was created successfully.": "El usuario se creó correctamente.",
+    "The user was edited successfully.": "El usuario se editó correctamente.",
+    "The user was successfully removed.": "El usuario fue eliminado con éxito."
 }

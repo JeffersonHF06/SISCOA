@@ -11,7 +11,6 @@ use App\Http\Requests\AddUserToFormRequest;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade as PDF;
 
-
 class FormController extends Controller
 {
     /**
@@ -20,9 +19,9 @@ class FormController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $forms = Form::where('user_id', $user->id)->paginate(8);
+
         return view('forms.index', [
-            'forms' => $forms
+            'forms' => Form::where('user_id', $user->id)->paginate(8)
         ]);
     }
 
@@ -47,7 +46,7 @@ class FormController extends Controller
     {
         Form::create($request->all() + ['user_id' => $request->user()->id]);
 
-        return redirect('/forms')->with('status', 'Formulario creado con éxito');
+        return redirect()->route('forms.index')->with('status', __('The form was created successfully.'));
     }
 
     /**
@@ -120,7 +119,8 @@ class FormController extends Controller
     public function switchActive(Form $form)
     {
         $form->update(['is_active' => !$form->is_active]);
-        return redirect('/forms')->with('status', 'Estado del formulario cambiado con éxito');
+
+        return redirect()->route('forms.index')->with('status', __('The state of the form was successfully modified.'));
     }
 
     /**
@@ -197,7 +197,8 @@ class FormController extends Controller
     public function update(UpdateFormRequest $request, Form $form)
     {
         $form->update($request->all());
-        return redirect('/forms')->with('status', 'Formulario editado con éxito');
+
+        return redirect()->route('forms.index')->with('status', __('The form was successfully edited.'));
     }
 
     /**
@@ -209,6 +210,7 @@ class FormController extends Controller
     public function destroy(Form $form)
     {
         $form->delete();
-        return redirect('/forms')->with('status', 'Formulario eliminado con éxito');
+
+        return redirect()->route('forms.index')->with('status', __('The form was successfully removed.'));
     }
 }

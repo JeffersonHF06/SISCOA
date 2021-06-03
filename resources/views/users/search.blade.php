@@ -1,12 +1,9 @@
-@extends('adminlte::page')
+<x-layout>
+    <x-slot name="header">
+        <h1>{{ __('Users') }}</h1>
+    </x-slot>
 
-@section('content_header')
-    <div id="titulos" class="mb-4">Usuarios del Sistema</div>
-@stop
-
-@section('content')
-    <div class="container text-style">
-
+    <div class="container">
         <div class="row mb-4">
             <a href="{{ route('users.index') }}" class="btn btn-link-dark ml-left">
                 <i class="fas fa-arrow-left mx-2"></i>
@@ -36,18 +33,5 @@
         @else
             <p>No tenemos registros en el sistema.</p>
         @endif
-
     </div>
-@endsection
-
-@section('footer')
-
-    <div class="row">
-        <strong> © 2021 Universidad Nacional de Costa Rica. Sistema de Control de Asistencia (SISCOA). </strong>
-    </div>
-
-    <div class="row">
-        <strong> Desarrollado por Jefferson Hernández Flores. </strong>
-    </div>
-
-@endsection
+</x-layout>
