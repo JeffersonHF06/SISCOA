@@ -21,124 +21,109 @@
         </button>
     </td>
 
-
     <td id="table-body-elements">
         <div class="row">
+            <button type="button" class="btn btn-info mr-2 mb-2" data-toggle="modal"
+                data-target="#details-form-{{ $form->id }}-modal">
+                <i class="fas fa-info-circle"></i>
+                {{ __('Details') }}
+            </button>
 
-            <button class="btn btn-info mr-2 mb-2" data-toggle="modal" data-target="#detailsModal{{ $form->id }}"><i
-                    class="fas fa-info-circle"></i> Detalles</button>
+            <a class="btn btn-secondary mr-2 mb-2" href="{{ route('forms.edit', $form->id) }}">
+                <i class="fas fa-marker"></i>
+                {{ __('Edit') }}
+            </a>
 
-            <a class="btn btn-secondary mr-2 mb-2" href="/forms/edit/{{ $form->id }}"><i class="fas fa-marker"></i>
-                Editar</a>
+            <a class="btn btn-warning mr-2 mb-2" href="{{ route('forms.pdf', $form->id) }}">
+                <i class="far fa-file-pdf"></i>
+                {{ __('PDF') }}
+            </a>
 
-            <a class="btn btn-warning mr-2 mb-2" href="/forms/pdf/{{ $form->id }}"><i class="far fa-file-pdf"></i>
-                PDF</a>
-
-
-            <form action="/forms/switchActive/{{ $form->id }}" method="POST" id="switchActive{{ $form->id }}">
-
-                @csrf
-                @method('PUT')
-
-                <button type="submit" class="btn {{ $form->is_active == 1 ? 'btn-success' : 'btn-danger' }}"><i
-                        class="fas {{ $form->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}">
-                    </i>{{ $form->is_active == 1 ? ' Activo' : ' Inactivo' }}</button>
-
-            </form>
-
-            <form action="forms/{{ $form->id }}" method="POST" id="delete{{ $form->id }}-form">
-                @csrf
-                @method('DELETE')
-
-                <button type="button" class="btn btn-danger delete mr-2 mb-2" data-toggle="modal"
-                    data-target="#deleteModal{{ $form->id }}">
-                    <i class="far fa-trash-alt"></i> Eliminar
+            <x-form method="PUT" action="{{ route('forms.activate', $form->id) }}">
+                <button type="submit" class="btn {{ $form->is_active == 1 ? 'btn-success' : 'btn-danger' }}">
+                    <i class="fas {{ $form->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}"></i>
+                    {{ $form->is_active == 1 ? __('Active') : __('Inactive') }}
                 </button>
+            </x-form>
 
-                <div class="modal fade" id="deleteModal{{ $form->id }}" tabindex="-1"
-                    aria-labelledby="deleteModal{{ $form->id }}Label" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModal{{ $form->id }}Label">Confirmación</h5>
+            <button type="button" class="btn btn-danger mr-2 mb-2" data-toggle="modal"
+                data-target="#delete-form-{{ $form->id }}-modal">
+                <i class="far fa-trash-alt"></i> {{ __('Delete') }}
+            </button>
+
+            <x-modal id="delete-form-{{ $form->id }}-modal">
+                <x-slot name="title">{{ __('Confirm') }}</x-slot>
+
+                <x-slot name="body">
+                    {{ __('Are you sure you want to delete the form :form?', ['form' => $form->title]) }}
+                </x-slot>
+
+                <x-slot name="success">
+                    <x-form method="DELETE" action="{{ route('forms.destroy', $form->id) }}">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-check"></i> {{ __('Yes') }}
+                        </button>
+                    </x-form>
+                </x-slot>
+
+                <x-slot name="close">
+                    <button type="button" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> {{ __('No') }}
+                    </button>
+                </x-slot>
+            </x-modal>
+
+            <x-modal id="details-form-{{ $form->id }}-modal">
+                <x-slot name="title">
+                    {{ __('Form details') }}
+                </x-slot>
+
+                <x-slot name="body">
+                    <div class="container">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>{{ __('Title') }}</label>
+                                <input disabled value="{{ $form->title }}" class="form-control" />
                             </div>
-                            <div class="modal-body">
-                                ¿Desea eliminar el formulario {{ $form->title }}?
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>{{ __('Activity date') }}</label>
+                                <input disabled value="{{ $form->date->isoFormat('LL') }}" class="form-control" />
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
-                                        class="fas fa-times"></i> No</button>
-                                <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i>
-                                    Sí</button>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>{{ __('Start time') }}</label>
+                                <input disabled value="{{ $form->start_time->format('g:i A') }}"
+                                    class="form-control" />
+                            </div>
+
+                            <div class="form-group col">
+                                <label>{{ __('End time') }}</label>
+                                <input disabled value="{{ $form->end_time->format('g:i A') }}"
+                                    class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>{{ __('Description') }}</label>
+                                <textarea disabled class="form-control">{{ $form->description }}</textarea>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </x-slot>
 
-            <!-- Modal detalles -->
-            <div class="modal fade" id="detailsModal{{ $form->id }}" tabindex="-1"
-                aria-labelledby="detailsModal{{ $form->id }}Label" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="detailsModal{{ $form->id }}Label">Detalles del formulario
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <x-input name="title{{ $form->id }}" title="Motivo"
-                                            value="{{ $form->title }}" disabled="disabled"></x-input>
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <x-input name="date{{ $form->id }}" title="Fecha de la actividad"
-                                            value="{{ $form->date->isoFormat('LL') }}" disabled="disabled"></x-input>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <x-input name="start_time{{ $form->id }}" title="Hora de Inicio"
-                                            value="{{ $form->start_time->format('g:i A') }}" disabled="disabled">
-                                        </x-input>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <x-input name="end_time{{ $form->id }}" title="Hora de Finalización"
-                                            value="{{ $form->end_time->format('g:i A') }}" disabled="disabled">
-                                        </x-input>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <x-textarea name="description{{ $form->id }}" title="Descripción"
-                                            value="{{ $form->description }}" disabled="disabled"></x-textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="btn btn-primary mr-2 mb-2" href="/forms/list/{{ $form->id }}"><i
-                                    class="fas fa-list"></i> Lista de Registro</a>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+                <x-slot name="success">
+                    <a class="btn btn-primary mr-2 mb-2" href="{{ route('forms.list', $form->id) }}">
+                        <i class="fas fa-list"></i>
+                        {{ __('Registration list') }}
+                    </a>
+                </x-slot>
+            </x-modal>
         </div>
     </td>
-
-
-
 </tr>
