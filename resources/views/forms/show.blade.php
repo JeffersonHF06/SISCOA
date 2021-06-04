@@ -36,13 +36,12 @@
 @section('footer')
     <footer id="footer" class="col  mb-auto">
         <div id="copyright" class="col-md sm-12">
-
             <div class="row">
-                © 2021 Universidad Nacional de Costa Rica. Todos los derechos reservados.
+                <strong> © 2021 Universidad Nacional de Costa Rica. Todos los derechos reservados.</strong>
             </div>
-
+        
             <div class="row">
-                Desarrollado por Jefferson Hernández Flores.
+                <strong> Sede Interuniversitaria de Alajuela, Ingeniería en Sistemas de Información. </strong>
             </div>
         </div>
 

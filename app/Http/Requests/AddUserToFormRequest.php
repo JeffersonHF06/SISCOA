@@ -28,14 +28,14 @@ class AddUserToFormRequest extends FormRequest
                 'email' => 'required',
                 'name' => 'required|string',
                 'phone' => 'required|integer',
-                'position_id' => 'required|string',
+                'position_id' => 'required',
             ];
         }else{
             return [
                 'email' => 'required|email|unique:users,email',
                 'name' => 'required|string',
                 'phone' => 'required|integer',
-                'position_id' => 'required|string',
+                'position_id' => 'required',
             ];
         }
     }

@@ -2248,17 +2248,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["page", "errors"],
+  mounted: function mounted() {
+    this.getPositions();
+  },
   data: function data() {
     return {
       id: "",
       email: "",
       name: "",
       phone: "",
-      position: "",
-      blocked: false
+      position_id: "",
+      blocked: false,
+      positions: []
     };
   },
   methods: {
@@ -2281,13 +2291,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this.id = data[0].id;
                     _this.name = data[0].name;
                     _this.phone = data[0].phone;
-                    _this.position = data[0].position;
+                    _this.position_id = data[0].position_id;
                     _this.blocked = true;
                   } else {
                     _this.id = "";
                     _this.name = "";
                     _this.phone = "";
-                    _this.position = "";
+                    _this.position_id = "";
                     _this.blocked = false;
                   }
                 })["catch"](function (err) {
@@ -2303,6 +2313,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+
+    /**
+     * Método que obtiene las posiciones.
+     */
+    getPositions: function getPositions() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/users/getPositions").then(function (_ref2) {
+                  var data = _ref2.data;
+                  _this2.positions = data;
+                })["catch"](function (err) {
+                  console.log(err);
+                });
+
+              case 2:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
@@ -3882,39 +3923,90 @@ var render = function() {
             [_vm._v("Puesto")]
           ),
           _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.position_id,
+                  expression: "position_id"
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.errors.position_id ? "is-invalid" : "",
+              attrs: { disabled: _vm.blocked == true },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.position_id = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "", disabled: "" } }, [
+                _vm._v("Seleccionar")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.positions, function(position, index) {
+                return _c(
+                  "option",
+                  { key: index, domProps: { value: position.id } },
+                  [
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(position.name) +
+                        "\n            "
+                    )
+                  ]
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.position,
-                expression: "position"
+                value: _vm.position_id,
+                expression: "position_id"
               }
             ],
-            staticClass: "form-control",
-            class: _vm.errors.position ? "is-invalid" : "",
             attrs: {
-              readonly: _vm.blocked == true,
-              id: "position-input",
-              name: "position",
-              placeholder: "",
-              type: "text"
+              hidden: "",
+              readonly: "",
+              type: "text",
+              name: "position_id"
             },
-            domProps: { value: _vm.position },
+            domProps: { value: _vm.position_id },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.position = $event.target.value
+                _vm.position_id = $event.target.value
               }
             }
           }),
           _vm._v(" "),
-          _vm.errors.position != null
+          _vm.errors.position_id != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n          " + _vm._s(_vm.errors.position[0]) + "\n        "
+                  "\n          " +
+                    _vm._s(_vm.errors.position_id[0]) +
+                    "\n        "
                 )
               ])
             : _vm._e()

@@ -78,19 +78,25 @@
           <label class="control-label required" for="position-input"
             >Puesto</label
           >
-          <input
-            :readonly="blocked == true"
-            v-model="position"
-            id="position-input"
-            name="position"
-            class="form-control"
-            placeholder=""
-            type="text"
-            :class="errors.position ? 'is-invalid' : ''"
-          />
+            <select
+              v-model="position_id"
+              class="form-control"
+              :class="errors.position_id ? 'is-invalid' : ''"
+              :disabled="blocked == true"
+            >
+              <option value="" disabled>Seleccionar</option>
+              <option
+                v-for="(position, index) of positions"
+                v-bind:key="index"
+                v-bind:value="position.id"
+              >
+                {{ position.name }}
+              </option>
+            </select>
+          <input hidden readonly type="text" v-model="position_id" name="position_id">
 
-          <div v-if="errors.position != null" class="invalid-feedback">
-            {{ errors.position[0] }}
+          <div v-if="errors.position_id != null" class="invalid-feedback">
+            {{ errors.position_id[0] }}
           </div>
         </div>
       </div>
@@ -102,8 +108,11 @@
 import axios from "axios";
 
 export default {
-
   props: ["page", "errors"],
+
+  mounted() {
+    this.getPositions();
+  },
 
   data() {
     return {
@@ -111,8 +120,9 @@ export default {
       email: "",
       name: "",
       phone: "",
-      position: "",
+      position_id: "",
       blocked: false,
+      positions: [],
     };
   },
 
@@ -128,15 +138,29 @@ export default {
             this.id = data[0].id;
             this.name = data[0].name;
             this.phone = data[0].phone;
-            this.position = data[0].position;
+            this.position_id = data[0].position_id;
             this.blocked = true;
           } else {
             this.id = "";
             this.name = "";
             this.phone = "";
-            this.position = "";
+            this.position_id = "";
             this.blocked = false;
           }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    /**
+     * Método que obtiene las posiciones.
+     */
+    async getPositions() {
+      return await axios
+        .get(`/users/getPositions`)
+        .then(({ data }) => {
+          this.positions = data;
         })
         .catch((err) => {
           console.log(err);

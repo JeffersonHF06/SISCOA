@@ -146,6 +146,14 @@ class UserController extends Controller
     }
 
     /**
+     * Método para obtener todas las posiciones.
+     * 
+     */
+    public function getPositions(){
+        return Position::all();
+    }
+
+    /**
      * Método que elimina un usuario en específico. Requiere un paraámetro:
      *
      * @param  \App\User $user el cual es el usuario por eliminar.

@@ -54,3 +54,4 @@ Route::middleware('ActiveForm')->group(function () {
 });
 
 Route::get('users/getUser/{email}', 'UserController@getUser')->name('users.getUser');
+Route::get('users/getPositions', 'UserController@getPositions')->name('users.getPositions');
