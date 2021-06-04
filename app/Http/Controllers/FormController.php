@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreFormRequest;
 use App\Http\Requests\UpdateFormRequest;
 use App\Http\Requests\AddUserToFormRequest;
+use App\Http\Requests\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Str;
@@ -44,7 +45,8 @@ class FormController extends Controller
      * @param  \App\Http\Requests\StoreFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreFormRequest $request)
+    // public function store(StoreFormRequest $request)
+    public function store(FormRequest $request)
     {
         Form::create($request->all() + [
             'user_id' => $request->user()->id,
@@ -68,8 +70,6 @@ class FormController extends Controller
     // public function addUserToForm(AddUserToFormRequest $request, Form $form)
     public function addUserToForm(AddUserToFormRequest $request, $uuid)
     {
-        ddd('estoy aquí');
-
         $form = Form::where('uuid', $uuid)->first();
 
         if (!$form) {
@@ -217,7 +217,7 @@ class FormController extends Controller
      * @param  \App\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateFormRequest $request, Form $form)
+    public function update(FormRequest $request, Form $form)
     {
         $this->authorize('update', $form);
 

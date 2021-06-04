@@ -23,29 +23,23 @@ class AddUserToFormRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->id != ""){
-            return [
-                'email' => 'required',
-                'name' => 'required|string',
-                'phone' => 'required|integer',
-                'position_id' => 'required|string',
-            ];
-        }else{
-            return [
-                'email' => 'required|email|unique:users,email',
-                'name' => 'required|string',
-                'phone' => 'required|integer',
-                'position_id' => 'required|string',
-            ];
-        }
+        return [
+            'email'       => $this->filled('id') ? 'required|email' : 'required|email|unique:users,email',
+            'name'        => 'required|string',
+            'phone'       => 'required|integer',
+            'position_id' => 'required|string'
+        ];
     }
 
-    public function attributes(){
+    public function attributes()
+    {
         return [
-            'email' => 'correo electrónico',
-            'name' => 'nombre',
-            'phone' => 'teléfono',
             'position_id' => 'puesto',
+
+            // Revisar porque algunas a están.
+            // 'email' => 'correo electrónico',
+            // 'name' => 'nombre',
+            // 'phone' => 'teléfono',
         ];
     }
 }

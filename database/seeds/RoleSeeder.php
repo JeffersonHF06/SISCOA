@@ -13,31 +13,32 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        //Admin role
-        DB::table('roles')->insert([
-            'name' => 'admin',
-            'label' => 'Administrador',
-            'description' => 'Rol que brinda acceso a todas las funcionalidades del sistema',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        $now = Carbon::now();
 
-        //Official role
-        DB::table('roles')->insert([
-            'name' => 'official',
-            'label' => 'Funcionario',
-            'description' => 'Rol para funcionarios, los cuales solamente acceden a las funcionalidades de sus formularios',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        $roles = [
+            [
+                'name' => 'admin',
+                'label' => 'Administrador',
+                'description' => 'Rol que brinda acceso a todas las funcionalidades del sistema',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'official',
+                'label' => 'Funcionario',
+                'description' => 'Rol para funcionarios, los cuales solamente acceden a las funcionalidades de sus formularios',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'hearer',
+                'label' => 'Oyente',
+                'description' => 'Rol para oyentes, este rol limita el acceso total al sistema, solamente pueden registrar asistencia en los formularios',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]
+        ];
 
-        //Hearer role
-        DB::table('roles')->insert([
-            'name' => 'hearer',
-            'label' => 'Oyente',
-            'description' => 'Rol para oyentes, este rol limita el acceso total al sistema, solamente pueden registrar asistencia en los formularios',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        DB::table('roles')->insert($roles);
     }
 }

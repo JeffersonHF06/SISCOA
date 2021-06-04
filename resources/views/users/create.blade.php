@@ -26,11 +26,13 @@
                 <div class="form-group col-md">
                     <label for="position">{{ __('Position') }}</label>
                     <x-select name="position_id" id="position">
-                        <option {{ old('position_id') ? '' : 'selected' }} value="" disabled>{{ __('Select') }}
+                        <option {{ old('position_id') ? '' : 'selected' }} value="" disabled>
+                            {{ __('Select') }}
                         </option>
 
                         @foreach ($positions as $position)
-                            <option {{ old('position_id') == $position->id ? 'selected' : '' }} value="{{ $position->id }}">
+                            <option {{ old('position_id') == $position->id ? 'selected' : '' }}
+                                value="{{ $position->id }}">
                                 {{ $position->name }}
                             </option>
                         @endforeach
@@ -40,20 +42,22 @@
 
             <div class="form-row">
 
-                
-                    <div class="form-group col-md">
-                        <label for="career">{{ __('Career') }}</label>
-                        <x-select name="career_id" id="career">
-                            <option {{ old('career_id') ? '' : 'selected' }} value="" disabled>{{ __('Select') }}
+
+                <div class="form-group col-md">
+                    <label for="career">{{ __('Career') }}</label>
+                    <x-select name="career_id" id="career">
+                        <option {{ old('career_id') ? '' : 'selected' }} value="" disabled>
+                            {{ __('Select') }}
+                        </option>
+
+                        @foreach ($careers as $career)
+                            <option {{ old('career_id') == $career->id ? 'selected' : '' }}
+                                value="{{ $career->id }}">
+                                {{ $career->name }}
                             </option>
-    
-                            @foreach ($careers as $career)
-                                <option {{ old('career_id') == $career->id ? 'selected' : '' }} value="{{ $career->id }}">
-                                    {{ $career->name }}
-                                </option>
-                            @endforeach
-                        </x-select>
-                    </div>
+                        @endforeach
+                    </x-select>
+                </div>
 
                 <div class="form-group col-md">
                     <label for="role">{{ __('Role') }}</label>

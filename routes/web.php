@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
          * Rutas para actualizar un usuario y para redirigir a la vista profile
          */
         Route::get('users/profile', 'UserController@profile')->name('users.profile');
+        Route::put('users/profile/{user}', 'UserController@update')->name('users.profile.update');
         Route::put('users/{user}', 'UserController@update')->name('users.update');
 
         /**
