@@ -19,12 +19,18 @@ class UsersAuthorized
         $user = $request->user();
         
         if($user->role->name != 'admin' && $user->role->name != 'official'){
-            
+            $msj = 'El usuario '.$user->name.' no posee permisos de ingreso.';
             if($user->role->name != 'official'){
                 Auth::logout();
             }
             
-            return abort(401);
+            return abort(403, $msj);
+        }
+
+        if ($user->is_active != 1) {
+            $msj = 'Usuario '.$user->name.' inactivo.';
+            Auth::logout();
+            return abort(403, $msj);
         }
       
         return $next($request);

@@ -14,12 +14,24 @@ class CreateUsersTable extends Migration
     public function up()
     {
 
+        Schema::create('positions', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
+
+        Schema::create('careers', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
+
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('label')->unique();
             $table->text('description')->nullable();
-            $table->timestamps();;
+            $table->timestamps();
         });
 
 
@@ -28,9 +40,11 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->integer('phone');
-            $table->string('position');
             $table->string('password');
+            $table->boolean('is_active');
             $table->foreignId('role_id')->references('id')->on('roles');
+            $table->foreignId('position_id')->references('id')->on('positions');
+            $table->foreignId('career_id')->references('id')->on('careers');
             $table->rememberToken();
             $table->timestamps();
         });

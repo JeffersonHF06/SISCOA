@@ -20,9 +20,16 @@ Route::middleware('auth')->group(function () {
             /**
              * Rutas para el mantenimiento de Usuarios.
              */
-            Route::resource('users', 'UserController')->except(['show']);
+            Route::resource('users', 'UserController')->except(['show', 'update']);
             Route::post('users/search', 'UserController@search')->name('users.search');
+            Route::put('users/switchActive/{user}', 'UserController@switchActive')->name('users.activate');
         });
+
+        /**
+         * Rutas para actualizar un usuario y para redirigir a la vista profile
+         */
+        Route::get('users/profile', 'UserController@profile')->name('users.profile');
+        Route::put('users/{user}', 'UserController@update')->name('users.update');
 
         /**
          * Rutas para el mantenimiento de Formularios.
@@ -44,4 +51,4 @@ Route::middleware('ActiveForm')->group(function () {
     Route::post('forms/addUserToForm/{uuid}', 'FormController@addUserToForm')->name('forms.subscribe');
 });
 
-Route::get('users/getUser/{email}', 'UserController@getUser');
+Route::get('users/getUser/{email}', 'UserController@getUser')->name('users.getUser');

@@ -27,7 +27,8 @@ class StoreUserRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|integer',
-            'position' => 'required|string',
+            'position_id' => 'required',
+            'career_id' => 'required',
             'password' => 'required|confirmed',
             'role_id' => 'required'
         ];
@@ -38,9 +39,10 @@ class StoreUserRequest extends FormRequest
             'name' => 'nombre',
             'email' => 'correo electrónico',
             'phone' => 'teléfono',
-            'position' => 'puesto',
             'password' => 'contraseña',
-            'role_id' => 'rol'
+            'role_id' => 'rol',
+            'position_id' => 'puesto',
+            'career_id' => 'carrera'
         ];
     }
 }
