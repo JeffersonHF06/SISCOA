@@ -26,10 +26,10 @@
                 <div class="form-group col-md">
                     <label for="position">{{ __('Position') }}</label>
                     <x-select name="position_id" id="position">
-                        </option>
-
                         @foreach ($positions as $position)
-                            <option {{ (old('position_id') ?? $user->position_id)  == $position->id ? 'selected' : '' }} value="{{ $position->id }}">
+                            <option
+                                {{ (old('position_id') ?? $user->position_id) == $position->id ? 'selected' : '' }}
+                                value="{{ $position->id }}">
                                 {{ $position->name }}
                             </option>
                         @endforeach
@@ -38,28 +38,24 @@
             </div>
 
             <div class="form-row">
-
-                
-                    <div class="form-group col-md">
-                        <label for="career">{{ __('Career') }}</label>
-                        <x-select name="career_id" id="career">
+                <div class="form-group col-md">
+                    <label for="career">{{ __('Career') }}</label>
+                    <x-select name="career_id" id="career">
+                        @foreach ($careers as $career)
+                            <option {{ (old('career_id') ?? $user->career_id) == $career->id ? 'selected' : '' }}
+                                value="{{ $career->id }}">
+                                {{ $career->name }}
                             </option>
-    
-                            @foreach ($careers as $career)
-                                <option {{ (old('career_id') ?? $user->career_id) == $career->id ? 'selected' : '' }} value="{{ $career->id }}">
-                                    {{ $career->name }}
-                                </option>
-                            @endforeach
-                        </x-select>
-                    </div>
+                        @endforeach
+                    </x-select>
+                </div>
 
                 <div class="form-group col-md">
                     <label for="role">{{ __('Role') }}</label>
                     <x-select name="role_id" id="role">
-                        </option>
-
                         @foreach ($roles as $role)
-                            <option {{ (old('role_id') ?? $user->role_id) == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
+                            <option {{ (old('role_id') ?? $user->role_id) == $role->id ? 'selected' : '' }}
+                                value="{{ $role->id }}">
                                 {{ $role->label }}
                             </option>
                         @endforeach
@@ -79,17 +75,16 @@
                 </div>
             </div>
 
-            <x-input name="kind" type="text" value="1" hidden/>
-
             <div class="form-row">
                 <div class="form-group col d-flex justify-content-end">
-                    <button type="button" class="btn btn-danger mr-2" data-toggle="modal" data-target="#cancel-modal">
-                        <i class="fas fa-times"></i> {{ __('Cancel') }}
-                    </button>
+                    <x-button icon="fas fa-times" color="danger" type="button" class="mr-2" data-toggle="modal"
+                        data-target="#cancel-modal">
+                        {{ __('Cancel') }}
+                    </x-button>
 
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save"></i> {{ __('Save') }}
-                    </button>
+                    <x-button icon="fas fa-save" color="success" type="submit">
+                        {{ __('Save') }}
+                    </x-button>
                 </div>
             </div>
 
@@ -99,15 +94,15 @@
                 <x-slot name="body">{{ __('Are you sure you want to cancel?') }}</x-slot>
 
                 <x-slot name="success">
-                    <a href="{{ route('users.index') }}" class="btn btn-secondary mr-2">
-                        <i class="fas fa-check"></i> {{ __('Yes') }}
-                    </a>
+                    <x-a icon="fas fa-check" color="secondary" href="{{ route('users.index') }}">
+                        {{ __('Yes') }}
+                    </x-a>
                 </x-slot>
 
                 <x-slot name="close">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">
-                        <i class="fas fa-times"></i> {{ __('No') }}
-                    </button>
+                    <x-button icon="fas fa-times" color="danger" type="button">
+                        {{ __('No') }}
+                    </x-button>
                 </x-slot>
             </x-modal>
         </x-form>

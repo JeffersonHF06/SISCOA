@@ -13,29 +13,32 @@ class PositionSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('positions')->insert([
-            'name' => 'Académico',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        $now = Carbon::now();
 
-        DB::table('positions')->insert([
-            'name' => 'Administrativo',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        $positions = [
+            [
+                'name' => 'Académico',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Administrativo',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Estudiante',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Otro',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]
 
-        DB::table('positions')->insert([
-            'name' => 'Estudiante',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        ];
 
-        DB::table('positions')->insert([
-            'name' => 'Otro',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
+        DB::table('positions')->insert($positions);
     }
 }

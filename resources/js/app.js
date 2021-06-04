@@ -4,11 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-window.axios = require('axios');
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.Vue = require('vue');
-
-
+window.axios = require("axios");
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+window.Vue = require("vue");
 
 /**
  * The following block of code may be used to automatically register your
@@ -23,9 +21,6 @@ window.Vue = require('vue');
 Vue.component("Register", require("./components/Register.vue").default);
 Vue.component("List", require("./components/List.vue").default);
 
-
-
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -33,18 +28,22 @@ Vue.component("List", require("./components/List.vue").default);
  */
 
 const app = new Vue({
-    el: '#app',
+    el: "#app"
 });
 
+// window.copy = id => {
+//     var copyText = document.getElementById("link-" + id);
+//     copyText.select();
+//     document.execCommand("copy");
+//     $("#copiedToast").toast("show");
+// };
 
+// Método para copiar enlace de form al clipboard
+window.copyLink = id => {
+    var copyText = document.getElementById("link-" + id);
 
-//Método para copiar enlace de form al clipboard
-window.copyLink = (id) => {
-    var copyText = document.getElementById("link"+id);
-
-    copyText.select()
+    copyText.select();
     document.execCommand("copy");
 
-
-    $('#copiedToast').toast('show')
+    $("#copiedToast").toast("show");
 };

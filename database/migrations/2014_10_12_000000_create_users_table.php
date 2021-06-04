@@ -41,7 +41,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->integer('phone');
             $table->string('password');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(true);
             $table->foreignId('role_id')->references('id')->on('roles');
             $table->foreignId('position_id')->references('id')->on('positions');
             $table->foreignId('career_id')->references('id')->on('careers');

@@ -14,16 +14,13 @@ Auth::routes([
 
 Route::middleware('auth')->group(function () {
     Route::middleware('roles')->group(function () {
-
         Route::get('/', 'HomeController@index')->name('home');
-        Route::get('/home', 'HomeController@index')->name('home');
 
         Route::middleware('can:admin')->group(function () {
-
             /**
              * Rutas para el mantenimiento de Usuarios.
              */
-            Route::resource('users', 'UserController')->except(['show','update']);
+            Route::resource('users', 'UserController')->except(['show']);
             Route::post('users/search', 'UserController@search')->name('users.search');
             Route::put('users/switchActive/{user}', 'UserController@switchActive')->name('users.activate');
         });
@@ -32,7 +29,7 @@ Route::middleware('auth')->group(function () {
          * Rutas para actualizar un usuario y para redirigir a la vista profile
          */
         Route::get('users/profile', 'UserController@profile')->name('users.profile');
-        Route::put('users/{user}', 'UserController@update')->name('users.update');
+        Route::put('users/profile/{user}', 'UserController@update')->name('users.profile.update');
 
         /**
          * Rutas para el mantenimiento de Formularios.
@@ -49,8 +46,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('ActiveForm')->group(function () {
-    Route::get('forms/{form}', 'FormController@show')->name('forms.show');
-    Route::post('forms/addUserToForm/{form}', 'FormController@addUserToForm')->name('forms.addUserForm');
+    Route::get('forms/{uuid}', 'FormController@show')->name('forms.show');
+
+    Route::post('forms/addUserToForm/{uuid}', 'FormController@addUserToForm')->name('forms.subscribe');
 });
 
 Route::get('users/getUser/{email}', 'UserController@getUser')->name('users.getUser');

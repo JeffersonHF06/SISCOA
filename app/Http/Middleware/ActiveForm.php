@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Form;
 use Closure;
 
 class ActiveForm
@@ -15,12 +16,20 @@ class ActiveForm
      */
     public function handle($request, Closure $next)
     {
-        $form = $request->form;
-        
-        if($form->is_active != 1){
-            return abort(403, 'Formulario '.$form->title.' inactivo.');
+        // $form = $request->form; // Jeff
+
+        $uuid = $request->uuid;
+
+        $form = Form::where('uuid', $uuid)->first();
+
+        if (!$form) {
+            abort(404);
         }
-      
+
+        if ($form->is_active != 1) {
+            return abort(403, 'Formulario Inactivo');
+        }
+
         return $next($request);
     }
 }

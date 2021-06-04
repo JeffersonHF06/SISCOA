@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UserRequest;
 use App\User;
 use App\Models\Role;
 use App\Models\Position;
@@ -14,7 +15,9 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * Método que redirige a la página index de usuarios.
+     * Muestra una lista del recurso.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -34,7 +37,9 @@ class UserController extends Controller
     }
 
     /**
-     * Método que redirige a la vista create de usuarios.
+     * Muestra el formulario para crear un nuevo recurso.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -47,24 +52,23 @@ class UserController extends Controller
     }
 
     /**
-     * Método que inserta un nuevo usuario en la base de datos. Requiere un parámetro:
+     * Almacena un recurso recién creado en el almacenamiento.
      *
-     * @param  \Illuminate\Http\Requests\StoreUserRequest  $request el cual valida y contiene los datos del nuevo 
-     * usuario.
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(UserRequest $request)
     {
-        $request->merge(['password' => Hash::make($request->password)]);
-
-        User::create($request->all() + ['is_active' => '1']);
+        User::create($request->validated());
 
         return redirect()->route('users.index')->with('status', __('The user was created successfully.'));
     }
 
     /**
-     * Método que redirige a la vista edit de usuarios, requiere un parámetro:
+     * Muestre el formulario para editar el recurso especificado.
      *
-     * @param \App\User $user el cual es el usuario por editar.
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
@@ -77,35 +81,19 @@ class UserController extends Controller
     }
 
     /**
-     * Método que actualiza los datos de un usuario. Requiere dos parámetros:
+     * Actualiza el recurso especificado en el almacenamiento.
      *
-     * @param  \Illuminate\Http\Requests\UpdateUserRequest  $request el cual valida y contiene los datos por actualizar
-     * del usuario,
-     * @param  \App\User $user el cual es el usuario por actualizar.
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-        $validateEmail = User::where('email', $request->email)->first();
-        if ($user != $validateEmail && !empty($validateEmail)) {
-            return redirect()->back()->withErrors(['email' => __('This email belongs to another user.')]);
-        }
+        $user->update($request->validated());
 
-        if($request->password != ""){
-            $request->merge(['password' => Hash::make($request->password)]);
-        }
-        else{
-            $request->merge(['password' => $user->password]);
-        }
-        
-        $user->update($request->all());
-        $user->refresh();
-
-        if($request->kind == 1){
-            return redirect('/users')->with('status', __('User edited successfully'));
-        }
-        else{
-            return redirect('/users/profile')->with('status', __('User information edited successfully'));
-        }
+        return $request->routeIs('users.update') ?
+            redirect()->route('users.index')->with('status', __('The user was edited successfully.')) :
+            redirect()->route('users.profile')->with('status', __('Your personal information has been edited correctly.'));
     }
 
     /**
@@ -131,7 +119,8 @@ class UserController extends Controller
      * 
      * @param \App\User $user usuario al que se le va a cambiar el estado.
      */
-    public function switchActive(User $user){
+    public function switchActive(User $user)
+    {
         $user->update(['is_active' => !$user->is_active]);
         return redirect('/users')->with('status', __('User status changed successfully'));
     }
@@ -139,16 +128,18 @@ class UserController extends Controller
     /**
      * Método que redirige a la vista profile para modificación de datos del usuario en sesión
      */
-    public function profile(){
+    public function profile()
+    {
         return view('users.profile', [
             'user' => Auth::user(),
         ]);
     }
 
     /**
-     * Método que elimina un usuario en específico. Requiere un paraámetro:
+     * Elimina el recurso especificado del almacenamiento.
      *
-     * @param  \App\User $user el cual es el usuario por eliminar.
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {

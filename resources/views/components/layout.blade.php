@@ -9,7 +9,7 @@
 @endisset
 
 @section('content')
-    <div id="app">
+    <div id="app" class="pb-5">
         {{ $slot }}
     </div>
 @endsection

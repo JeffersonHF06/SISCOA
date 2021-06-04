@@ -3,9 +3,7 @@
 @section('title', 'UNA')
 
 @section('content')
-
     <div class="container text-style">
-
         <h2>Registro de asistencia</h2>
         <h5>Motivo: {{ $form->title }}</h5>
         <h5>Descripción de la reunión: {{ $form->description }}</h5>
@@ -13,23 +11,21 @@
             {{ $form->end_time->format('g:i A') }}</h5>
 
         <x-flash-message />
+        {{ $errors }}
 
-        <form action="{{ route('forms.addUserForm', $form->id)}}" id="search-form" method="POST">
-            @csrf
-
+        <x-form method="POST" action="{{ route('forms.subscribe', $form->uuid) }}">
             <div>
-                <register :page="{{ $form->id }}" :errors="{{ $errors }}" />
+                <register :errors="{{ $errors }}" />
             </div>
 
             <div class="row-md">
                 <div class="col my-3 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-lg btn-danger"><i class="fas fa-sign-in-alt"></i>
-                        Registrarse</button>
+                    <x-button icon="fas fa-sign-in-alt" color="danger" type="submit" class="btn-lg">
+                        {{ __('Register') }}
+                    </x-button>
                 </div>
-
             </div>
-
-        </form>
+        </x-form>
     </div>
 @stop
 

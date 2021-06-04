@@ -24,10 +24,9 @@
             </div>
 
             <div class="col d-flex align-items-end flex-column">
-                <a href="{{ route('forms.create') }}" class="ml-auto btn btn-success">
-                    <i class="fas fa-plus"></i>
+                <x-a icon="fas fa-plus" color="success" class="ml-auto" href="{{ route('forms.create') }}">
                     {{ __('Add') }}
-                </a>
+                </x-a>
             </div>
         </div>
 

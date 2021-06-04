@@ -5,8 +5,8 @@
 
     <div class="container">
         <x-flash-message />
-        
-        <x-form method="PUT" action="{{ route('users.update', $user->id) }}">
+
+        <x-form method="PUT" action="{{ route('users.profile.update', $user->id) }}">
             <div class="form-row">
                 <div class="form-group col-md">
                     <label for="name">{{ __('Full name') }}</label>
@@ -35,8 +35,6 @@
                     <x-input name="password_confirmation" type="password" />
                 </div>
             </div>
-
-            <x-input name="kind" type="text" value="2" hidden/>
 
             <div class="form-row">
                 <div class="form-group col d-flex justify-content-end">
