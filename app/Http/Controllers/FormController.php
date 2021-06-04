@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Form;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreFormRequest;
-use App\Http\Requests\UpdateFormRequest;
 use App\Http\Requests\AddUserToFormRequest;
+use App\Http\Requests\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
     /**
-     * Método que redirige a la vista index de formularios.
+     * Muestra una lista del recurso.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -26,25 +28,28 @@ class FormController extends Controller
     }
 
     /**
-     * Método que redirige a la vista create de formularios.
+     * Muestra el formulario para crear un nuevo recurso.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('forms.create', [
-            'user' => Auth::user()
-        ]);
+        return view('forms.create');
     }
 
     /**
-     * Método que inserta un nuevo formulario en la Base de Datos, recibe los parámetros:
+     * Almacena un recurso recién creado en el almacenamiento.
      *
-     * @param  \Illuminate\Http\Requests\StoreFormRequest $request el cual valida y a la vez contiene
-     * los datos del formulario por insertar.
-     * 
+     * @param  \App\Http\Requests\StoreFormRequest  $request
+     * @return \Illuminate\Http\Response
      */
-    public function store(StoreFormRequest $request)
+    public function store(FormRequest $request)
     {
-        Form::create($request->all() + ['user_id' => $request->user()->id, 'is_active' => '1']);
+        Form::create($request->all() + [
+            'user_id' => $request->user()->id,
+            'uuid' => Str::uuid(),
+            'is_active' => '1'
+        ]);
 
         return redirect()->route('forms.index')->with('status', __('The form was created successfully.'));
     }
@@ -59,8 +64,14 @@ class FormController extends Controller
      * 
      * Por último, nos redirige de nuevo a la página de registro o form con un mensaje de error o de éxito.
      */
-    public function addUserToForm(AddUserToFormRequest $request, Form $form)
+    // public function addUserToForm(AddUserToFormRequest $request, Form $form)
+    public function addUserToForm(AddUserToFormRequest $request, $uuid)
     {
+        $form = Form::where('uuid', $uuid)->first();
+
+        if (!$form) {
+            abort(404);
+        }
 
         if ($request->id == "") {
             $user = User::create([
@@ -76,13 +87,13 @@ class FormController extends Controller
             $user = User::find($request->id);
 
             if ($form->users()->firstWhere('user_id', '=', $user->id)) {
-                return redirect('/forms/' . $request->page)->with('error', 'El usuario ingresado ya se encuentra registrado');
+                return redirect()->back()->with('error', 'El usuario ingresado ya se encuentra registrado');
             }
         }
 
         $form->users()->attach($user);
 
-        return redirect('/forms/' . $request->page)->with('status', 'Ha sido registrado con éxito');
+        return redirect()->back()->with('status', 'Ha sido registrado con éxito');
     }
 
     /**
@@ -93,6 +104,8 @@ class FormController extends Controller
      */
     public function getUsersForm(Form $form)
     {
+        $this->authorize('subscribers', $form);
+
         return [
             'users' => $form->users,
             'noUsers' => count($form->users)
@@ -106,9 +119,12 @@ class FormController extends Controller
      */
     public function PDF(Form $form)
     {
+        $this->authorize('pdf', $form);
+
         $pdf = PDF::loadView('pdf.form', [
             'form' => $form
         ]);
+
         return $pdf->stream('Lista.pdf');
     }
 
@@ -119,21 +135,23 @@ class FormController extends Controller
      */
     public function switchActive(Form $form)
     {
+        $this->authorize('update', $form);
+
         $form->update(['is_active' => !$form->is_active]);
 
         return redirect()->route('forms.index')->with('status', __('The state of the form was successfully modified.'));
     }
 
     /**
-     * Método que redirige a la vista de registro de un formulario en específico. Requiere un parámetro:
+     * Muestra el recurso especificado.
      *
-     * @param  \App\Form  $form formulario específico.
-     *
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
      */
-    public function show(Form $form)
+    public function show($uuid)
     {
         return view('forms.show', [
-            'form' => $form
+            'form' => Form::where('uuid', $uuid)->first()
         ]);
     }
 
@@ -145,6 +163,8 @@ class FormController extends Controller
      */
     public function showList(Form $form)
     {
+        $this->authorize('subscribers', $form);
+
         return view('forms.list', [
             'form' => $form
         ]);
@@ -172,44 +192,47 @@ class FormController extends Controller
         ]);
     }
 
-
     /**
-     * Método que redirige a la vista edit de un formulario en específico. Requiere un parámetro:
+     * Muestre el formulario para editar el recurso especificado.
      *
-     * @param  \App\Form  $form formulario a editar.
-     * 
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
      */
     public function edit(Form $form)
     {
+        $this->authorize('update', $form);
+
         return view('forms.edit', [
-            'user' => Auth::user(),
             'form' => $form
         ]);
     }
 
     /**
-     * Método que edita o actualiza los datos de un formulario específico. Requiere dos parámetros:
+     * Actualiza el recurso especificado en el almacenamiento.
      *
-     * @param  \Illuminate\Http\Requests\UpdateFormRequest  $request el cual valida y contiene los datos nuevos 
-     * del formulario.
-     * @param  \App\Form  $form el cual es el formulario a actualizar.
-     * 
+     * @param  \Illuminate\Http\Requests\UpdateFormRequest  $request
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateFormRequest $request, Form $form)
+    public function update(FormRequest $request, Form $form)
     {
-        $form->update($request->all());
+        $this->authorize('update', $form);
+
+        $form->update($request->validated());
 
         return redirect()->route('forms.index')->with('status', __('The form was successfully edited.'));
     }
 
     /**
-     * Método que elimina un formulario en específico. Requiere un parámetro:
+     * Elimina el recurso especificado del almacenamiento.
      *
-     * @param  \App\Form  $form formulario por eliminar.
-     * 
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Form $form)
     {
+        $this->authorize('delete', $form);
+
         $form->delete();
 
         return redirect()->route('forms.index')->with('status', __('The form was successfully removed.'));

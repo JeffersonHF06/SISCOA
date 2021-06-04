@@ -2251,9 +2251,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+<<<<<<< HEAD
 //
 //
 //
+=======
+>>>>>>> 4f467643bb978856c3e95d654769031061d8c2ae
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["page", "errors"],
@@ -3742,27 +3745,6 @@ var render = function() {
       }
     }),
     _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.page,
-          expression: "page"
-        }
-      ],
-      attrs: { hidden: "", type: "text", name: "page" },
-      domProps: { value: _vm.page },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.page = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col" }, [
         _c("div", { staticClass: "form-group" }, [
@@ -3802,7 +3784,9 @@ var render = function() {
           _vm.errors.email != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n          " + _vm._s(_vm.errors.email[0]) + "\n        "
+                  "\n                    " +
+                    _vm._s(_vm.errors.email[0]) +
+                    "\n                "
                 )
               ])
             : _vm._e()
@@ -3853,7 +3837,9 @@ var render = function() {
           _vm.errors.name != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n          " + _vm._s(_vm.errors.name[0]) + "\n        "
+                  "\n                    " +
+                    _vm._s(_vm.errors.name[0]) +
+                    "\n                "
                 )
               ])
             : _vm._e()
@@ -3905,7 +3891,9 @@ var render = function() {
           _vm.errors.phone != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n          " + _vm._s(_vm.errors.phone[0]) + "\n        "
+                  "\n                    " +
+                    _vm._s(_vm.errors.phone[0]) +
+                    "\n                "
                 )
               ])
             : _vm._e()
@@ -4004,9 +3992,15 @@ var render = function() {
           _vm.errors.position_id != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
+<<<<<<< HEAD
                   "\n          " +
                     _vm._s(_vm.errors.position_id[0]) +
                     "\n        "
+=======
+                  "\n                    " +
+                    _vm._s(_vm.errors.position[0]) +
+                    "\n                "
+>>>>>>> 4f467643bb978856c3e95d654769031061d8c2ae
                 )
               ])
             : _vm._e()
@@ -16164,7 +16158,8 @@ module.exports = g;
  * building robust, powerful web applications using Vue and Laravel.
  */
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -16185,14 +16180,20 @@ Vue.component("List", __webpack_require__(/*! ./components/List.vue */ "./resour
  */
 
 var app = new Vue({
-  el: '#app'
-}); //Método para copiar enlace de form al clipboard
+  el: "#app"
+}); // window.copy = id => {
+//     var copyText = document.getElementById("link-" + id);
+//     copyText.select();
+//     document.execCommand("copy");
+//     $("#copiedToast").toast("show");
+// };
+// Método para copiar enlace de form al clipboard
 
 window.copyLink = function (id) {
-  var copyText = document.getElementById("link" + id);
+  var copyText = document.getElementById("link-" + id);
   copyText.select();
   document.execCommand("copy");
-  $('#copiedToast').toast('show');
+  $("#copiedToast").toast("show");
 };
 
 /***/ }),
@@ -16353,8 +16354,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/jefferson/Escritorio/SISCOA/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/jefferson/Escritorio/SISCOA/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\DOCUMENTOS KEVIN\GITHUB PROJECTS\siscoa\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\DOCUMENTOS KEVIN\GITHUB PROJECTS\siscoa\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

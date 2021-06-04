@@ -747,6 +747,8 @@
     "The user was created successfully.": "El usuario se creó correctamente.",
     "The user was edited successfully.": "El usuario se editó correctamente.",
     "The user was successfully removed.": "El usuario fue eliminado con éxito.",
-    "User information edited successfully": "Información del usuario editada con éxito.",
+    "Copy": "Copiar",
+    "Go this section": "Ir a esta sección",
+    "Your personal information has been edited correctly.": "Tú información personal se ha editado correctamente.",
     "Profile: edit personal information": "Perfil: editar información personal"
 }

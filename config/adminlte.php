@@ -187,7 +187,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -234,7 +234,7 @@ return [
             'text' => 'Formularios',
             'url'  => 'forms',
             'icon' => 'fas fa-clipboard-list',
-            'can' => ['admin','official']
+            'can' => ['admin', 'official']
         ],
     ],
 
@@ -343,7 +343,7 @@ return [
                 ],
             ],
         ],
-    ],  
+    ],
 
     /*
     |--------------------------------------------------------------------------

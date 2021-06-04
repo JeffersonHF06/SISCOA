@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Foundation\Http\FormRequest as GG;
 
-class UpdateFormRequest extends FormRequest
+class FormRequest extends GG
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,19 +24,25 @@ class UpdateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string',
+            'title'       => 'required|string',
             'description' => 'required|string',
-            'date' => 'required|date',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'date'        => 'required|date',
+            'start_time'  => 'required',
+            'end_time'    => 'required'
         ];
     }
 
-    public function attributes(){
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
         return [
-            'title' => 'motivo',
+            'title'      => 'motivo',
             'start_time' => 'hora de inicio',
-            'end_time' => 'hora de finalización',
+            'end_time'   => 'hora de finalización'
         ];
     }
 }

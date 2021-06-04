@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Form;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Role;
+use App\Policies\FormPolicy;
 use App\User;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        Form::class => FormPolicy::class,
     ];
 
     /**
@@ -27,8 +28,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function (User $user, $value) {
-            return $value == $user->role->name;
+        Gate::define('admin', function (User $user) {
+            return $user->role->name == 'admin';
+        });
+
+        Gate::define('official', function (User $user) {
+            return $user->role->name == 'official';
         });
     }
 }

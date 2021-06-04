@@ -1,43 +1,46 @@
 <tr>
-    <td id="table-body-text">
+    <td>
         {{ $user->name }}
     </td>
 
-    <td id="table-body-text">
+    <td>
         {{ $user->email }}
     </td>
 
-    <td id="table-body-text">
+    <td>
         {{ $user->phone }}
     </td>
 
-    <td id="table-body-text">
+    <td>
         {{ $user->career->name }}
     </td>
 
-    <td id="table-body-text">
+    <td>
         {{ $user->position->name }}
     </td>
 
-    <td id="table-body-text">
+    <td>
         {{ $user->role->label }}
     </td>
 
-    <td id="table-body-elements">
+    <td>
         <div class="row">
-            <a class="btn btn-secondary mr-2 mb-2" href="{{ route('users.edit', $user->id) }} ">
-                <i class="fas fa-marker"></i>
+            <x-a icon="fas fa-marker" class="m-1" color="secondary" href="{{ route('users.edit', $user->id) }}">
                 {{ __('Edit') }}
-            </a>
+            </x-a>
 
             <x-form method="PUT" action="{{ route('users.activate', $user->id) }}">
-                <button type="submit" class="btn {{ $user->is_active == 1 ? 'btn-success' : 'btn-danger' }} mr-2 mb-2"><i class="fas {{ $user->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}"> </i>{{ $user->is_active == 1 ? ' Activo' : ' Inactivo' }}</button>
+                <button type="submit"
+                    class="btn {{ $user->is_active == 1 ? 'btn-success' : 'btn-danger' }} mr-2 mb-2"><i
+                        class="fas {{ $user->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}">
+                    </i>{{ $user->is_active == 1 ? ' Activo' : ' Inactivo' }}
+                </button>
             </x-form>
 
-            <button type="button" class="btn btn-danger mr-2 mb-2" data-toggle="modal"
+            <x-button icon="far fa-trash-alt" color="danger" type="button" class="m-1" data-toggle="modal"
                 data-target="#delete-user-{{ $user->id }}-modal">
-                <i class="far fa-trash-alt"></i> {{ __('Delete') }}
-            </button>
+                {{ __('Delete') }}
+            </x-button>
 
             <x-modal id="delete-user-{{ $user->id }}-modal">
                 <x-slot name="title">{{ __('Confirm') }}</x-slot>

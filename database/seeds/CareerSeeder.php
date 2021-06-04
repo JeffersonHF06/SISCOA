@@ -13,46 +13,46 @@ class CareerSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('careers')->insert([
-            'name' => 'Administración de Empresas',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        $now = Carbon::now();
 
-        DB::table('careers')->insert([
-            'name' => 'Química Industrial',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        $carrers = [
+            [
+                'name' => 'Administración de Empresas',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Química Industrial',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Ingeniería en Sistemas',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Estudios Generales',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Cursos de Servicio',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Administrativos',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Otro',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]
+        ];
 
-        DB::table('careers')->insert([
-            'name' => 'Ingeniería en Sistemas',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        DB::table('careers')->insert([
-            'name' => 'Estudios Generales',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        DB::table('careers')->insert([
-            'name' => 'Cursos de Servicio',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        DB::table('careers')->insert([
-            'name' => 'Administrativos',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        DB::table('careers')->insert([
-            'name' => 'Otro',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        DB::table('careers')->insert($carrers);
     }
 }

@@ -1,55 +1,51 @@
 <tr>
-    <td id="table-body-text">
+    <td>
         {{ $form->title }}
     </td>
 
-    <td id="table-body-text">
+    <td>
         {{ $form->date->isoFormat('LL') }}
     </td>
 
-    <td id="table-body-text">
+    <td>
         {{ $form->start_time->format('g:i A') }} - {{ $form->end_time->format('g:i A') }}
     </td>
 
-    <td id="table-body-text">
-        <input style="opacity: .01; height:0;
-      position:absolute;
-      z-index: -1;" type="text" id="link{{ $form->id }}" value="{{ asset('forms') }}/{{ $form->id }}" />
-        <button type="button" id="linkBtn" data-toggle="tooltip" data-placement="top" title="Copiar"
-            class="btn btn-dark mr-2 mb-2" onclick="copyLink({{ $form->id }})">
-            {{ __('Copy Link') }}
-        </button>
+    <td>
+        <input type="text" class="sr-only" id="link-{{ $form->id }}"
+            value="{{ route('forms.show', $form->uuid) }}">
+
+        <x-button icon="fas fa-copy" color="dark" class="m-1" type="button" onclick="copyLink({{ $form->id }})">
+            {{ __('Copy') }}
+        </x-button>
     </td>
 
-    <td id="table-body-elements">
+    <td>
         <div class="row">
-            <button type="button" class="btn btn-info mr-2 mb-2" data-toggle="modal"
+            <x-button icon="fas fa-info-circle" type="button" class="m-1" data-toggle="modal"
                 data-target="#details-form-{{ $form->id }}-modal">
-                <i class="fas fa-info-circle"></i>
                 {{ __('Details') }}
-            </button>
+            </x-button>
 
-            <a class="btn btn-secondary mr-2 mb-2" href="{{ route('forms.edit', $form->id) }}">
-                <i class="fas fa-marker"></i>
+            <x-a icon="fas fa-marker" color="secondary" class="m-1" href="{{ route('forms.edit', $form->id) }}">
                 {{ __('Edit') }}
-            </a>
+            </x-a>
 
-            <a class="btn btn-warning mr-2 mb-2" href="{{ route('forms.pdf', $form->id) }}">
-                <i class="far fa-file-pdf"></i>
+            <x-a icon="far fa-file-pdf" color="warning" class="m-1" href="{{ route('forms.pdf', $form->id) }}">
                 {{ __('PDF') }}
-            </a>
+            </x-a>
 
             <x-form method="PUT" action="{{ route('forms.activate', $form->id) }}">
-                <button type="submit" class="btn {{ $form->is_active == 1 ? 'btn-success' : 'btn-danger' }} mr-2 mb-2">
-                    <i class="fas {{ $form->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}"></i>
+                <x-button icon="fas {{ $form->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}" class="m-1"
+                    type="submit" color="{{ $form->is_active == 1 ? 'success' : 'danger' }}">
                     {{ $form->is_active == 1 ? __('Active') : __('Inactive') }}
-                </button>
+                </x-button>
             </x-form>
 
-            <button type="button" class="btn btn-danger mr-2 mb-2" data-toggle="modal"
+            <x-button icon="far fa-trash-alt" type="button" class="m-1" color="danger" data-toggle="modal"
                 data-target="#delete-form-{{ $form->id }}-modal">
-                <i class="far fa-trash-alt"></i> {{ __('Delete') }}
-            </button>
+                {{ __('Delete') }}
+            </x-button>
 
             <x-modal id="delete-form-{{ $form->id }}-modal">
                 <x-slot name="title">{{ __('Confirm') }}</x-slot>
