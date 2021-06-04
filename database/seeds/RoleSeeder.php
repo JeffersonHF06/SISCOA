@@ -21,7 +21,7 @@ class RoleSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
- 
+
         //Official role
         DB::table('roles')->insert([
             'name' => 'official',
@@ -30,14 +30,14 @@ class RoleSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
- 
-         //Hearer role
+
+        //Hearer role
         DB::table('roles')->insert([
-             'name' => 'hearer',
-             'label' => 'Oyente',
-             'description' => 'Rol para oyentes, este rol limita el acceso total al sistema, solamente pueden registrar asistencia en los formularios',
-             'created_at' => Carbon::now(),
-             'updated_at' => Carbon::now(),
+            'name' => 'hearer',
+            'label' => 'Oyente',
+            'description' => 'Rol para oyentes, este rol limita el acceso total al sistema, solamente pueden registrar asistencia en los formularios',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

@@ -25,19 +25,41 @@
 
                 <div class="form-group col-md">
                     <label for="position">{{ __('Position') }}</label>
-                    <x-input name="position" value="{{ old('position') ?? $user->position }}" id="position" />
+                    <x-select name="position_id" id="position">
+                        </option>
+
+                        @foreach ($positions as $position)
+                            <option {{ (old('position_id') ?? $user->position_id)  == $position->id ? 'selected' : '' }} value="{{ $position->id }}">
+                                {{ $position->name }}
+                            </option>
+                        @endforeach
+                    </x-select>
                 </div>
+            </div>
+
+            <div class="form-row">
+
+                
+                    <div class="form-group col-md">
+                        <label for="career">{{ __('Career') }}</label>
+                        <x-select name="career_id" id="career">
+                            </option>
+    
+                            @foreach ($careers as $career)
+                                <option {{ (old('career_id') ?? $user->career_id) == $career->id ? 'selected' : '' }} value="{{ $career->id }}">
+                                    {{ $career->name }}
+                                </option>
+                            @endforeach
+                        </x-select>
+                    </div>
 
                 <div class="form-group col-md">
                     <label for="role">{{ __('Role') }}</label>
                     <x-select name="role_id" id="role">
-                        <option {{ old('role_id') ? '' : 'selected' }} value="" disabled>{{ __('Select') }}
                         </option>
 
                         @foreach ($roles as $role)
-                            <option
-                                {{ (old('role_id') == $role->id ? 'selected' : $user->role->id == $role->id) ? 'selected' : '' }}
-                                value="{{ $role->id }}">
+                            <option {{ (old('role_id') ?? $user->role_id) == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
                                 {{ $role->label }}
                             </option>
                         @endforeach
@@ -56,6 +78,8 @@
                     <x-input name="password_confirmation" type="password" />
                 </div>
             </div>
+
+            <x-input name="kind" type="text" value="1" hidden/>
 
             <div class="form-row">
                 <div class="form-group col d-flex justify-content-end">

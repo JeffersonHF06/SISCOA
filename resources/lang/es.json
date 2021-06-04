@@ -711,7 +711,7 @@
 
 
 
-
+    "Career": "Carrera",
     "Phone": "Teléfono",
     "Position": "Puesto",
     "Password confirmation": "Confirmación de contraseña",
@@ -720,6 +720,9 @@
     "Are you sure you want to delete the form :form?": "¿Seguro de eliminar el formulario :form?",
     "Title": "Motivo",
     "Activity date": "Fecha de la actividad",
+    "Start hour": "Hora de inicio",
+    "End hour": "Hora de finalización",
+    "Copy Link": "Copiar enlace",
     "Start time": "Hora de inicio",
     "End time": "Hora de finalización",
     "Description": "Descripción",
@@ -734,6 +737,7 @@
     "Add Form": "Añadir Formulario",
     "Edit Form": "Editar Formulario",
     "Forms": "Formularios",
+    "Assist Forms": "Formularios de asistencia",
     "Schedule": "Horario",
     "Link": "Enlace",
     "The form was created successfully.": "El formulario se creó correctamente.",
@@ -744,5 +748,7 @@
     "The user was edited successfully.": "El usuario se editó correctamente.",
     "The user was successfully removed.": "El usuario fue eliminado con éxito.",
     "Copy": "Copiar",
-    "Go this section": "Ir a esta sección"
+    "Go this section": "Ir a esta sección",
+    "User information edited successfully": "Información del usuario editada con éxito.",
+    "Profile: edit personal information": "Perfil: editar información personal"
 }

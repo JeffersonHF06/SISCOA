@@ -64,8 +64,8 @@ return [
     |
     */
 
-    'usermenu_enabled' => false,
-    'usermenu_header' => false,
+    'usermenu_enabled' => true,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
     'usermenu_desc' => false,
@@ -193,7 +193,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => 'users/profile',
 
     /*
     |--------------------------------------------------------------------------
