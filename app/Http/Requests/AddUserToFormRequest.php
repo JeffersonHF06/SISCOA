@@ -27,7 +27,8 @@ class AddUserToFormRequest extends FormRequest
             'email'       => $this->filled('id') ? 'required|email' : 'required|email|unique:users,email',
             'name'        => 'required|string',
             'phone'       => 'required|integer',
-            'position_id' => 'required|string'
+            'position_id' => 'required',
+            'career_id' => 'required'
         ];
     }
 
@@ -35,7 +36,7 @@ class AddUserToFormRequest extends FormRequest
     {
         return [
             'position_id' => 'puesto',
-
+            
             // Revisar porque algunas a están.
             // 'email' => 'correo electrónico',
             // 'name' => 'nombre',

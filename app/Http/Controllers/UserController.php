@@ -139,8 +139,11 @@ class UserController extends Controller
      * Método para obtener todas las posiciones.
      * 
      */
-    public function getPositions(){
-        return Position::all();
+    public function getPositionsAndCareers(){
+        return [
+            'positions' => Position::all(),
+            'careers' => Career::all()
+        ];
     }
 
     /**

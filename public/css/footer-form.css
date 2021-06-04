@@ -3,10 +3,12 @@
 #footer{
     background-color:	darkred;
     color: white;
+    margin-top:5%;
+    padding-bottom: 2%;
 }
 
 #copyright{
-    margin-top: 1%;
+    margin-top: 1.5%;
     margin-left: 1%;
 }
 

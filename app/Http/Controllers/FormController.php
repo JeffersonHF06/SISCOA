@@ -74,26 +74,21 @@ class FormController extends Controller
         }
 
         if ($request->id == "") {
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'position_id' => $request->position,
-                'password' => Hash::make("default"),
-                'role_id' => '3',
-                'is_active' => '1'
-            ]);
+            $user = User::create($request->validated() + [
+            'password' => 'default',
+            'role_id' => '3',
+            'is_active' => '1']);
         } else {
             $user = User::find($request->id);
 
             if ($form->users()->firstWhere('user_id', '=', $user->id)) {
-                return redirect()->back()->with('error', 'El usuario ingresado ya se encuentra registrado');
+                return redirect()->back()->with('error', __('The user was already registered in this form'));
             }
         }
 
         $form->users()->attach($user);
 
-        return redirect()->back()->with('status', 'Ha sido registrado con éxito');
+        return redirect()->back()->with('status', __('Registered succesfully'));
     }
 
     /**

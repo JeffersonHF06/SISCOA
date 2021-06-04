@@ -31,17 +31,11 @@ const app = new Vue({
     el: "#app"
 });
 
-// window.copy = id => {
-//     var copyText = document.getElementById("link-" + id);
-//     copyText.select();
-//     document.execCommand("copy");
-//     $("#copiedToast").toast("show");
-// };
-
 // Método para copiar enlace de form al clipboard
 window.copyLink = id => {
     var copyText = document.getElementById("link-" + id);
 
+    console.log(copyText)
     copyText.select();
     document.execCommand("copy");
 

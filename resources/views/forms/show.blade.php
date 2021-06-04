@@ -3,6 +3,7 @@
 @section('title', 'UNA')
 
 @section('content')
+    <br>
     <div class="container text-style">
         <h2>Registro de asistencia</h2>
         <h5>Motivo: {{ $form->title }}</h5>
@@ -11,7 +12,6 @@
             {{ $form->end_time->format('g:i A') }}</h5>
 
         <x-flash-message />
-        {{ $errors }}
 
         <x-form method="POST" action="{{ route('forms.subscribe', $form->uuid) }}">
             <div>

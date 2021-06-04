@@ -2251,17 +2251,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-<<<<<<< HEAD
 //
 //
 //
-=======
->>>>>>> 4f467643bb978856c3e95d654769031061d8c2ae
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["page", "errors"],
   mounted: function mounted() {
-    this.getPositions();
+    this.getPositionsAndCareers();
   },
   data: function data() {
     return {
@@ -2270,8 +2306,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       name: "",
       phone: "",
       position_id: "",
+      career_id: "",
       blocked: false,
-      positions: []
+      positions: [],
+      careers: []
     };
   },
   methods: {
@@ -2295,12 +2333,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this.name = data[0].name;
                     _this.phone = data[0].phone;
                     _this.position_id = data[0].position_id;
+                    _this.career_id = data[0].career_id;
                     _this.blocked = true;
                   } else {
                     _this.id = "";
                     _this.name = "";
                     _this.phone = "";
                     _this.position_id = "";
+                    _this.career_id = "";
                     _this.blocked = false;
                   }
                 })["catch"](function (err) {
@@ -2320,9 +2360,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
 
     /**
-     * Método que obtiene las posiciones.
+     * Método que obtiene las posiciones y carreras.
      */
-    getPositions: function getPositions() {
+    getPositionsAndCareers: function getPositionsAndCareers() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -2331,9 +2371,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/users/getPositions").then(function (_ref2) {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/users/getPositionsAndCareers").then(function (_ref2) {
                   var data = _ref2.data;
-                  _this2.positions = data;
+                  _this2.positions = data.positions;
+                  _this2.careers = data.careers;
                 })["catch"](function (err) {
                   console.log(err);
                 });
@@ -3729,6 +3770,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("br"),
+    _vm._v(" "),
     _c("input", {
       directives: [
         { name: "model", rawName: "v-model", value: _vm.id, expression: "id" }
@@ -3746,7 +3789,7 @@ var render = function() {
     }),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
+      _c("div", { staticClass: "col-4" }, [
         _c("div", { staticClass: "form-group" }, [
           _c(
             "label",
@@ -3784,18 +3827,14 @@ var render = function() {
           _vm.errors.email != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.errors.email[0]) +
-                    "\n                "
+                  "\n          " + _vm._s(_vm.errors.email[0]) + "\n        "
                 )
               ])
             : _vm._e()
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "col" }, [
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-4" }, [
         _c("div", { staticClass: "form-group" }, [
           _c(
             "label",
@@ -3837,18 +3876,14 @@ var render = function() {
           _vm.errors.name != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.errors.name[0]) +
-                    "\n                "
+                  "\n          " + _vm._s(_vm.errors.name[0]) + "\n        "
                 )
               ])
             : _vm._e()
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-6" }, [
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-4" }, [
         _c("div", { staticClass: "form-group" }, [
           _c(
             "label",
@@ -3891,15 +3926,15 @@ var render = function() {
           _vm.errors.phone != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.errors.phone[0]) +
-                    "\n                "
+                  "\n          " + _vm._s(_vm.errors.phone[0]) + "\n        "
                 )
               ])
             : _vm._e()
         ])
-      ]),
-      _vm._v(" "),
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-row" }, [
       _c("div", { staticClass: "col-6" }, [
         _c("div", { staticClass: "form-group" }, [
           _c(
@@ -3952,9 +3987,7 @@ var render = function() {
                   { key: index, domProps: { value: position.id } },
                   [
                     _vm._v(
-                      "\n              " +
-                        _vm._s(position.name) +
-                        "\n            "
+                      "\n            " + _vm._s(position.name) + "\n          "
                     )
                   ]
                 )
@@ -3992,15 +4025,108 @@ var render = function() {
           _vm.errors.position_id != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-<<<<<<< HEAD
                   "\n          " +
                     _vm._s(_vm.errors.position_id[0]) +
                     "\n        "
-=======
-                  "\n                    " +
-                    _vm._s(_vm.errors.position[0]) +
-                    "\n                "
->>>>>>> 4f467643bb978856c3e95d654769031061d8c2ae
+                )
+              ])
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-6" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "label",
+            {
+              staticClass: "control-label required",
+              attrs: { for: "career-input" }
+            },
+            [_vm._v("Carrera")]
+          ),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.career_id,
+                  expression: "career_id"
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.errors.career_id ? "is-invalid" : "",
+              attrs: { disabled: _vm.blocked == true },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.career_id = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "", disabled: "" } }, [
+                _vm._v("Seleccionar")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.careers, function(career, index) {
+                return _c(
+                  "option",
+                  { key: index, domProps: { value: career.id } },
+                  [
+                    _vm._v(
+                      "\n            " + _vm._s(career.name) + "\n          "
+                    )
+                  ]
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.career_id,
+                expression: "career_id"
+              }
+            ],
+            attrs: {
+              hidden: "",
+              readonly: "",
+              type: "text",
+              name: "career_id"
+            },
+            domProps: { value: _vm.career_id },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.career_id = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.errors.career_id != null
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.errors.career_id[0]) +
+                    "\n        "
                 )
               ])
             : _vm._e()
@@ -16160,7 +16286,6 @@ module.exports = g;
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -16181,16 +16306,11 @@ Vue.component("List", __webpack_require__(/*! ./components/List.vue */ "./resour
 
 var app = new Vue({
   el: "#app"
-}); // window.copy = id => {
-//     var copyText = document.getElementById("link-" + id);
-//     copyText.select();
-//     document.execCommand("copy");
-//     $("#copiedToast").toast("show");
-// };
-// Método para copiar enlace de form al clipboard
+}); // Método para copiar enlace de form al clipboard
 
 window.copyLink = function (id) {
   var copyText = document.getElementById("link-" + id);
+  console.log(copyText);
   copyText.select();
   document.execCommand("copy");
   $("#copiedToast").toast("show");
@@ -16354,8 +16474,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\DOCUMENTOS KEVIN\GITHUB PROJECTS\siscoa\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\DOCUMENTOS KEVIN\GITHUB PROJECTS\siscoa\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/jefferson/Escritorio/SISCOA/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/jefferson/Escritorio/SISCOA/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
