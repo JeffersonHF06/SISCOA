@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Form;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreFormRequest;
-use App\Http\Requests\UpdateFormRequest;
 use App\Http\Requests\AddUserToFormRequest;
 use App\Http\Requests\FormRequest;
 use Illuminate\Support\Facades\Hash;
@@ -45,7 +43,6 @@ class FormController extends Controller
      * @param  \App\Http\Requests\StoreFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(StoreFormRequest $request)
     public function store(FormRequest $request)
     {
         Form::create($request->all() + [
@@ -221,7 +218,7 @@ class FormController extends Controller
     {
         $this->authorize('update', $form);
 
-        $form->update($request->all());
+        $form->update($request->validated());
 
         return redirect()->route('forms.index')->with('status', __('The form was successfully edited.'));
     }

@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
             /**
              * Rutas para el mantenimiento de Usuarios.
              */
-            Route::resource('users', 'UserController')->except(['show', 'update']);
+            Route::resource('users', 'UserController')->except(['show']);
             Route::post('users/search', 'UserController@search')->name('users.search');
             Route::put('users/switchActive/{user}', 'UserController@switchActive')->name('users.activate');
         });
@@ -30,7 +30,6 @@ Route::middleware('auth')->group(function () {
          */
         Route::get('users/profile', 'UserController@profile')->name('users.profile');
         Route::put('users/profile/{user}', 'UserController@update')->name('users.profile.update');
-        Route::put('users/{user}', 'UserController@update')->name('users.update');
 
         /**
          * Rutas para el mantenimiento de Formularios.

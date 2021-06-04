@@ -24,15 +24,15 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'  => 'required|string',
-            'phone' => 'required|integer',
+            'name'        => 'required|string',
+            'phone'       => 'required|integer',
         ];
 
         if (!$this->routeIs('users.profile.update')) {
             $rules += [
+                'role_id'     => 'required|integer',
                 'position_id' => 'required|integer',
                 'career_id'   => 'required|integer',
-                'role_id'     => 'required|integer'
             ];
         }
 
