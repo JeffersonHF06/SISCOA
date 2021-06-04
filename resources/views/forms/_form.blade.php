@@ -12,12 +12,10 @@
     </td>
 
     <td>
-        <input style="opacity: .01; height:0;
-      position:absolute;
-      z-index: -1;" type="text" id="link{{ $form->id }}" value="{{ asset('forms') }}/{{ $form->id }}" />
+        <input type="text" class="sr-only" id="link-{{ $form->id }}"
+            value="{{ route('forms.show', $form->uuid) }}">
 
-        <x-button icon="fas fa-copy" color="dark" class="m-1" type="button" id="linkBtn" data-toggle="tooltip"
-            data-placement="top" title="Copiar" onclick="copyLink({{ $form->id }})">
+        <x-button icon="fas fa-copy" color="dark" class="m-1" type="button" onclick="copyLink({{ $form->id }})">
             {{ __('Copy') }}
         </x-button>
     </td>

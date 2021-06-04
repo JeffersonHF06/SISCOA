@@ -84,10 +84,10 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $validateEmail = User::where('email', $request->email)->first();
-        if ($user != $validateEmail) {
-            return redirect()->back()->withErrors(['email' => 'El correo electrónico ya ha sido registrado.']);
-        }
+        // $validateEmail = User::where('email', $request->email)->first();
+        // if ($user != $validateEmail) {
+        //     return redirect()->back()->withErrors(['email' => 'El correo electrónico ya ha sido registrado.']);
+        // }
 
         if ($request->password != "") {
             $request->merge(['password' => Hash::make($request->password)]);

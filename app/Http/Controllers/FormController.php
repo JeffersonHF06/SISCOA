@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateFormRequest;
 use App\Http\Requests\AddUserToFormRequest;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
@@ -40,12 +41,15 @@ class FormController extends Controller
     /**
      * Almacena un recurso recién creado en el almacenamiento.
      *
-     * @param  \Illuminate\Http\Requests\StoreFormRequest  $request
+     * @param  \App\Http\Requests\StoreFormRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreFormRequest $request)
     {
-        Form::create($request->all() + ['user_id' => $request->user()->id]);
+        Form::create($request->all() + [
+            'user_id' => $request->user()->id,
+            'uuid' => Str::uuid()
+        ]);
 
         return redirect()->route('forms.index')->with('status', __('The form was created successfully.'));
     }
@@ -60,8 +64,14 @@ class FormController extends Controller
      * 
      * Por último, nos redirige de nuevo a la página de registro o form con un mensaje de error o de éxito.
      */
-    public function addUserToForm(AddUserToFormRequest $request, Form $form)
+    // public function addUserToForm(AddUserToFormRequest $request, Form $form)
+    public function addUserToForm(AddUserToFormRequest $request, $uuid)
     {
+        $form = Form::where('uuid', $uuid)->first();
+
+        if (!$form) {
+            abort(404);
+        }
 
         if ($request->id == "") {
             $user = User::create([
@@ -70,19 +80,19 @@ class FormController extends Controller
                 'phone' => $request->phone,
                 'position' => $request->position,
                 'password' => Hash::make("default"),
-                'role_id' => "3"
+                'role_id' => "3",
             ]);
         } else {
             $user = User::find($request->id);
 
             if ($form->users()->firstWhere('user_id', '=', $user->id)) {
-                return redirect('/forms/' . $request->page)->with('error', 'El usuario ingresado ya se encuentra registrado');
+                return redirect()->back()->with('error', 'El usuario ingresado ya se encuentra registrado');
             }
         }
 
         $form->users()->attach($user);
 
-        return redirect('/forms/' . $request->page)->with('status', 'Ha sido registrado con éxito');
+        return redirect()->back()->with('status', 'Ha sido registrado con éxito');
     }
 
     /**
@@ -93,6 +103,8 @@ class FormController extends Controller
      */
     public function getUsersForm(Form $form)
     {
+        $this->authorize('subscribers', $form);
+
         return [
             'users' => $form->users,
             'noUsers' => count($form->users)
@@ -106,9 +118,12 @@ class FormController extends Controller
      */
     public function PDF(Form $form)
     {
+        $this->authorize('pdf', $form);
+
         $pdf = PDF::loadView('pdf.form', [
             'form' => $form
         ]);
+
         return $pdf->stream('Lista.pdf');
     }
 
@@ -119,6 +134,8 @@ class FormController extends Controller
      */
     public function switchActive(Form $form)
     {
+        $this->authorize('update', $form);
+
         $form->update(['is_active' => !$form->is_active]);
 
         return redirect()->route('forms.index')->with('status', __('The state of the form was successfully modified.'));
@@ -130,10 +147,10 @@ class FormController extends Controller
      * @param  \App\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function show(Form $form)
+    public function show($uuid)
     {
         return view('forms.show', [
-            'form' => $form
+            'form' => Form::where('uuid', $uuid)->first()
         ]);
     }
 
@@ -145,6 +162,8 @@ class FormController extends Controller
      */
     public function showList(Form $form)
     {
+        $this->authorize('subscribers', $form);
+
         return view('forms.list', [
             'form' => $form
         ]);
@@ -180,6 +199,8 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
+        $this->authorize('update', $form);
+
         return view('forms.edit', [
             'form' => $form
         ]);
@@ -194,6 +215,8 @@ class FormController extends Controller
      */
     public function update(UpdateFormRequest $request, Form $form)
     {
+        $this->authorize('update', $form);
+
         $form->update($request->all());
 
         return redirect()->route('forms.index')->with('status', __('The form was successfully edited.'));
@@ -207,6 +230,8 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
+        $this->authorize('delete', $form);
+
         $form->delete();
 
         return redirect()->route('forms.index')->with('status', __('The form was successfully removed.'));

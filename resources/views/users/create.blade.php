@@ -31,7 +31,8 @@
                 <div class="form-group col-md">
                     <label for="role">{{ __('Role') }}</label>
                     <x-select name="role_id" id="role">
-                        <option {{ old('role_id') ? '' : 'selected' }} value="" disabled>{{ __('Select') }}
+                        <option {{ old('role_id') ? '' : 'selected' }} value="" disabled>
+                            {{ __('Select') }}
                         </option>
 
                         @foreach ($roles as $role)

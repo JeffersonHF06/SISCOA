@@ -14,11 +14,9 @@ Auth::routes([
 
 Route::middleware('auth')->group(function () {
     Route::middleware('roles')->group(function () {
-
         Route::get('/', 'HomeController@index')->name('home');
 
         Route::middleware('can:admin')->group(function () {
-
             /**
              * Rutas para el mantenimiento de Usuarios.
              */
@@ -41,8 +39,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('ActiveForm')->group(function () {
-    Route::get('forms/{form}', 'FormController@show');
-    Route::post('forms/addUserToForm/{form}', 'FormController@addUserToForm');
+    Route::get('forms/{uuid}', 'FormController@show')->name('forms.show');
+
+    Route::post('forms/addUserToForm/{uuid}', 'FormController@addUserToForm')->name('forms.subscribe');
 });
 
 Route::get('users/getUser/{email}', 'UserController@getUser');

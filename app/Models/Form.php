@@ -15,7 +15,8 @@ class Form extends Model
         'start_time',
         'end_time',
         'is_active',
-        'user_id'
+        'user_id',
+        'uuid'
     ];
 
     protected $casts = ['date' => 'datetime'];

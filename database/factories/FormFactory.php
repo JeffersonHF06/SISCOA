@@ -5,6 +5,7 @@
 use App\User;
 use App\Models\Form;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ $factory->define(Form::class, function (Faker $faker) {
         'start_time'  => $faker->time(),
         'end_time'    => $faker->time(),
         // 'user_id'     => factory(User::class)->create()->id,
-        'user_id'     => '1'
+        'user_id'     => '1',
+        'uuid' => Str::uuid()
     ];
 });
