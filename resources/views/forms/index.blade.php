@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="header">
-        <h1>{{ __('Forms') }}</h1>
+        <h1>{{ __('Assist Forms') }}</h1>
     </x-slot>
 
     <div class="container">
@@ -8,11 +8,10 @@
 
         <div class="row mb-4">
             <div class="col">
-                <x-form method="POST" action="{{ route('forms.search') }}">
+                <x-form method="POST" action="{{ route('forms.search') }}" class="form-inline">
                     <input id="search-input"
                         class="form-control mr-sm-2 {{ $errors->has('search') ? 'is-invalid' : '' }} " type="search"
-                        placeholder="{{ __('Search') }}" aria-label="Buscar" name="search"
-                        value="{{ old('search') }}">
+                        placeholder="Buscar Formulario " aria-label="Buscar" name="search" value="{{ old('search') }}">
 
                     <button class="btn my-2 my-sm-0" type="submit">
                         <i class="fas fa-search"></i>

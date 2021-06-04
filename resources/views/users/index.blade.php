@@ -38,6 +38,7 @@
                         <th>{{ __('Full name') }}</th>
                         <th>{{ __('Email') }}</th>
                         <th>{{ __('Phone') }}</th>
+                        <th>{{ __('Career') }}</th>
                         <th>{{ __('Position') }}</th>
                         <th>{{ __('Role') }}</th>
                         <th>{{ __('Actions') }}</th>

@@ -711,7 +711,7 @@
 
 
 
-
+    "Career": "Carrera",
     "Phone": "Teléfono",
     "Position": "Puesto",
     "Password confirmation": "Confirmación de contraseña",
@@ -737,6 +737,7 @@
     "Add Form": "Añadir Formulario",
     "Edit Form": "Editar Formulario",
     "Forms": "Formularios",
+    "Assist Forms": "Formularios de asistencia",
     "Schedule": "Horario",
     "Link": "Enlace",
     "The form was created successfully.": "El formulario se creó correctamente.",
@@ -745,5 +746,7 @@
     "The form was successfully removed.": "El formulario se eliminó correctamente.",
     "The user was created successfully.": "El usuario se creó correctamente.",
     "The user was edited successfully.": "El usuario se editó correctamente.",
-    "The user was successfully removed.": "El usuario fue eliminado con éxito."
+    "The user was successfully removed.": "El usuario fue eliminado con éxito.",
+    "User information edited successfully": "Información del usuario editada con éxito.",
+    "Profile: edit personal information": "Perfil: editar información personal"
 }

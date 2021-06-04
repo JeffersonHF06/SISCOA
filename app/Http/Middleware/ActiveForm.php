@@ -18,7 +18,7 @@ class ActiveForm
         $form = $request->form;
         
         if($form->is_active != 1){
-            return abort(403, 'Formulario Inactivo');
+            return abort(403, 'Formulario '.$form->title.' inactivo.');
         }
       
         return $next($request);

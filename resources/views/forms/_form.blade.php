@@ -40,7 +40,7 @@
             </a>
 
             <x-form method="PUT" action="{{ route('forms.activate', $form->id) }}">
-                <button type="submit" class="btn {{ $form->is_active == 1 ? 'btn-success' : 'btn-danger' }}">
+                <button type="submit" class="btn {{ $form->is_active == 1 ? 'btn-success' : 'btn-danger' }} mr-2 mb-2">
                     <i class="fas {{ $form->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}"></i>
                     {{ $form->is_active == 1 ? __('Active') : __('Inactive') }}
                 </button>

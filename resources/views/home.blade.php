@@ -34,7 +34,6 @@
 
     @can('official')
         <div id="off-forms" class="row align-items-center align-content-center flex-column">
-        </div>
         <div class="col-sm-6">
             <div class="card bg-dark text-white">
                 <div class="card-body">

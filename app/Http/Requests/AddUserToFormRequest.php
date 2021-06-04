@@ -28,14 +28,14 @@ class AddUserToFormRequest extends FormRequest
                 'email' => 'required',
                 'name' => 'required|string',
                 'phone' => 'required|integer',
-                'position' => 'required|string',
+                'position_id' => 'required|string',
             ];
         }else{
             return [
                 'email' => 'required|email|unique:users,email',
                 'name' => 'required|string',
                 'phone' => 'required|integer',
-                'position' => 'required|string',
+                'position_id' => 'required|string',
             ];
         }
     }
@@ -45,7 +45,7 @@ class AddUserToFormRequest extends FormRequest
             'email' => 'correo electrónico',
             'name' => 'nombre',
             'phone' => 'teléfono',
-            'position' => 'puesto',
+            'position_id' => 'puesto',
         ];
     }
 }

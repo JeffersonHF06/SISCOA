@@ -44,7 +44,7 @@ class FormController extends Controller
      */
     public function store(StoreFormRequest $request)
     {
-        Form::create($request->all() + ['user_id' => $request->user()->id]);
+        Form::create($request->all() + ['user_id' => $request->user()->id, 'is_active' => '1']);
 
         return redirect()->route('forms.index')->with('status', __('The form was created successfully.'));
     }
@@ -67,9 +67,10 @@ class FormController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
-                'position' => $request->position,
+                'position_id' => $request->position,
                 'password' => Hash::make("default"),
-                'role_id' => "3"
+                'role_id' => '3',
+                'is_active' => '1'
             ]);
         } else {
             $user = User::find($request->id);

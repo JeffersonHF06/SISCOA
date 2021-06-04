@@ -14,7 +14,7 @@
 
         <x-flash-message />
 
-        <form action="/forms/addUserToForm/{{ $form->id }}" id="search-form" method="POST">
+        <form action="{{ route('forms.addUserForm', $form->id)}}" id="search-form" method="POST">
             @csrf
 
             <div>

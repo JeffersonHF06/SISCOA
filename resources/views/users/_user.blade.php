@@ -12,7 +12,11 @@
     </td>
 
     <td id="table-body-text">
-        {{ $user->position }}
+        {{ $user->career->name }}
+    </td>
+
+    <td id="table-body-text">
+        {{ $user->position->name }}
     </td>
 
     <td id="table-body-text">
@@ -25,6 +29,10 @@
                 <i class="fas fa-marker"></i>
                 {{ __('Edit') }}
             </a>
+
+            <x-form method="PUT" action="{{ route('users.activate', $user->id) }}">
+                <button type="submit" class="btn {{ $user->is_active == 1 ? 'btn-success' : 'btn-danger' }} mr-2 mb-2"><i class="fas {{ $user->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}"> </i>{{ $user->is_active == 1 ? ' Activo' : ' Inactivo' }}</button>
+            </x-form>
 
             <button type="button" class="btn btn-danger mr-2 mb-2" data-toggle="modal"
                 data-target="#delete-user-{{ $user->id }}-modal">

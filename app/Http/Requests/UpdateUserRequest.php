@@ -23,24 +23,44 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->password != ""){
+        if($this->kind == 1){
+            if($this->password != ""){
+                return [
+                    'name' => 'required|string',
+                    'email' => 'required|email',
+                    'phone' => 'required|integer',
+                    'position_id' => 'required',
+                    'career_id' => 'required',
+                    'role_id' => 'required',
+                    'password' => 'required|confirmed',
+                ];
+            }
+    
             return [
                 'name' => 'required|string',
                 'email' => 'required|email',
                 'phone' => 'required|integer',
-                'position' => 'required|string',
-                'role_id' => 'required',
-                'password' => 'required|confirmed',
+                'career_id' => 'required',
+                'position_id' => 'required',
+                'role_id' => 'required'
             ];
         }
-
-        return [
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'phone' => 'required|integer',
-            'position' => 'required|string',
-            'role_id' => 'required'
-        ];
+        else{
+            if($this->password != ""){
+                return [
+                    'name' => 'required|string',
+                    'email' => 'required|email',
+                    'phone' => 'required|integer',
+                    'password' => 'required|confirmed',
+                ];
+            }
+    
+            return [
+                'name' => 'required|string',
+                'email' => 'required|email',
+                'phone' => 'required|integer',
+            ];
+        }
     }
 
     public function attributes(){

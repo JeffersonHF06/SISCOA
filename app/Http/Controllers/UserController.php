@@ -6,6 +6,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\User;
 use App\Models\Role;
+use App\Models\Position;
+use App\Models\Career;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -38,7 +40,9 @@ class UserController extends Controller
     {
         return view('users.create', [
             'user' => Auth::user(),
-            'roles' => Role::all()
+            'roles' => Role::all(),
+            'positions' => Position::all(),
+            'careers' => Career::all()
         ]);
     }
 
@@ -52,7 +56,7 @@ class UserController extends Controller
     {
         $request->merge(['password' => Hash::make($request->password)]);
 
-        User::create($request->all());
+        User::create($request->all() + ['is_active' => '1']);
 
         return redirect()->route('users.index')->with('status', __('The user was created successfully.'));
     }
@@ -66,35 +70,42 @@ class UserController extends Controller
     {
         return view('users.edit', [
             'user' => $user,
-            'roles' => Role::all()
+            'roles' => Role::all(),
+            'positions' => Position::all(),
+            'careers' => Career::all()
         ]);
     }
 
     /**
      * Método que actualiza los datos de un usuario. Requiere dos parámetros:
      *
-     * @param  \Illuminate\Http\Requests\UpdateUSerRequest  $request el cual valida y contiene los datos por actualizar
+     * @param  \Illuminate\Http\Requests\UpdateUserRequest  $request el cual valida y contiene los datos por actualizar
      * del usuario,
      * @param  \App\User $user el cual es el usuario por actualizar.
      */
     public function update(UpdateUserRequest $request, User $user)
     {
         $validateEmail = User::where('email', $request->email)->first();
-        if ($user != $validateEmail) {
-            return redirect()->back()->withErrors(['email' => 'El correo electrónico ya ha sido registrado.']);
+        if ($user != $validateEmail && !empty($validateEmail)) {
+            return redirect()->back()->withErrors(['email' => __('This email belongs to another user.')]);
         }
 
-        if ($request->password != "") {
+        if($request->password != ""){
             $request->merge(['password' => Hash::make($request->password)]);
-        } else {
+        }
+        else{
             $request->merge(['password' => $user->password]);
         }
-
+        
         $user->update($request->all());
-
         $user->refresh();
 
-        return redirect()->route('users.index')->with('status', __('The user was edited successfully.'));
+        if($request->kind == 1){
+            return redirect('/users')->with('status', __('User edited successfully'));
+        }
+        else{
+            return redirect('/users/profile')->with('status', __('User information edited successfully'));
+        }
     }
 
     /**
@@ -116,6 +127,25 @@ class UserController extends Controller
     }
 
     /**
+     * Método que activa o desactiva el estado de un usuario, recibe por parámetros: 
+     * 
+     * @param \App\User $user usuario al que se le va a cambiar el estado.
+     */
+    public function switchActive(User $user){
+        $user->update(['is_active' => !$user->is_active]);
+        return redirect('/users')->with('status', __('User status changed successfully'));
+    }
+
+    /**
+     * Método que redirige a la vista profile para modificación de datos del usuario en sesión
+     */
+    public function profile(){
+        return view('users.profile', [
+            'user' => Auth::user(),
+        ]);
+    }
+
+    /**
      * Método que elimina un usuario en específico. Requiere un paraámetro:
      *
      * @param  \App\User $user el cual es el usuario por eliminar.
@@ -123,7 +153,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if ($user->forms->isNotEmpty()) {
-            return redirect('/users')->with('error', 'No puede eliminar el usuario ya que se encuentra registrado en un formulario o es dueño de alguno.');
+            return redirect('/users')->with('error', __('Can not delete an user that owns a form or is register in one'));
         }
 
         $user->delete();
