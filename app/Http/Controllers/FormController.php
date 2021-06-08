@@ -228,6 +228,10 @@ class FormController extends Controller
     {
         $this->authorize('delete', $form);
 
+        if ($form->users->isNotEmpty()) {
+            return redirect('/forms')->with('error', __('Can not delete this form because some users are already register on it'));
+        }
+
         $form->delete();
 
         return redirect()->route('forms.index')->with('status', __('The form was successfully removed.'));
