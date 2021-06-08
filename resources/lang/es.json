@@ -752,5 +752,6 @@
     "Your personal information has been edited correctly.": "Tú información personal se ha editado correctamente.",
     "Profile: edit personal information": "Perfil: editar información personal",
     "The user was already registered in this form": "El usuario ya se encuentra registrado en este formulario.",
-    "Registered succesfully": "Ha sido registrado con éxito."
+    "Registered succesfully": "Ha sido registrado con éxito.",
+    "Can not delete this form because some users are already register on it": "No puede eliminar el formulario ya que tiene usuarios registrados actualmente."
 }

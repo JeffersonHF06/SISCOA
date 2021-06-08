@@ -102,7 +102,7 @@ class FormController extends Controller
         $this->authorize('subscribers', $form);
 
         return [
-            'users' => $form->users,
+            'users' => $form->users->load(['position','career']),
             'noUsers' => count($form->users)
         ];
     }
