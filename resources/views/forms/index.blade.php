@@ -56,11 +56,6 @@
                 {{ $forms->links() }}
             </div>
         </div>
-        <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px">
-            <div id="copiedToast" class="toast" style="position: absolute; top: 0; right: 0">
-                <div class="toast-body">Enlace Copiado</div>
-            </div>
-        </div>
     </div>
 
     @push('scripts')

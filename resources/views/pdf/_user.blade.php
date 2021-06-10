@@ -13,7 +13,11 @@
     </td class="text-center">
 
     <td class="text-center">
-        {{ $user->position }}
+        {{ $user->position->name }}
+    </td>   
+
+    <td class="text-center">
+        {{ $user->career->name }}
     </td>   
 
 </tr>

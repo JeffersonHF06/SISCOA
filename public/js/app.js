@@ -16289,8 +16289,18 @@ module.exports = g;
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -16320,15 +16330,46 @@ Vue.component("List", __webpack_require__(/*! ./components/List.vue */ "./resour
 
 var app = new Vue({
   el: "#app"
-}); // Método para copiar enlace de form al clipboard
+}); //Método para esperar, tomado de: https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
 
-window.copyLink = function (id) {
-  var copyText = document.getElementById("link-" + id);
-  console.log(copyText);
-  copyText.select();
-  document.execCommand("copy");
-  $("#copiedToast").toast("show");
-};
+function sleep(ms) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, ms);
+  });
+} // Método para copiar enlace de form al clipboard
+
+
+window.copyLink = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(id) {
+    var copyText;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            copyText = document.getElementById("link-" + id);
+            console.log(copyText);
+            copyText.select();
+            document.execCommand("copy");
+            $("#btn-".concat(id)).attr("title", "Enlace copiado");
+            $("#btn-".concat(id)).tooltip("show");
+            _context.next = 8;
+            return sleep(2000);
+
+          case 8:
+            $("#btn-".concat(id)).tooltip("dispose");
+
+          case 9:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
 
 /***/ }),
 

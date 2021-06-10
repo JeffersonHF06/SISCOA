@@ -38,6 +38,7 @@
                     <th>Email</th>
                     <th>Teléfono</th>
                     <th>Puesto</th>
+                    <th>Carrera</th>
                 </tr>
             </thead>
 
