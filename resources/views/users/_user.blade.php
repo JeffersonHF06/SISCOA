@@ -30,11 +30,10 @@
             </x-a>
 
             <x-form method="PUT" action="{{ route('users.activate', $user->id) }}">
-                <button type="submit"
-                    class="btn {{ $user->is_active == 1 ? 'btn-success' : 'btn-danger' }} mr-2 mb-2"><i
-                        class="fas {{ $user->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}">
-                    </i>{{ $user->is_active == 1 ? ' Activo' : ' Inactivo' }}
-                </button>
+                <x-button icon="fas {{ $user->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}" class="m-1"
+                    type="submit" color="{{ $user->is_active == 1 ? 'success' : 'danger' }}">
+                    {{ $user->is_active == 1 ? __('Active') : __('Inactive') }}
+                </x-button>
             </x-form>
 
             <x-button icon="far fa-trash-alt" color="danger" type="button" class="m-1" data-toggle="modal"

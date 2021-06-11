@@ -23,7 +23,7 @@ class FormController extends Controller
         $user = Auth::user();
 
         return view('forms.index', [
-            'forms' => Form::where('user_id', $user->id)->paginate(8)
+            'forms' => Form::where('user_id', $user->id)->paginate(5)
         ]);
     }
 

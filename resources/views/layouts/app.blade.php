@@ -46,7 +46,7 @@
             @yield('content')
         </main>
     </div>
-    
+   @yield('js')
 </body>
 <div class="d-flex flex-column" style="height: 100px; margin-top:3%;">
     @yield('footer')

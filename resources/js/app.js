@@ -33,7 +33,7 @@ const app = new Vue({
 
 //Método para esperar, tomado de: https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
   function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms)); 
   }
 
 // Método para copiar enlace de form al clipboard
