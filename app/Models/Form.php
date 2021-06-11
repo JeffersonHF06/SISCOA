@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\User;
+use Illuminate\Support\Str;
 
 class Form extends Model
 {
@@ -41,7 +42,7 @@ class Form extends Model
 
     public function owner()
     {
-        return $this->hasOne(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function users()

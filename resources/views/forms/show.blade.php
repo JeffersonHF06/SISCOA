@@ -11,7 +11,6 @@
             {{ $form->end_time->format('g:i A') }}</h5>
 
         <x-flash-message />
-        {{ $errors }}
 
         <x-form method="POST" action="{{ route('forms.subscribe', $form->uuid) }}">
             <div>

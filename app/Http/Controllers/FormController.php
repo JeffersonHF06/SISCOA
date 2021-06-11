@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CollectionHelper;
 use App\Models\Form;
 use App\User;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AddUserToFormRequest;
 use App\Http\Requests\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('auth')->except(['show', 'addUserToForm']);
+        $this->middleware('auth')->except(['show', 'subscribe']);
+    }
+
     /**
      * Muestra una lista del recurso.
      *
@@ -20,10 +28,10 @@ class FormController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        $this->authorize('viewAny', Form::class);
 
         return view('forms.index', [
-            'forms' => Form::where('user_id', $user->id)->paginate(8)
+            'forms' => request()->user()->forms()->paginate(4)
         ]);
     }
 
@@ -34,6 +42,8 @@ class FormController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Form::class);
+
         return view('forms.create');
     }
 
@@ -45,13 +55,106 @@ class FormController extends Controller
      */
     public function store(FormRequest $request)
     {
-        Form::create($request->all() + [
+        $this->authorize('create', Form::class);
+
+        Form::create($request->validated() + [
             'user_id' => $request->user()->id,
             'uuid' => Str::uuid(),
-            'is_active' => '1'
         ]);
 
-        return redirect()->route('forms.index')->with('status', __('The form was created successfully.'));
+        return redirect()
+            ->route('forms.index')
+            ->with('status', __('The form was created successfully.'));
+    }
+
+    /**
+     * Muestra el recurso especificado.
+     *
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
+     */
+    public function show($uuid)
+    {
+        return view('forms.show', [
+            'form' => Form::where('uuid', $uuid)->first()
+        ]);
+    }
+
+    /**
+     * Muestre el formulario para editar el recurso especificado.
+     *
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Form $form)
+    {
+        $this->authorize('update', $form);
+
+        return view('forms.edit', [
+            'form' => $form
+        ]);
+    }
+
+    /**
+     * Actualiza el recurso especificado en el almacenamiento.
+     *
+     * @param  \Illuminate\Http\Requests\UpdateFormRequest  $request
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
+     */
+    public function update(FormRequest $request, Form $form)
+    {
+        $this->authorize('update', $form);
+
+        $form->update($request->validated());
+
+        return redirect()
+            ->route('forms.index')
+            ->with('status', __('The form was successfully edited.'));
+    }
+
+    /**
+     * Elimina el recurso especificado del almacenamiento.
+     *
+     * @param  \App\Models\Form  $form
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Form $form)
+    {
+        $this->authorize('delete', $form);
+
+        $form->delete();
+
+        return redirect()
+            ->route('forms.index')
+            ->with('status', __('The form was successfully removed.'));
+    }
+
+    /**
+     * Muestra una lista personalizada del recurso.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $request->validate([
+            'search' => 'required'
+        ]);
+
+        $search = $request->search;
+
+        $forms = $request->user()->forms()
+            ->where(function (Builder $query) use ($search) {
+                $query->orWhere('title', 'like', '%' . $search . '%');
+                $query->orWhere('description', 'like', '%' . $search . '%');
+                $query->orWhere('date', 'like', '%' . $search . '%');
+            })
+            ->paginate(4);
+
+        return view('forms.index', [
+            'forms' => $forms,
+            'search' => $search
+        ]);
     }
 
     /**
@@ -65,13 +168,9 @@ class FormController extends Controller
      * Por último, nos redirige de nuevo a la página de registro o form con un mensaje de error o de éxito.
      */
     // public function addUserToForm(AddUserToFormRequest $request, Form $form)
-    public function addUserToForm(AddUserToFormRequest $request, $uuid)
+    public function subscribe(AddUserToFormRequest $request, $uuid)
     {
-        $form = Form::where('uuid', $uuid)->first();
-
-        if (!$form) {
-            abort(404);
-        }
+        $form = Form::where('uuid', $uuid)->firstOrFail();
 
         if ($request->id == "") {
             $user = User::create([
@@ -139,20 +238,9 @@ class FormController extends Controller
 
         $form->update(['is_active' => !$form->is_active]);
 
-        return redirect()->route('forms.index')->with('status', __('The state of the form was successfully modified.'));
-    }
-
-    /**
-     * Muestra el recurso especificado.
-     *
-     * @param  \App\Models\Form  $form
-     * @return \Illuminate\Http\Response
-     */
-    public function show($uuid)
-    {
-        return view('forms.show', [
-            'form' => Form::where('uuid', $uuid)->first()
-        ]);
+        return redirect()
+            ->route('forms.index')
+            ->with('status', __('The state of the form was successfully modified.'));
     }
 
     /**
@@ -168,73 +256,5 @@ class FormController extends Controller
         return view('forms.list', [
             'form' => $form
         ]);
-    }
-
-    /**
-     * Método que busca en la base de datos un formulario que posea un motivo o fecha similares a los enviados
-     * por el usuario.
-     */
-    public function search()
-    {
-        $search = request()->validate([
-            'search' => 'required'
-        ]);
-
-        /**
-         * Changed.
-         */
-        $forms = Form::where('title', 'like', '%' . $search['search'] . '%')
-            ->orWhere('date', 'like', '%' . $search['search'] . '%')->get()
-            ->where('user_id', auth()->user()->id);
-
-        return view('forms.search', [
-            'forms' => $forms
-        ]);
-    }
-
-    /**
-     * Muestre el formulario para editar el recurso especificado.
-     *
-     * @param  \App\Models\Form  $form
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Form $form)
-    {
-        $this->authorize('update', $form);
-
-        return view('forms.edit', [
-            'form' => $form
-        ]);
-    }
-
-    /**
-     * Actualiza el recurso especificado en el almacenamiento.
-     *
-     * @param  \Illuminate\Http\Requests\UpdateFormRequest  $request
-     * @param  \App\Models\Form  $form
-     * @return \Illuminate\Http\Response
-     */
-    public function update(FormRequest $request, Form $form)
-    {
-        $this->authorize('update', $form);
-
-        $form->update($request->validated());
-
-        return redirect()->route('forms.index')->with('status', __('The form was successfully edited.'));
-    }
-
-    /**
-     * Elimina el recurso especificado del almacenamiento.
-     *
-     * @param  \App\Models\Form  $form
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Form $form)
-    {
-        $this->authorize('delete', $form);
-
-        $form->delete();
-
-        return redirect()->route('forms.index')->with('status', __('The form was successfully removed.'));
     }
 }

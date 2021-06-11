@@ -1,6 +1,6 @@
 @props(['icon' => null, 'breakpoint' => 'sm', 'responsive' => false, 'color' => 'info'])
 
-<a {{ $attributes->merge(['class' => 'btn btn-' . $color]) }}>
+<a {{ $attributes->merge(['class' => "btn btn-{$color}"]) }}>
     @if ($icon)
         <div class="d-flex justify-content-center">
             <div>

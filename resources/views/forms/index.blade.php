@@ -6,60 +6,97 @@
     <div class="container">
         <x-flash-message />
 
-        <div class="row mb-4">
-            <div class="col">
-                <x-form method="POST" action="{{ route('forms.search') }}" class="form-inline">
-                    <input id="search-input"
-                        class="form-control mr-sm-2 {{ $errors->has('search') ? 'is-invalid' : '' }} " type="search"
-                        placeholder="Buscar Formulario " aria-label="Buscar" name="search" value="{{ old('search') }}">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="row">
+                    <div class="col-md mb-3 mb-md-0">
+                        <x-form method="GET" action="{{ route('forms.search') }}">
+                            <x-input name="search" type="text" placeholder="{{ __('Search') }}"
+                                value="{{ isset($search) ? $search : '' }}" />
+                        </x-form>
+                    </div>
 
-                    <button class="btn my-2 my-sm-0" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-
-                    @error('search')
-                        <div id="error" class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </x-form>
+                    @if (Route::is('forms.search'))
+                        <div class="col-md-auto d-flex justify-content-end">
+                            <x-a class="btn-block" icon="fas fa-times" color="danger"
+                                href="{{ route('forms.index') }}">
+                                {{ __('Cancel') }}</x-a>
+                        </div>
+                    @endif
+                </div>
             </div>
 
-            <div class="col d-flex align-items-end flex-column">
-                <x-a icon="fas fa-plus" color="success" class="ml-auto" href="{{ route('forms.create') }}">
-                    {{ __('Add') }}
-                </x-a>
-            </div>
+            @can('create', App\Models\Form::class)
+                <div class="col-6 mb-3">
+                    <div class="col d-flex align-items-end flex-column">
+                        <x-a icon="fas fa-plus" color="success" class="ml-auto" href="{{ route('forms.create') }}">
+                            {{ __('Add') }}
+                        </x-a>
+                    </div>
+                </div>
+            @endcan
         </div>
 
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>{{ __('Title') }}</th>
-                        <th>{{ __('Activity date') }}</th>
-                        <th>{{ __('Schedule') }}</th>
-                        <th>{{ __('Link') }}</th>
-                        <th>{{ __('Actions') }}</th>
-                    </tr>
-                </thead>
+        @if (Route::is('forms.search'))
+            <div class="row">
+                <div class="col mb-3">
+                    <div class="row">
+                        <div class="col">
+                            Se encontraron: <strong>{{ $forms->total() }}</strong> registros.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
-                <tbody>
-                    @foreach ($forms as $form)
-                        @include('forms._form')
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="col mb-3">
+                @if ($forms->isEmpty())
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                @if (Route::is('forms.search'))
+                                    No hay resultados para tu busqueda.
+                                @else
+                                    No hay usuarios registrados.
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>{{ __('Title') }}</th>
+                                    <th>{{ __('Activity date') }}</th>
+                                    <th>{{ __('Schedule') }}</th>
+                                    <th>{{ __('Link') }}</th>
+                                    <th>{{ __('Actions') }}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($forms as $form)
+                                    @include('forms._form')
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </div>
         </div>
 
         <div class="row">
             <div class="col d-flex justify-content-end">
-                {{ $forms->links() }}
+                {{ $forms->withQueryString()->links() }}
             </div>
         </div>
+    </div>
 
-        <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px">
-            <div id="copiedToast" class="toast" style="position: absolute; top: 0; right: 0">
-                <div class="toast-body">Enlace Copiado</div>
-            </div>
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px">
+        <div id="copiedToast" class="toast" style="position: absolute; top: 0; right: 0">
+            <div class="toast-body">Enlace Copiado</div>
         </div>
     </div>
 

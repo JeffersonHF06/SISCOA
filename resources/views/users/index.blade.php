@@ -6,55 +6,90 @@
     <div class="container">
         <x-flash-message />
 
-        <div class="row mb-4">
-            <div class="col">
-                <x-form method="POST" action="{{ route('users.search') }}" class="form-inline">
-                    <input id="search-input"
-                        class="form-control mr-sm-2 {{ $errors->has('search') ? 'is-invalid' : '' }} " type="search"
-                        placeholder="Buscar Usuario " aria-label="Buscar" name="search" value="{{ old('search') }}">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="row">
+                    <div class="col-md mb-3 mb-md-0">
+                        <x-form method="GET" action="{{ route('users.search') }}">
+                            <x-input name="search" type="text" placeholder="{{ __('Search') }}"
+                                value="{{ isset($search) ? $search : '' }}" />
+                        </x-form>
+                    </div>
 
-                    <button class="btn my-2 my-sm-0" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-
-                    @error('search')
-                        <div id="error" class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </x-form>
+                    @if (Route::is('users.search'))
+                        <div class="col-md-auto d-flex justify-content-end">
+                            <x-a class="btn-block" icon="fas fa-times" color="danger"
+                                href="{{ route('users.index') }}">
+                                {{ __('Cancel') }}</x-a>
+                        </div>
+                    @endif
+                </div>
             </div>
 
-            <div class="col d-flex align-items-end flex-column">
-                <x-a icon="fas fa-plus" color="success" class="ml-auto" href="{{ route('users.create') }}">
-                    {{ __('Add') }}
-                </x-a>
+            <div class="col-6 mb-3">
+                <div class="col d-flex align-items-end flex-column">
+                    <x-a icon="fas fa-plus" color="success" class="ml-auto" href="{{ route('users.create') }}">
+                        {{ __('Add') }}
+                    </x-a>
+                </div>
             </div>
         </div>
 
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>{{ __('Full name') }}</th>
-                        <th>{{ __('Email') }}</th>
-                        <th>{{ __('Phone') }}</th>
-                        <th>{{ __('Career') }}</th>
-                        <th>{{ __('Position') }}</th>
-                        <th>{{ __('Role') }}</th>
-                        <th>{{ __('Actions') }}</th>
-                    </tr>
-                </thead>
+        @if (Route::is('users.search'))
+            <div class="row">
+                <div class="col mb-3">
+                    <div class="row">
+                        <div class="col">
+                            Se encontraron: <strong>{{ $users->total() }}</strong> registros.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
-                <tbody>
-                    @foreach ($users as $user)
-                        @include('users._user')
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="col mb-3">
+                @if ($users->isEmpty())
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                @if (Route::is('users.search'))
+                                    No hay resultados para tu busqueda.
+                                @else
+                                    No hay usuarios registrados.
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>{{ __('Full name') }}</th>
+                                    <th>{{ __('Email') }}</th>
+                                    <th>{{ __('Phone') }}</th>
+                                    <th>{{ __('Career') }}</th>
+                                    <th>{{ __('Position') }}</th>
+                                    <th>{{ __('Role') }}</th>
+                                    <th>{{ __('Actions') }}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($users as $user)
+                                    @include('users._user')
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </div>
         </div>
 
         <div class="row">
             <div class="col d-flex justify-content-end">
-                {{ $users->links() }}
+                {{ $users->withQueryString()->links() }}
             </div>
         </div>
     </div>

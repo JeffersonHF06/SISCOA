@@ -6,7 +6,7 @@ use App\Models\Form;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class FormPolicy
+class TestPolicy
 {
     use HandlesAuthorization;
 
@@ -18,7 +18,19 @@ class FormPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role->name == 'admin' || $user->role->name == 'official';
+        //
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Form  $form
+     * @return mixed
+     */
+    public function view(User $user, Form $form)
+    {
+        //
     }
 
     /**
@@ -29,54 +41,54 @@ class FormPolicy
      */
     public function create(User $user)
     {
-        return $user->role->name == 'admin' || $user->role->name == 'official';
+        //
     }
 
     /**
-     * Determina si el usuario puede actualizar el modelo.
+     * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Models\Form  $form
+     * @param  \App\Form  $form
      * @return mixed
      */
     public function update(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        //
     }
 
     /**
-     * Determina si el usuario puede eliminar el modelo.
+     * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Models\Form  $form
+     * @param  \App\Form  $form
      * @return mixed
      */
     public function delete(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        //
     }
 
     /**
-     * Determina si el usuario puede visualizar las subscripciones del modelo.
+     * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Models\Form  $form
+     * @param  \App\Form  $form
      * @return mixed
      */
-    public function subscribers(User $user, Form $form)
+    public function restore(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        //
     }
 
     /**
-     * Determina si el usuario puede generar pdf del modelo.
+     * Determine whether the user can permanently delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Models\Form  $form
+     * @param  \App\Form  $form
      * @return mixed
      */
-    public function pdf(User $user, Form $form)
+    public function forceDelete(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        //
     }
 }

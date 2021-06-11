@@ -6,6 +6,7 @@ use App\Models\Form;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Policies\FormPolicy;
+use App\Policies\UserPolicy;
 use App\User;
 
 class AuthServiceProvider extends ServiceProvider
@@ -17,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Form::class => FormPolicy::class,
+        User::class => UserPolicy::class
     ];
 
     /**
