@@ -169,9 +169,22 @@ class UserController extends Controller
     }
 
     /**
-     * Método que activa o desactiva el estado de un usuario, recibe por parámetros: 
+     * Método para obtener todas las posiciones.
      * 
-     * @param \App\User $user usuario al que se le va a cambiar el estado.
+     */
+    public function getPositionsAndCareers()
+    {
+        return [
+            'positions' => Position::all(),
+            'careers' => Career::all()
+        ];
+    }
+
+    /**
+     * Método que elimina un usuario en específico. Requiere un paraámetro:
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function switchActive(User $user)
     {

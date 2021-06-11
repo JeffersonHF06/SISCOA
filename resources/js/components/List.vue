@@ -42,6 +42,7 @@
                         <th>Email</th>
                         <th>Teléfono</th>
                         <th>Puesto</th>
+                        <th>Carrera</th>
                     </tr>
                 </thead>
 
@@ -60,7 +61,11 @@
                         </td>
 
                         <td id="table-body-text">
-                            {{ user.position }}
+                            {{ user.position.name }}
+                        </td>
+
+                        <td id="table-body-text">
+                            {{ user.career.name }}
                         </td>
                     </tr>
                 </tbody>
@@ -74,7 +79,6 @@ import axios from "axios";
 
 export default {
     async mounted() {
-        console.log(this.form.id);
         await this.refresh();
     },
 

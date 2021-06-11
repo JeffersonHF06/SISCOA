@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\User;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class Form extends Model
 {
@@ -48,5 +48,10 @@ class Form extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
     }
 }

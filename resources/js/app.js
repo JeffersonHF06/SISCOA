@@ -31,19 +31,22 @@ const app = new Vue({
     el: "#app"
 });
 
-// window.copy = id => {
-//     var copyText = document.getElementById("link-" + id);
-//     copyText.select();
-//     document.execCommand("copy");
-//     $("#copiedToast").toast("show");
-// };
+//Método para esperar, tomado de: https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms)); 
+  }
 
 // Método para copiar enlace de form al clipboard
-window.copyLink = id => {
+window.copyLink = async id => {
     var copyText = document.getElementById("link-" + id);
 
+    console.log(copyText)
     copyText.select();
     document.execCommand("copy");
 
-    $("#copiedToast").toast("show");
+    $(`#btn-${id}`).attr("title", "Enlace copiado")
+    $(`#btn-${id}`).tooltip("show")
+    await sleep(2000)
+    $(`#btn-${id}`).tooltip("dispose")
+
 };

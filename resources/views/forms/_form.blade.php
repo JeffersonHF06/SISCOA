@@ -15,7 +15,7 @@
         <input type="text" class="sr-only" id="link-{{ $form->id }}"
             value="{{ route('forms.show', $form->uuid) }}">
 
-        <x-button icon="fas fa-copy" color="dark" class="m-1" type="button" onclick="copyLink({{ $form->id }})">
+        <x-button id="btn-{{$form->id}}" icon="fas fa-copy" color="dark" class="m-1" type="button" onclick="copyLink({{ $form->id }})">
             {{ __('Copy') }}
         </x-button>
     </td>

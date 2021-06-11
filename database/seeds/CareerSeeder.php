@@ -17,7 +17,7 @@ class CareerSeeder extends Seeder
 
         $carrers = [
             [
-                'name' => 'Administración de Empresas',
+                'name' => 'Administración',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],

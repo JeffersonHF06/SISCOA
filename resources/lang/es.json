@@ -750,5 +750,11 @@
     "Copy": "Copiar",
     "Go this section": "Ir a esta sección",
     "Your personal information has been edited correctly.": "Tú información personal se ha editado correctamente.",
-    "Profile: edit personal information": "Perfil: editar información personal"
+    "Profile: edit personal information": "Perfil: editar información personal",
+    "The user was already registered in this form": "El usuario ya se encuentra registrado en este formulario.",
+    "Registered succesfully": "Ha sido registrado con éxito.",
+    "Can not delete this form because some users are already register on it": "No puede eliminar el formulario ya que tiene usuarios registrados actualmente.",
+    "Link Copied": "Enlace copiado",
+    "Can not delete an user that owns a form or is register in one" : "No se puede eliminar un usuario que ha creado formularios o se ha registrado en uno.",
+    "User status changed successfully": "Estado del usuario cambiado exitosamente."
 }

@@ -26,12 +26,6 @@ class UsersAuthorized
             
             return abort(403, $msj);
         }
-
-        if ($user->is_active != 1) {
-            $msj = 'Usuario '.$user->name.' inactivo.';
-            Auth::logout();
-            return abort(403, $msj);
-        }
       
         return $next($request);
     }

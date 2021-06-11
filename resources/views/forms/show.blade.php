@@ -3,6 +3,7 @@
 @section('title', 'UNA')
 
 @section('content')
+    <br>
     <div class="container text-style">
         <h2>Registro de asistencia</h2>
         <h5>Motivo: {{ $form->title }}</h5>
@@ -31,13 +32,12 @@
 @section('footer')
     <footer id="footer" class="col  mb-auto">
         <div id="copyright" class="col-md sm-12">
-
             <div class="row">
-                © 2021 Universidad Nacional de Costa Rica. Todos los derechos reservados.
+                <strong> © 2021 Universidad Nacional de Costa Rica. Todos los derechos reservados.</strong>
             </div>
-
+        
             <div class="row">
-                Desarrollado por Jefferson Hernández Flores.
+                <strong> Sede Interuniversitaria de Alajuela, Ingeniería en Sistemas de Información. </strong>
             </div>
         </div>
 
@@ -46,5 +46,6 @@
 
 
 @section('js')
-    <script src="{{ asset('js/app.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js" ></script>
 @endsection

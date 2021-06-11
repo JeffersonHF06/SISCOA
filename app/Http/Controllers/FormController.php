@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\CollectionHelper;
 use App\Models\Form;
 use App\User;
 use App\Http\Requests\AddUserToFormRequest;
 use App\Http\Requests\FormRequest;
-use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -173,12 +171,8 @@ class FormController extends Controller
         $form = Form::where('uuid', $uuid)->firstOrFail();
 
         if ($request->id == "") {
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'position_id' => $request->position,
-                'password' => Hash::make("default"),
+            $user = User::create($request->validated() + [
+                'password' => 'default',
                 'role_id' => '3',
                 'is_active' => '1'
             ]);
@@ -186,13 +180,13 @@ class FormController extends Controller
             $user = User::find($request->id);
 
             if ($form->users()->firstWhere('user_id', '=', $user->id)) {
-                return redirect()->back()->with('error', 'El usuario ingresado ya se encuentra registrado');
+                return redirect()->back()->with('error', __('The user was already registered in this form'));
             }
         }
 
         $form->users()->attach($user);
 
-        return redirect()->back()->with('status', 'Ha sido registrado con éxito');
+        return redirect()->back()->with('status', __('Registered succesfully'));
     }
 
     /**
@@ -206,7 +200,7 @@ class FormController extends Controller
         $this->authorize('subscribers', $form);
 
         return [
-            'users' => $form->users,
+            'users' => $form->users->load(['position', 'career']),
             'noUsers' => count($form->users)
         ];
     }

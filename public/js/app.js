@@ -2048,6 +2048,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2058,11 +2063,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log(_this.form.id);
-              _context.next = 3;
+              _context.next = 2;
               return _this.refresh();
 
-            case 3:
+            case 2:
             case "end":
               return _context.stop();
           }
@@ -2251,17 +2255,65 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["page", "errors"],
+  mounted: function mounted() {
+    this.getPositionsAndCareers();
+  },
   data: function data() {
     return {
       id: "",
       email: "",
       name: "",
       phone: "",
-      position: "",
-      blocked: false
+      position_id: "",
+      career_id: "",
+      blocked: false,
+      positions: [],
+      careers: []
     };
   },
   methods: {
@@ -2284,13 +2336,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this.id = data[0].id;
                     _this.name = data[0].name;
                     _this.phone = data[0].phone;
-                    _this.position = data[0].position;
+                    _this.position_id = data[0].position_id;
+                    _this.career_id = data[0].career_id;
                     _this.blocked = true;
                   } else {
                     _this.id = "";
                     _this.name = "";
                     _this.phone = "";
-                    _this.position = "";
+                    _this.position_id = "";
+                    _this.career_id = "";
                     _this.blocked = false;
                   }
                 })["catch"](function (err) {
@@ -2306,6 +2360,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+
+    /**
+     * Método que obtiene las posiciones y carreras.
+     */
+    getPositionsAndCareers: function getPositionsAndCareers() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/users/getPositionsAndCareers").then(function (_ref2) {
+                  var data = _ref2.data;
+                  _this2.positions = data.positions;
+                  _this2.careers = data.careers;
+                })["catch"](function (err) {
+                  console.log(err);
+                });
+
+              case 2:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
@@ -3636,7 +3722,15 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", { attrs: { id: "table-body-text" } }, [
                   _vm._v(
-                    "\n            " + _vm._s(user.position) + "\n          "
+                    "\n            " +
+                      _vm._s(user.position.name) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", { attrs: { id: "table-body-text" } }, [
+                  _vm._v(
+                    "\n            " + _vm._s(user.career.name) + "\n          "
                   )
                 ])
               ])
@@ -3661,7 +3755,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Teléfono")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Puesto")])
+        _c("th", [_vm._v("Puesto")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Carrera")])
       ])
     ])
   }
@@ -3688,6 +3784,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("br"),
+    _vm._v(" "),
     _c("input", {
       directives: [
         { name: "model", rawName: "v-model", value: _vm.id, expression: "id" }
@@ -3705,7 +3803,7 @@ var render = function() {
     }),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
+      _c("div", { staticClass: "col-4" }, [
         _c("div", { staticClass: "form-group" }, [
           _c(
             "label",
@@ -3743,18 +3841,14 @@ var render = function() {
           _vm.errors.email != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.errors.email[0]) +
-                    "\n                "
+                  "\n          " + _vm._s(_vm.errors.email[0]) + "\n        "
                 )
               ])
             : _vm._e()
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "col" }, [
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-4" }, [
         _c("div", { staticClass: "form-group" }, [
           _c(
             "label",
@@ -3796,18 +3890,14 @@ var render = function() {
           _vm.errors.name != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.errors.name[0]) +
-                    "\n                "
+                  "\n          " + _vm._s(_vm.errors.name[0]) + "\n        "
                 )
               ])
             : _vm._e()
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-6" }, [
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-4" }, [
         _c("div", { staticClass: "form-group" }, [
           _c(
             "label",
@@ -3850,9 +3940,108 @@ var render = function() {
           _vm.errors.phone != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.errors.phone[0]) +
-                    "\n                "
+                  "\n          " + _vm._s(_vm.errors.phone[0]) + "\n        "
+                )
+              ])
+            : _vm._e()
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-row" }, [
+      _c("div", { staticClass: "col-6" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "label",
+            {
+              staticClass: "control-label required",
+              attrs: { for: "position-input" }
+            },
+            [_vm._v("Puesto")]
+          ),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.position_id,
+                  expression: "position_id"
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.errors.position_id ? "is-invalid" : "",
+              attrs: { disabled: _vm.blocked == true },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.position_id = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "", disabled: "" } }, [
+                _vm._v("Seleccionar")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.positions, function(position, index) {
+                return _c(
+                  "option",
+                  { key: index, domProps: { value: position.id } },
+                  [
+                    _vm._v(
+                      "\n            " + _vm._s(position.name) + "\n          "
+                    )
+                  ]
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.position_id,
+                expression: "position_id"
+              }
+            ],
+            attrs: {
+              hidden: "",
+              readonly: "",
+              type: "text",
+              name: "position_id"
+            },
+            domProps: { value: _vm.position_id },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.position_id = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.errors.position_id != null
+            ? _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.errors.position_id[0]) +
+                    "\n        "
                 )
               ])
             : _vm._e()
@@ -3865,9 +4054,59 @@ var render = function() {
             "label",
             {
               staticClass: "control-label required",
-              attrs: { for: "position-input" }
+              attrs: { for: "career-input" }
             },
-            [_vm._v("Puesto")]
+            [_vm._v("Carrera")]
+          ),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.career_id,
+                  expression: "career_id"
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.errors.career_id ? "is-invalid" : "",
+              attrs: { disabled: _vm.blocked == true },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.career_id = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "", disabled: "" } }, [
+                _vm._v("Seleccionar")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.careers, function(career, index) {
+                return _c(
+                  "option",
+                  { key: index, domProps: { value: career.id } },
+                  [
+                    _vm._v(
+                      "\n            " + _vm._s(career.name) + "\n          "
+                    )
+                  ]
+                )
+              })
+            ],
+            2
           ),
           _vm._v(" "),
           _c("input", {
@@ -3875,36 +4114,33 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.position,
-                expression: "position"
+                value: _vm.career_id,
+                expression: "career_id"
               }
             ],
-            staticClass: "form-control",
-            class: _vm.errors.position ? "is-invalid" : "",
             attrs: {
-              readonly: _vm.blocked == true,
-              id: "position-input",
-              name: "position",
-              placeholder: "",
-              type: "text"
+              hidden: "",
+              readonly: "",
+              type: "text",
+              name: "career_id"
             },
-            domProps: { value: _vm.position },
+            domProps: { value: _vm.career_id },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.position = $event.target.value
+                _vm.career_id = $event.target.value
               }
             }
           }),
           _vm._v(" "),
-          _vm.errors.position != null
+          _vm.errors.career_id != null
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.errors.position[0]) +
-                    "\n                "
+                  "\n          " +
+                    _vm._s(_vm.errors.career_id[0]) +
+                    "\n        "
                 )
               ])
             : _vm._e()
@@ -16053,8 +16289,18 @@ module.exports = g;
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -16063,7 +16309,6 @@ module.exports = g;
  */
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -16085,20 +16330,46 @@ Vue.component("List", __webpack_require__(/*! ./components/List.vue */ "./resour
 
 var app = new Vue({
   el: "#app"
-}); // window.copy = id => {
-//     var copyText = document.getElementById("link-" + id);
-//     copyText.select();
-//     document.execCommand("copy");
-//     $("#copiedToast").toast("show");
-// };
-// Método para copiar enlace de form al clipboard
+}); //Método para esperar, tomado de: https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
 
-window.copyLink = function (id) {
-  var copyText = document.getElementById("link-" + id);
-  copyText.select();
-  document.execCommand("copy");
-  $("#copiedToast").toast("show");
-};
+function sleep(ms) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, ms);
+  });
+} // Método para copiar enlace de form al clipboard
+
+
+window.copyLink = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(id) {
+    var copyText;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            copyText = document.getElementById("link-" + id);
+            console.log(copyText);
+            copyText.select();
+            document.execCommand("copy");
+            $("#btn-".concat(id)).attr("title", "Enlace copiado");
+            $("#btn-".concat(id)).tooltip("show");
+            _context.next = 8;
+            return sleep(2000);
+
+          case 8:
+            $("#btn-".concat(id)).tooltip("dispose");
+
+          case 9:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
 
 /***/ }),
 
@@ -16258,8 +16529,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\DOCUMENTOS KEVIN\GITHUB PROJECTS\siscoa\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\DOCUMENTOS KEVIN\GITHUB PROJECTS\siscoa\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/jefferson/Escritorio/SISCOA/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/jefferson/Escritorio/SISCOA/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

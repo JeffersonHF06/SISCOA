@@ -16,11 +16,11 @@
 
 @section('footer')
     <div class="row">
-        <strong> © 2021 Universidad Nacional de Costa Rica. Sistema de Control de Asistencia (SISCOA). </strong>
+        <strong> © 2021 Universidad Nacional de Costa Rica. Todos los derechos reservados.</strong>
     </div>
 
     <div class="row">
-        <strong> Desarrollado por Jefferson Hernández Flores. </strong>
+        <strong> Sede Interuniversitaria de Alajuela, Ingeniería en Sistemas de Información. </strong>
     </div>
 @endsection
 
