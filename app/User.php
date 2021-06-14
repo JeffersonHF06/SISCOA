@@ -21,7 +21,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'position_id', 'career_id', 'password', 'role_id', 'is_active'
+        'name',
+        'email',
+        'phone',
+        'position_id',
+        'career_id',
+        'password',
+        'role_id',
+        'is_active',
     ];
 
     /**
@@ -65,5 +72,15 @@ class User extends Authenticatable
     public function forms()
     {
         return $this->hasMany(Form::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->name == 'admin';
+    }
+
+    public function isOfficial()
+    {
+        return $this->role->name == 'official';
     }
 }

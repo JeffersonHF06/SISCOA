@@ -18,7 +18,7 @@ class FormPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role->name == 'admin' || $user->role->name == 'official';
+        return $user->isAdmin() || $user->isOfficial();
     }
 
     /**
@@ -29,7 +29,7 @@ class FormPolicy
      */
     public function create(User $user)
     {
-        return $user->role->name == 'admin' || $user->role->name == 'official';
+        return $user->isAdmin() || $user->isOfficial();
     }
 
     /**
@@ -41,7 +41,7 @@ class FormPolicy
      */
     public function update(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        return ($user->isAdmin() || $user->isOfficial()) && $user->id == $form->user_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class FormPolicy
      */
     public function delete(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        return ($user->isAdmin() || $user->isOfficial()) && $user->id == $form->user_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class FormPolicy
      */
     public function subscribers(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        return ($user->isAdmin() || $user->isOfficial()) && $user->id == $form->user_id;
     }
 
     /**
@@ -77,6 +77,6 @@ class FormPolicy
      */
     public function pdf(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        return ($user->isAdmin() || $user->isOfficial()) && $user->id == $form->user_id;
     }
 }

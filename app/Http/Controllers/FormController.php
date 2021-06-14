@@ -13,12 +13,6 @@ use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
-    public function __construct()
-    {
-        // $this->middleware('auth')->except(['show', 'addUserToForm']);
-        $this->middleware('auth')->except(['show', 'subscribe']);
-    }
-
     /**
      * Muestra una lista del recurso.
      *
@@ -55,9 +49,8 @@ class FormController extends Controller
     {
         $this->authorize('create', Form::class);
 
-        Form::create($request->validated() + [
-            'user_id' => $request->user()->id,
-            'uuid' => Str::uuid(),
+        $request->user()->forms()->create($request->validated() + [
+            'uuid' => Str::uuid()
         ]);
 
         return redirect()
@@ -135,9 +128,9 @@ class FormController extends Controller
      */
     public function search(Request $request)
     {
-        $request->validate([
-            'search' => 'required'
-        ]);
+        $this->authorize('viewAny', Form::class);
+
+        $request->validate(['search' => 'required']);
 
         $search = $request->search;
 
@@ -166,7 +159,7 @@ class FormController extends Controller
      * Por último, nos redirige de nuevo a la página de registro o form con un mensaje de error o de éxito.
      */
     // public function addUserToForm(AddUserToFormRequest $request, Form $form)
-    public function subscribe(AddUserToFormRequest $request, $uuid)
+    public function addUserToForm(AddUserToFormRequest $request, $uuid)
     {
         $form = Form::where('uuid', $uuid)->firstOrFail();
 

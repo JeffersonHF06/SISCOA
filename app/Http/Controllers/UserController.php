@@ -12,11 +12,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Muestra una lista del recurso.
      *
@@ -24,8 +19,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', User::class);
-
         return view('users.index', [
             'users' => User::paginate(5)
         ]);
@@ -38,8 +31,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', User::class);
-
         return view('users.create', [
             'roles' => Role::all(),
             'positions' => Position::all(),
@@ -55,8 +46,6 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $this->authorize('create', User::class);
-
         User::create($request->validated());
 
         return redirect()
@@ -72,8 +61,6 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('update', $user);
-
         return view('users.edit', [
             'user' => $user,
             'roles' => Role::all(),
@@ -91,8 +78,6 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $this->authorize('update', $user);
-
         $user->update($request->validated());
 
         return $request->routeIs('users.update') ?
@@ -108,8 +93,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $this->authorize('delete', $user);
-
         if ($user->forms->isNotEmpty()) {
             return redirect()
                 ->route('users.index')
@@ -130,11 +113,7 @@ class UserController extends Controller
      */
     public function search(Request $request)
     {
-        $this->authorize('viewAny', User::class);
-
-        $request->validate([
-            'search' => 'required'
-        ]);
+        $request->validate(['search' => 'required']);
 
         $search = $request->search;
 
@@ -188,12 +167,17 @@ class UserController extends Controller
      */
     public function switchActive(User $user)
     {
-        $this->authorize('update', $user);
-
         $user->update(['is_active' => !$user->is_active]);
 
         return redirect()
             ->route('users.index')
             ->with('status', __('User status changed successfully'));
+    }
+
+    public function profile()
+    {
+        return view('users.profile', [
+            'user' => auth()->user()
+        ]);
     }
 }
