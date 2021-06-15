@@ -30,13 +30,13 @@ SISCOA fue diseñado para la Universidad Nacional de Costa Rica como parte de un
 ## Usuarios
 SISCOA nace con 3 usuarios con roles distintos:
     
-    Email                   Password                Rol
-    admin@gmail.com         Admin1234               Administrador
-    cvf@gmail.com           Professor1234           Funcionario
-    mcg@gmail.com           Listener1234            Oyente
+    Email                   Contraseña            Rol
+    admin@gmail.com         password              Administrador
+    cvf@gmail.com           password              Funcionario
+    mcg@gmail.com           password              Oyente
     
- Solamente pueden iniciar sesión en el sistema los usuarios con rol de administrador o de funcionario, el oyente solamente tiene derecho a registrar asistencia mediante un enlace de formulario.
-
+ Solamente pueden iniciar sesión en el sistema los usuarios con rol de administrador o de funcionario, el oyente solamente tiene derecho a registrar asistencia mediante un enlace de formulario. Además, si un administrador cambia
+ el estado de un usuario a inactivo, este tampoco podrá ingresar al sistema.
 
 ## SISCOA fue desarrollado con las siguientes tecnologías: 
     • Laravel 7
