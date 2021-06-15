@@ -20,13 +20,13 @@ use Illuminate\Support\Str;
 
 $factory->define(Form::class, function (Faker $faker) {
     return [
-        'title'       => $faker->paragraph,
+        'title'       => $faker->paragraph(1),
         'description' => $faker->paragraph,
         'date'        => $faker->date('Y-m-d', 'now'),
         'start_time'  => $faker->time(),
         'end_time'    => $faker->time(),
         // 'user_id'     => factory(User::class)->create()->id,
-        'user_id'     => '1',
+        'user_id'     => random_int(1, 3),
         'uuid' => Str::uuid()
     ];
 });

@@ -11,27 +11,25 @@ class FormPolicy
     use HandlesAuthorization;
 
     /**
-     * Determina si el usuario puede visualizar las subscripciones del modelo.
+     * Determine whether the user can view any models.
      *
      * @param  \App\User  $user
-     * @param  \App\Models\Form  $form
      * @return mixed
      */
-    public function subscribers(User $user, Form $form)
+    public function viewAny(User $user)
     {
-        return $user->id == $form->user_id;
+        return $user->isAdmin() || $user->isOfficial();
     }
 
     /**
-     * Determina si el usuario puede generar pdf del modelo.
+     * Determine whether the user can create models.
      *
      * @param  \App\User  $user
-     * @param  \App\Models\Form  $form
      * @return mixed
      */
-    public function pdf(User $user, Form $form)
+    public function create(User $user)
     {
-        return $user->id == $form->user_id;
+        return $user->isAdmin() || $user->isOfficial();
     }
 
     /**
@@ -43,7 +41,7 @@ class FormPolicy
      */
     public function update(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        return ($user->isAdmin() || $user->isOfficial()) && $user->id == $form->user_id;
     }
 
     /**
@@ -55,6 +53,30 @@ class FormPolicy
      */
     public function delete(User $user, Form $form)
     {
-        return $user->id == $form->user_id;
+        return ($user->isAdmin() || $user->isOfficial()) && $user->id == $form->user_id;
+    }
+
+    /**
+     * Determina si el usuario puede visualizar las subscripciones del modelo.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Models\Form  $form
+     * @return mixed
+     */
+    public function subscribers(User $user, Form $form)
+    {
+        return ($user->isAdmin() || $user->isOfficial()) && $user->id == $form->user_id;
+    }
+
+    /**
+     * Determina si el usuario puede generar pdf del modelo.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Models\Form  $form
+     * @return mixed
+     */
+    public function pdf(User $user, Form $form)
+    {
+        return ($user->isAdmin() || $user->isOfficial()) && $user->id == $form->user_id;
     }
 }

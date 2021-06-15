@@ -27,47 +27,55 @@
                 {{ __('Details') }}
             </x-button>
 
-            <x-a icon="fas fa-marker" color="secondary" class="m-1" href="{{ route('forms.edit', $form->id) }}">
-                {{ __('Edit') }}
-            </x-a>
+            @can('update', $form)
+                <x-a icon="fas fa-marker" color="secondary" class="m-1" href="{{ route('forms.edit', $form->id) }}">
+                    {{ __('Edit') }}
+                </x-a>
+            @endcan
 
-            <x-a icon="far fa-file-pdf" color="warning" class="m-1" href="{{ route('forms.pdf', $form->id) }}">
-                {{ __('PDF') }}
-            </x-a>
+            @can('pdf', $form)
+                <x-a icon="far fa-file-pdf" color="warning" class="m-1" href="{{ route('forms.pdf', $form->id) }}">
+                    {{ __('PDF') }}
+                </x-a>
+            @endcan
 
-            <x-form method="PUT" action="{{ route('forms.activate', $form->id) }}">
-                <x-button icon="fas {{ $form->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}" class="m-1"
-                    type="submit" color="{{ $form->is_active == 1 ? 'success' : 'danger' }}">
-                    {{ $form->is_active == 1 ? __('Active') : __('Inactive') }}
+            @can('update', $form)
+                <x-form method="PUT" action="{{ route('forms.activate', $form->id) }}">
+                    <x-button icon="fas {{ $form->is_active == 1 ? 'fa-check' : 'fa-exclamation-circle' }}" class="m-1"
+                        type="submit" color="{{ $form->is_active == 1 ? 'success' : 'danger' }}">
+                        {{ $form->is_active == 1 ? __('Active') : __('Inactive') }}
+                    </x-button>
+                </x-form>
+            @endcan
+
+            @can('delete', $form)
+                <x-button icon="far fa-trash-alt" type="button" class="m-1" color="danger" data-toggle="modal"
+                    data-target="#delete-form-{{ $form->id }}-modal">
+                    {{ __('Delete') }}
                 </x-button>
-            </x-form>
 
-            <x-button icon="far fa-trash-alt" type="button" class="m-1" color="danger" data-toggle="modal"
-                data-target="#delete-form-{{ $form->id }}-modal">
-                {{ __('Delete') }}
-            </x-button>
+                <x-modal id="delete-form-{{ $form->id }}-modal">
+                    <x-slot name="title">{{ __('Confirm') }}</x-slot>
 
-            <x-modal id="delete-form-{{ $form->id }}-modal">
-                <x-slot name="title">{{ __('Confirm') }}</x-slot>
+                    <x-slot name="body">
+                        {{ __('Are you sure you want to delete the form :form?', ['form' => $form->title]) }}
+                    </x-slot>
 
-                <x-slot name="body">
-                    {{ __('Are you sure you want to delete the form :form?', ['form' => $form->title]) }}
-                </x-slot>
+                    <x-slot name="success">
+                        <x-form method="DELETE" action="{{ route('forms.destroy', $form->id) }}">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-check"></i> {{ __('Yes') }}
+                            </button>
+                        </x-form>
+                    </x-slot>
 
-                <x-slot name="success">
-                    <x-form method="DELETE" action="{{ route('forms.destroy', $form->id) }}">
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fas fa-check"></i> {{ __('Yes') }}
+                    <x-slot name="close">
+                        <button type="button" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> {{ __('No') }}
                         </button>
-                    </x-form>
-                </x-slot>
-
-                <x-slot name="close">
-                    <button type="button" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> {{ __('No') }}
-                    </button>
-                </x-slot>
-            </x-modal>
+                    </x-slot>
+                </x-modal>
+            @endcan
 
             <x-modal id="details-form-{{ $form->id }}-modal">
                 <x-slot name="title">
@@ -113,12 +121,14 @@
                     </div>
                 </x-slot>
 
-                <x-slot name="success">
-                    <a class="btn btn-primary mr-2 mb-2" href="{{ route('forms.list', $form->id) }}">
-                        <i class="fas fa-list"></i>
-                        {{ __('Registration list') }}
-                    </a>
-                </x-slot>
+                @can('subscribers', $form)
+                    <x-slot name="success">
+                        <a class="btn btn-primary mr-2 mb-2" href="{{ route('forms.list', $form->id) }}">
+                            <i class="fas fa-list"></i>
+                            {{ __('Registration list') }}
+                        </a>
+                    </x-slot>
+                @endcan
             </x-modal>
         </div>
     </td>

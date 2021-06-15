@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserRequest;
 use App\User;
 use App\Models\Role;
 use App\Models\Position;
 use App\Models\Career;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -27,16 +25,6 @@ class UserController extends Controller
     }
 
     /**
-     * Método que retorna el usuario que contenga un email específico. Requiere un parámetro:
-     * 
-     * @param String $email el cual es el email específico por el cual buscar al usuario.
-     */
-    public function getUser(String $email)
-    {
-        return User::where('email', $email)->get();
-    }
-
-    /**
      * Muestra el formulario para crear un nuevo recurso.
      *
      * @return \Illuminate\Http\Response
@@ -44,7 +32,6 @@ class UserController extends Controller
     public function create()
     {
         return view('users.create', [
-            'user' => Auth::user(),
             'roles' => Role::all(),
             'positions' => Position::all(),
             'careers' => Career::all()
@@ -61,7 +48,9 @@ class UserController extends Controller
     {
         User::create($request->validated());
 
-        return redirect()->route('users.index')->with('status', __('The user was created successfully.'));
+        return redirect()
+            ->route('users.index')
+            ->with('status', __('The user was created successfully.'));
     }
 
     /**
@@ -97,49 +86,73 @@ class UserController extends Controller
     }
 
     /**
-     * Método que busca en la base de datos un usuario que posea un nombre o email similares a los enviados
-     * por el usuario.
+     * Elimina el recurso especificado del almacenamiento.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function destroy(User $user)
     {
-        $search = request()->validate([
-            'search' => 'required'
-        ]);
+        if ($user->forms->isNotEmpty()) {
+            return redirect()
+                ->route('users.index')
+                ->with('error', __('Can not delete an user that owns a form or is register in one'));
+        }
 
-        $users = User::where('name', 'like', '%' . $search['search'] . '%')
-            ->orWhere('email', 'like', '%' . $search['search'] . '%')->get();
+        $user->delete();
 
-        return view('users.search', [
-            'users' => $users
+        return redirect()
+            ->route('users.index')
+            ->with('status', __('The user was successfully removed.'));
+    }
+
+    /**
+     * Muestra una lista personalizada del recurso.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $request->validate(['search' => 'required']);
+
+        $search = $request->search;
+
+        $users = User::where('name', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%')
+            ->orWhere('phone', 'like', '%' . $search . '%')
+            ->orWhereHas('career', function (Builder $query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orWhereHas('position', function (Builder $query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orWhereHas('role', function (Builder $query) use ($search) {
+                $query->where('label', 'like', '%' . $search . '%');
+            })
+            ->paginate(5);
+
+        return view('users.index', [
+            'users' => $users,
+            'search' => $search
         ]);
     }
 
     /**
-     * Método que activa o desactiva el estado de un usuario, recibe por parámetros: 
+     * Método que retorna el usuario que contenga un email específico. Requiere un parámetro:
      * 
-     * @param \App\User $user usuario al que se le va a cambiar el estado.
+     * @param String $email el cual es el email específico por el cual buscar al usuario.
      */
-    public function switchActive(User $user)
+    public function getUser(String $email)
     {
-        $user->update(['is_active' => !$user->is_active]);
-        return redirect('/users')->with('status', __('User status changed successfully'));
-    }
-
-    /**
-     * Método que redirige a la vista profile para modificación de datos del usuario en sesión
-     */
-    public function profile()
-    {
-        return view('users.profile', [
-            'user' => Auth::user(),
-        ]);
+        return User::where('email', $email)->get();
     }
 
     /**
      * Método para obtener todas las posiciones.
      * 
      */
-    public function getPositionsAndCareers(){
+    public function getPositionsAndCareers()
+    {
         return [
             'positions' => Position::all(),
             'careers' => Career::all()
@@ -152,14 +165,19 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function switchActive(User $user)
     {
-        if ($user->forms->isNotEmpty()) {
-            return redirect('/users')->with('error', __('Can not delete an user that owns a form or is register in one'));
-        }
+        $user->update(['is_active' => !$user->is_active]);
 
-        $user->delete();
+        return redirect()
+            ->route('users.index')
+            ->with('status', __('User status changed successfully'));
+    }
 
-        return redirect()->route('users.index')->with('status', __('The user was successfully removed.'));
+    public function profile()
+    {
+        return view('users.profile', [
+            'user' => auth()->user()
+        ]);
     }
 }

@@ -24,7 +24,9 @@
             </div>
 
             <div class="modal-footer">
-                {{ $success }}
+                @isset($success)
+                    {{ $success }}
+                @endisset
 
                 <span data-dismiss="modal">
                     @if (isset($close))

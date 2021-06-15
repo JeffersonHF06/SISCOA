@@ -16,8 +16,9 @@ class HomeController extends Controller
     }
 
     /**
-     * Método que redirige a la página principal o Home
+     * Muestra la vista de home.
      *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {

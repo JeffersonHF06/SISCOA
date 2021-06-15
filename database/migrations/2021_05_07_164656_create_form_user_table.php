@@ -15,7 +15,7 @@ class CreateFormUserTable extends Migration
     {
         Schema::create('form_user', function (Blueprint $table) {
             $table->primary(['form_id', 'user_id']);
-            $table->foreignId('form_id')->references('id')->on('forms');
+            $table->foreignId('form_id')->references('id')->on('forms')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
