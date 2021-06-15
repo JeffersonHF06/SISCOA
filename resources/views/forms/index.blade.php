@@ -59,7 +59,7 @@
                                 @if (Route::is('forms.search'))
                                     No hay resultados para tu busqueda.
                                 @else
-                                    No hay usuarios registrados.
+                                    No hay formularios registrados.
                                 @endif
                             </div>
                         </div>
@@ -72,6 +72,9 @@
                                     <th>{{ __('Title') }}</th>
                                     <th>{{ __('Activity date') }}</th>
                                     <th>{{ __('Schedule') }}</th>
+                                    @if (auth()->user()->isAdmin())
+                                        <th>{{ __('Owner') }}</th>
+                                    @endif
                                     <th>{{ __('Link') }}</th>
                                     <th>{{ __('Actions') }}</th>
                                 </tr>

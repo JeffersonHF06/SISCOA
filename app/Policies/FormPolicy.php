@@ -77,6 +77,7 @@ class FormPolicy
      */
     public function pdf(User $user, Form $form)
     {
-        return ($user->isAdmin() || $user->isOfficial()) && $user->id == $form->user_id;
+        return ($user->isAdmin() && $form->owner->career_id == $user->career_id) || 
+            ($user->isOfficial() && $user->id == $form->user_id);
     }
 }

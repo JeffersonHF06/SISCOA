@@ -11,6 +11,12 @@
         {{ $form->start_time->format('g:i A') }} - {{ $form->end_time->format('g:i A') }}
     </td>
 
+    @if (auth()->user()->isAdmin())
+        <td>
+            {{ $form->owner->name }}
+        </td>
+    @endif
+
     <td>
         <input type="text" class="sr-only" id="link-{{ $form->id }}"
             value="{{ route('forms.show', $form->uuid) }}">
@@ -33,11 +39,12 @@
                 </x-a>
             @endcan
 
-            @can('pdf', $form)
+            {{-- @can('pdf', $form)
+            @endcan --}}
                 <x-a icon="far fa-file-pdf" color="warning" class="m-1" href="{{ route('forms.pdf', $form->id) }}">
                     {{ __('PDF') }}
                 </x-a>
-            @endcan
+            
 
             @can('update', $form)
                 <x-form method="PUT" action="{{ route('forms.activate', $form->id) }}">

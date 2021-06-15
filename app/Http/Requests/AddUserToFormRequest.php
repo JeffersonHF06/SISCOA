@@ -36,11 +36,7 @@ class AddUserToFormRequest extends FormRequest
     {
         return [
             'position_id' => 'puesto',
-            
-            // Revisar porque algunas a están.
-            // 'email' => 'correo electrónico',
-            // 'name' => 'nombre',
-            // 'phone' => 'teléfono',
+            'career_id' => 'carrera'
         ];
     }
 }

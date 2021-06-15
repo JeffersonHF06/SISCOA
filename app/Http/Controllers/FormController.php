@@ -22,8 +22,19 @@ class FormController extends Controller
     {
         $this->authorize('viewAny', Form::class);
 
+        $user = auth()->user();
+
+        if($user->role->id == 1){
+            $forms = Form::whereHas('owner', function (Builder $query) use ($user){
+                $query->where('career_id', $user->career_id);
+            })->paginate(4);
+        }
+        else{
+            $forms = request()->user()->forms()->paginate(4);
+        }
+
         return view('forms.index', [
-            'forms' => request()->user()->forms()->paginate(4)
+            'forms' => $forms
         ]);
     }
 
@@ -134,13 +145,28 @@ class FormController extends Controller
 
         $search = $request->search;
 
-        $forms = $request->user()->forms()
+        $user = auth()->user();
+
+        if($user->role->id == 1){
+            $forms = Form::whereHas('owner', function (Builder $query) use ($user){
+                $query->where('career_id', $user->career_id);
+            })->where(function (Builder $query) use ($search) {
+                $query->orWhere('title', 'like', '%' . $search . '%');
+                $query->orWhere('description', 'like', '%' . $search . '%');
+                $query->orWhere('date', 'like', '%' . $search . '%');
+            })->paginate(4);
+        }
+        else{
+            $forms = $request->user()->forms()
             ->where(function (Builder $query) use ($search) {
                 $query->orWhere('title', 'like', '%' . $search . '%');
                 $query->orWhere('description', 'like', '%' . $search . '%');
                 $query->orWhere('date', 'like', '%' . $search . '%');
             })
             ->paginate(4);
+        }
+
+        
 
         return view('forms.index', [
             'forms' => $forms,
