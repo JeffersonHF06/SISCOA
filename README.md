@@ -19,7 +19,7 @@ SISCOA fue diseñado para la Universidad Nacional de Costa Rica como parte de un
 2. Ejecutar los siguientes comandos en consola dentro del folder del proyecto:
     - composer install
     - npm install
-    - cp .env.example .env
+    - Linux: cp .env.example .env       Windows: copy .env.example .env
     - php artisan key:generate
 3. Crear una base de datos y configurar en el archivo .env los parámetros necesarios como el nombre de la base de datos, usuario y contraseña.
 4. Realizar migraciones ejecutando el comando:
